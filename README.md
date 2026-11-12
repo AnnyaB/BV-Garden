@@ -21,3 +21,10 @@ Open `index.html` in a modern browser, or serve it through a static host. All ar
 
 ## Visibility and deployment
 The repository is intentionally **private**. Publishing a game through a static web host can still make the website public, even if its source repository is private. Please check hosting access settings before distributing the playable URL.
+
+## Documentation and scientific provenance
+- [20 chapter companions and their science topics](CHARACTERS.md) — identity map and unofficial fan-art notice.
+- [Harvard-style research source catalogue](SOURCES_HARVARD.md) — 64 selected foundational and frontier references, with peer-review status, primary links, scientific limitations and future research questions.
+- [Private deployment and safe preview](DEPLOYMENT_PRIVACY.md) — why a private source repository does **not** necessarily produce a private website.
+
+The standalone game and source ZIP were committed in `main`; roaming, keyboard access and the 20-location map are included without changing the Stella/Tonitrus progression conditions. This bibliography is selective, not a claim to cite every AI paper in existence.
