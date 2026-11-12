@@ -994,6 +994,7 @@ window.LatentAtlasLabs={count:LABS.length,labNames:LABS.map(x=>x[0])};
   window.addEventListener('pagehide',flush);
   window.addEventListener('beforeunload',flush);
   setInterval(flush,1100);
+  if(quest.bolts>=10)restartForBolts(); // migrate saves already at the new limit
   storeExplorer();
 })();</script>
 </body>
