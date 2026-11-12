@@ -28,3 +28,12 @@ The repository is intentionally **private**. Publishing a game through a static 
 - [Private deployment and safe preview](DEPLOYMENT_PRIVACY.md) — why a private source repository does **not** necessarily produce a private website.
 
 The standalone game and source ZIP were committed in `main`; roaming, keyboard access and the 20-location map are included without changing the Stella/Tonitrus progression conditions. This bibliography is selective, not a claim to cite every AI paper in existence.
+
+## Autosave and Stella / Tonitrus audio (13 November 2026)
+- The playable `index.html` automatically stores **chapter progress, awarded stars, bolt count, used question IDs, active quiz and chosen answers** in browser `localStorage`. It also remembers the explorer's map position, camera pan and currently viewed chapter.
+- Revisit **the same website origin in the same browser/device** to resume. Progress is not synchronized across devices, and clearing browser/site data, private browsing restrictions, or changing from `file://` to a hosted origin can prevent restoration.
+- A **new Stella after all four chapter questions** plays the user's supplied approximately two-second twinkle sound. The **10th Tonitrus Bolt** plays the supplied fail-trumpet sound and restarts at Chapter 1. Previously seen questions remain retired.
+- The existing `♪ mute sounds / ♪ enable sounds` button controls playback and remembers the preference. Audio may require a user interaction on mobile; autoplay policies can mute playback without warning.
+- Both supplied original MP3 files are **embedded inside the playable `index.html`** so no additional file downloads are needed to play.
+- The repository's `research-garden-source.zip` is an **older source snapshot**. The current updated editable ZIP (including the original audio files) is in the owner's [Google Drive Research Garden folder](https://drive.google.com/drive/folders/1FwTfNHQ1QJ1O8lOSfGmH4yTTX1UPmJHs) as `BV_Garden_AUTOSAVE_STELLA_TONITRUS_Source.zip`.
+- For public distribution, verify the licenses for the user-provided sound effects credited in filenames to **shidenbeatsmusic** and **universfield**; a supplied audio file is not by itself a redistribution license.
