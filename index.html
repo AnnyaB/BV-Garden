@@ -228,7 +228,7 @@ function render(ms){requestAnimationFrame(render);if(ms-last<85)return;last=ms;s
  for(let x=0;x<NX;x++)for(let y=0;y<NY;y++){
  const p=iso(x,y);if(p.x<-80||p.x>W+80||p.y<-100||p.y>H+65)continue;
  const n=hash(x+31,y+87),occupied=chapters.some(a=>Math.abs(a.place[0]-x)+Math.abs(a.place[1]-y)<2.6)||Math.hypot(x-23,y-22)<2.8;
- if(!occupied&&!pathTile(x,y)&&n>.90)objects.push({place:[x,y],fn:()=>drawTree(iso(x,y),n)});
+ if(!occupied&&!pathTile(x,y)&&n>.90){const moved=x===16&&y===24,tx=moved?14:x,ty=moved?26:y;objects.push({place:[tx,ty],fn:()=>drawTree(iso(tx,ty),n)});}
  else if(!occupied&&!pathTile(x,y)&&n>.81)objects.push({place:[x,y],fn:()=>drawBush(iso(x,y),n)});
  else if(!occupied&&!pathTile(x,y)&&n>.72)objects.push({place:[x,y],fn:()=>drawFlower(iso(x,y),n)});
  }
