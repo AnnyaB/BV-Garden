@@ -41,7 +41,34 @@
 /* Accessible free-roam navigator; original garden, chapters and rewards remain unchanged. */
 .garden-tour[hidden]{display:none!important}.garden-tour{position:absolute;inset:12px 12px 12px auto;width:min(370px,88%);z-index:10;overflow:auto;background:#fffcf2f7;border:1px solid #b2c2ac;border-radius:9px;padding:13px;box-shadow:0 12px 36px #223b3559}.garden-tour-head{display:flex;align-items:center;justify-content:space-between;font-size:14px;color:#355b49}.garden-tour-head button{font-size:19px;border:1px solid #c8d5c7;background:white;border-radius:5px;width:30px;height:30px}.garden-tour p{font-size:10px;color:#738375;line-height:1.45;margin:7px 0 10px}.garden-tour-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}.garden-tour-grid button{text-align:left;background:#f6f9f1;border:1px solid #d2dccc;border-radius:5px;padding:7px;font:700 10px/1.35 ui-monospace,monospace;color:#466b55}.garden-tour-grid button:hover,.garden-tour-grid button:focus-visible{background:#e0eddf;border-color:#789f80}.garden-tour-grid span{display:block;font-size:10px;font-weight:500;color:#344d3d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.movement-controls .garden-index-toggle{width:auto;padding:0 9px;font-size:10px;font-weight:700;white-space:nowrap}.movement-controls .garden-center{font-size:18px}
 </style>
-</head>
+<style id="bv-responsive-2026-11">
+/* Responsive-only accessibility changes; game logic, artwork and desktop styling preserved */
+@media(max-width:680px){
+.canvas-wrap{position:relative;height:328px;min-height:328px;aspect-ratio:auto}
+.canvas-wrap #world{position:absolute;top:0;left:50%;transform:translateX(-50%);width:560px;height:328px;max-width:none;aspect-ratio:1070/626;touch-action:manipulation}
+.game-frame-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px;padding:9px 8px}
+.location{flex:1 1 100%;text-align:center;line-height:1.45}
+.movement-controls{width:100%;justify-content:space-evenly;align-items:center;gap:3px}
+.movement-controls button,.movement-controls .garden-center{width:clamp(34px,10vw,44px);height:44px;font-size:18px;flex:none}
+.movement-controls .garden-index-toggle{min-width:51px;width:auto;height:44px;padding:0 6px;font-size:11px}
+.world-tip{width:max-content;max-width:90%;text-align:center}
+.journal-content{overflow-wrap:anywhere}
+.chapter-article p,.deep-primer p{font-size:12.5px!important;line-height:1.65!important}
+.quest-prompt{font-size:14px!important}
+.quest-choice{font-size:13px;min-height:46px}
+.garden-tour{inset:7px;width:auto;padding:12px}
+.garden-tour-grid button{min-height:44px;font-size:11px}
+.garden-tour-grid span{font-size:11px}
+}
+@media(max-width:360px){
+.game-frame-title{gap:5px;letter-spacing:.04em}
+.game-frame-header{padding:0 8px}
+.world-legend{gap:4px;font-size:7px}
+.garden-tour-grid{grid-template-columns:1fr 1fr}
+.chapter-article .math-line{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chapter-ribbon{scroll-behavior:auto}.primary-link,.chapter-button,.world-tip{transition:none}}
+</style></head>
 <body>
 <div class="app-shell">
   <header class="topbar">
