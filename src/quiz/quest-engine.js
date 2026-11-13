@@ -126,7 +126,7 @@ function resolveAttempt(){const a=quest.active,hard=a.results.filter(r=>r.d==='h
  quest.active=null;storeQuest();ribbon();
 }
 function updateSelectedAvatar(){
- const key=quest.imperial?(quest.avatarChoice===1?'explorer_scholar_alt':'explorer_scholar'):
+ const key=(quest.imperial||quest.imperialWins>0)?(quest.avatarChoice===1?'explorer_scholar_alt':'explorer_scholar'):
    (quest.avatarChoice===1?'explorer_alt':'explorer');
  if(INLINE_SPRITES[key]&&imgs.explorer)imgs.explorer.src=asset(key);
  const current=document.getElementById('bv-avatar-current');
