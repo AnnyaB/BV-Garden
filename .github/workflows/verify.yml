@@ -4,11 +4,17 @@ on:
     branches: [main]
     paths:
       - index.html
+      - src/**
+      - scripts/build.mjs
+      - package.json
       - scripts/verify-site.mjs
       - .github/workflows/verify.yml
   pull_request:
     paths:
       - index.html
+      - src/**
+      - scripts/build.mjs
+      - package.json
       - scripts/verify-site.mjs
       - .github/workflows/verify.yml
   workflow_dispatch:
@@ -26,5 +32,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Check deterministic source build
+        run: node scripts/build.mjs --check
       - name: Verify standalone game
         run: node scripts/verify-site.mjs
