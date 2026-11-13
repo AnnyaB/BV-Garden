@@ -28,3 +28,26 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chapter-ribbon{scroll-behavior:auto}.primary-link,.chapter-button,.world-tip{transition:none}}
 .bv-typeset-math{overflow:hidden;max-width:100%;padding:13px 11px!important}.bv-math-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:4px 0;scrollbar-width:thin}.bv-typeset-math math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math",math,serif;font-size:1.13rem;line-height:1.6;white-space:nowrap;color:#284d43}.bv-typeset-math math mtext{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.82em}.bv-typeset-math math mo{padding-inline:.08em}@media(max-width:480px){.bv-typeset-math math{font-size:1.01rem}}@media(prefers-reduced-motion:reduce){.bv-math-scroll{scroll-behavior:auto}}
 .learning-bridge{margin:14px 0 20px;display:grid;gap:10px}.learning-bridge-part{border:1px solid #dde7d9;border-radius:9px;background:#f7faf5;padding:12px 14px}.learning-bridge-part:nth-child(2){background:#f2f7f0}.learning-bridge-part h5{margin:0 0 7px;color:#456655}.learning-bridge-part p{margin:0;white-space:normal;overflow-wrap:anywhere;line-height:1.75}@media(max-width:480px){.learning-bridge-part{padding:10px 11px}.intro .eyebrow{overflow-wrap:anywhere;line-height:1.5}}
+
+/* Optional avatar picker and scholarly achievements; isolated from garden geometry. */
+.bv-avatar-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid #b5c9b7;border-radius:8px;background:#f7faf2;padding:3px 9px;min-height:33px;color:#315d4f;font-size:11px;font-weight:700;white-space:nowrap}
+.bv-avatar-toggle img{width:24px;height:27px;object-fit:contain;image-rendering:pixelated}
+.bv-avatar-toggle:hover{background:#eaf3e7}
+.bv-avatar-dialog{max-width:min(365px,calc(100vw - 30px));border:1px solid #bed1bf;border-radius:14px;padding:17px;background:#fffdf8;color:#345447;box-shadow:0 18px 50px #1b352f90}
+.bv-avatar-dialog::backdrop{background:#172c2780}
+.bv-avatar-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;font:600 20px Georgia,serif}
+.bv-avatar-heading button{background:transparent;border:0;color:#526a5a;font-size:26px;min-width:36px;min-height:36px}
+.bv-avatar-options{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}
+.bv-avatar-option{border:2px solid #d4decc;border-radius:12px;background:#eff2e9;padding:8px;min-height:165px;position:relative}
+.bv-avatar-option.chosen{border-color:#a87829;box-shadow:0 0 0 3px #efe0b4}
+.bv-avatar-option img{height:150px;width:100%;object-fit:contain;image-rendering:pixelated}
+.bv-option-marker{display:none;position:absolute;right:8px;bottom:8px;padding:2px 5px;border-radius:40px;background:#527f5e;color:white}
+.bv-avatar-option.chosen .bv-option-marker{display:inline}
+.bv-backup-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.bv-backup-actions p{flex:1 1 100%;font-size:11px;line-height:1.6}
+.bv-backup-actions .action-button{font-size:11px}
+.bv-league-task{border:1px solid #d3ddce;border-radius:11px;background:#f5f8f3;margin:11px 0;padding:12px}
+.bv-league-task label{display:block;font-size:12px;margin:8px 0}
+.bv-league-task input:not([type=radio]),.bv-league-task textarea{width:100%;background:white;border:1px solid #b1c9b6;border-radius:7px;padding:9px}
+.bv-league-task textarea{min-height:80px}
+@media(max-width:360px){.bv-avatar-toggle{font-size:10px;padding:3px 5px;gap:4px}.bv-avatar-toggle img{height:23px;width:20px}}
