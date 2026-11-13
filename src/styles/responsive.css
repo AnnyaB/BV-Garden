@@ -1,0 +1,30 @@
+
+/* Responsive-only accessibility changes; game logic, artwork and desktop styling preserved */
+@media(max-width:680px){
+.canvas-wrap{position:relative;height:328px;min-height:328px;aspect-ratio:auto}
+.canvas-wrap #world{position:absolute;top:0;left:50%;transform:translateX(-50%);width:560px;height:328px;max-width:none;aspect-ratio:1070/626;touch-action:manipulation}
+.game-frame-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px;padding:9px 8px}
+.location{flex:1 1 100%;text-align:center;line-height:1.45}
+.movement-controls{width:100%;justify-content:space-evenly;align-items:center;gap:3px}
+.movement-controls button,.movement-controls .garden-center{width:clamp(34px,10vw,44px);height:44px;font-size:18px;flex:none}
+.movement-controls .garden-index-toggle{min-width:51px;width:auto;height:44px;padding:0 6px;font-size:11px}
+.world-tip{width:max-content;max-width:90%;text-align:center}
+.journal-content{overflow-wrap:anywhere}
+.chapter-article p,.deep-primer p{font-size:12.5px!important;line-height:1.65!important}
+.quest-prompt{font-size:14px!important}
+.quest-choice{font-size:13px;min-height:46px}
+.garden-tour{inset:7px;width:auto;padding:12px}
+.garden-tour-grid button{min-height:44px;font-size:11px}
+.garden-tour-grid span{font-size:11px}
+}
+@media(max-width:360px){
+.game-frame-title{gap:5px;letter-spacing:.04em}
+.game-frame-header{padding:0 8px}
+.world-legend{gap:4px;font-size:7px}
+.garden-tour-grid{grid-template-columns:1fr 1fr}
+.chapter-article .math-line{font-size:11px}
+}
+@media (min-width:681px) and (max-width:1100px){.movement-controls button{min-width:42px;min-height:42px}.movement-controls .garden-index-toggle{padding-inline:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chapter-ribbon{scroll-behavior:auto}.primary-link,.chapter-button,.world-tip{transition:none}}
+.bv-typeset-math{overflow:hidden;max-width:100%;padding:13px 11px!important}.bv-math-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:4px 0;scrollbar-width:thin}.bv-typeset-math math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math",math,serif;font-size:1.13rem;line-height:1.6;white-space:nowrap;color:#284d43}.bv-typeset-math math mtext{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.82em}.bv-typeset-math math mo{padding-inline:.08em}@media(max-width:480px){.bv-typeset-math math{font-size:1.01rem}}@media(prefers-reduced-motion:reduce){.bv-math-scroll{scroll-behavior:auto}}
+.learning-bridge{margin:14px 0 20px;display:grid;gap:10px}.learning-bridge-part{border:1px solid #dde7d9;border-radius:9px;background:#f7faf5;padding:12px 14px}.learning-bridge-part:nth-child(2){background:#f2f7f0}.learning-bridge-part h5{margin:0 0 7px;color:#456655}.learning-bridge-part p{margin:0;white-space:normal;overflow-wrap:anywhere;line-height:1.75}@media(max-width:480px){.learning-bridge-part{padding:10px 11px}.intro .eyebrow{overflow-wrap:anywhere;line-height:1.5}}
