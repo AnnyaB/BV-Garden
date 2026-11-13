@@ -121,6 +121,6 @@ test("Every level has four substantive lesson components",
 test("Redundant map legend removed",
   !html.includes('<div class="world-legend">'));
 test("Prerequisite notice shown above research game",
-  html.includes("STARTING POINT · PYTHON, ALGEBRA & PROBABILITY"));
+  html.includes("BEFORE YOU BEGIN") && html.includes("Some familiarity with Levels 1–3") && html.includes("Full teaching from scratch for beginners is planned for a future version."));
 
 console.log("Static verification complete; separately test runtime and browser behavior.");
