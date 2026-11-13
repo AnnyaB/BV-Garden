@@ -26,23 +26,6 @@ Visit http://localhost:8000/ and use the same browser/origin to resume. Storage 
 **Controls:** WASD or arrows to move; M to open the map; F to recenter; drag to pan. Touchscreen controls are available. Entering a locked location does not unlock its lesson.
 
 
-## Source organization and testing
-
-BV-Garden has a **maintainable source tree with an exactly reproducible playable artifact**. The current HTML was split into individual CSS, inline sprite data, quiz banks, teaching content, world logic and save/audio logic. Rebuilding concatenates those files in their original order; it does not alter or modernize the game engine.
-
-```text
-src/
-  index.template.html
-  styles/           # Original CSS and responsive additions
-  assets/           # Embedded sprite data
-  scripts/          # Curriculum, world rendering, interactions and saves
-  quiz/             # Level MCQs, final examination and quest engine
-  lessons/          # Teaching material and prerequisite guides
-scripts/
-  build.mjs         # Deterministic standalone HTML builder
-  verify-site.mjs   # Question-bank and source integrity checks
-```
-
 **No dependencies or paid API are required to play.** With Node.js 20+ installed, contributors can use:
 
 ```sh
