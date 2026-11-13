@@ -26,6 +26,36 @@ Visit http://localhost:8000/ and use the same browser/origin to resume. Storage 
 **Controls:** WASD or arrows to move; M to open the map; F to recenter; drag to pan. Touchscreen controls are available. Entering a locked location does not unlock its lesson.
 
 
+## Source organization and testing
+
+BV-Garden has a **maintainable source tree with an exactly reproducible playable artifact**. The current HTML was split into individual CSS, inline sprite data, quiz banks, teaching content, world logic and save/audio logic. Rebuilding concatenates those files in their original order; it does not alter or modernize the game engine.
+
+```text
+src/
+  index.template.html
+  styles/           # Original CSS and responsive additions
+  assets/           # Embedded sprite data
+  scripts/          # Curriculum, world rendering, interactions and saves
+  quiz/             # Level MCQs, final examination and quest engine
+  lessons/          # Teaching material and prerequisite guides
+scripts/
+  build.mjs         # Deterministic standalone HTML builder
+  verify-site.mjs   # Question-bank and source integrity checks
+```
+
+**No dependencies or paid API are required to play.** With Node.js 20+ installed, contributors can use:
+
+```sh
+npm run build:check
+npm test
+npm run build
+```
+
+Run `npm run build` only after intentionally editing source files, and review the generated HTML diff. See [build reproducibility](docs/BUILD.md) and [contributing](CONTRIBUTING.md).
+
+## Deployment
+
+GitHub Pages on GitHub Free requires a public repository. This development repository is private and does **not** currently host a live GitHub Pages website. For a safe release, create a fresh-history public repository containing only the reviewed release files. The Pages workflow verifies the game and publishes only the root `index.html` as the website artifact; it skips private repositories.
 ## Documentation
 - [Architecture and persistence](docs/ARCHITECTURE.md)
 - [Chapter cast and asset provenance](docs/CHARACTERS.md)
