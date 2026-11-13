@@ -1,11 +1,18 @@
 /* RESEARCH GARDEN QUEST ENGINE · 20 chapters, nonrepeating conceptual question IDs, real scoring. */
 'use strict';
 const QUEST_STORAGE='latent-atlas-research-quest-v1';
-const initQuest=()=>({passed:Array(20).fill(false),stars:Array(20).fill(false),bolts:0,used:{},seenPrompts:{},active:null,last:null,imperial:false,examPass:false,epoch:0});
+const initQuest=()=>({passed:Array(20).fill(false),stars:Array(20).fill(false),bolts:0,used:{},seenPrompts:{},active:null,last:null,imperial:false,examPass:false,epoch:0,avatarChoice:0,imperialWins:0,firstWinAt:null,eliteUnlocked:false,league:{entered:false,answers:{},reviewed:false}});
 let quest=initQuest();
 try{const old=JSON.parse(localStorage.getItem(QUEST_STORAGE)||'null');if(old&&Array.isArray(old.passed)&&old.passed.length===20&&Array.isArray(old.stars)&&old.stars.length===20){
  quest={...initQuest(),...old};quest.passed=old.passed.map(Boolean);quest.stars=old.stars.map(Boolean);quest.bolts=Math.max(0,Math.min(10,Number(old.bolts)||0));
 }}catch(_){/* storage unavailable => session-only state */}
+quest.avatarChoice=quest.avatarChoice===1?1:0;
+quest.imperialWins=Number.isInteger(quest.imperialWins)&&quest.imperialWins>=0?Math.min(999,quest.imperialWins):(quest.imperial?1:0);
+if(quest.imperial&&!quest.imperialWins)quest.imperialWins=1;
+quest.firstWinAt=Number.isFinite(quest.firstWinAt)?quest.firstWinAt:null;
+quest.eliteUnlocked=quest.imperialWins>=5;
+if(!quest.league||typeof quest.league!=='object')quest.league={entered:false,answers:{},reviewed:false};
+if(!quest.league.answers||typeof quest.league.answers!=='object')quest.league.answers={};
 function storeQuest(){try{localStorage.setItem(QUEST_STORAGE,JSON.stringify(quest));}catch(_){}}
 function canEnterZone(x,y){return !chapters.some((ch,i)=>i>state.current&&Math.hypot(x-ch.place[0],y-ch.place[1])<3.5);}
 function move(dx,dy){if(state.travel)state.travel=null;const nx=Math.max(0,Math.min(NX-1,state.player.x+dx)),ny=Math.max(0,Math.min(NY-1,state.player.y+dy));if(!canEnterZone(nx,ny)){showRewardToast('tonitrus','Concept gate locked · resolve the four obstacles');return;}state.player.x=nx;state.player.y=ny;}
@@ -75,21 +82,54 @@ function submitQuizAnswer(){const a=quest.active;if(!a)return;const q=a.items[a.
  if(a.position>=a.items.length)resolveAttempt();
  storeQuest();progress();if(a&&a.kind==='stage')openChapter(a.level);else openChapter(20);
 }
-function restartForBolts(){const history=quest.used,seenHistory=quest.seenPrompts,epoch=(quest.epoch||0)+1;quest=initQuest();quest.used=history;quest.seenPrompts=seenHistory;quest.epoch=epoch;repairProgress();quest.last={kind:'stage',level:0,reset:true,msg:'Tenth Tonitrus Bolt! Back to chapter 01. Previously used questions remain retired.'};state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};state.travel=null;storeQuest();progress();ribbon();openChapter(0);}
+function restartJourney(tenthBolt=false){
+ const previous=quest;quest=initQuest();
+ quest.used=previous.used;quest.seenPrompts=previous.seenPrompts;
+ quest.avatarChoice=previous.avatarChoice===1?1:0;
+ quest.imperialWins=previous.imperialWins||0;quest.firstWinAt=previous.firstWinAt||null;
+ quest.eliteUnlocked=quest.imperialWins>=5;quest.league=previous.league||{entered:false,answers:{},reviewed:false};
+ quest.epoch=(previous.epoch||0)+1;
+ if(tenthBolt)quest.last={kind:'stage',level:0,reset:true,msg:'Tenth Tonitrus Bolt! Back to chapter 01. Previously used questions remain retired.'};
+ repairProgress();state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};state.travel=null;
+ updateSelectedAvatar();storeQuest();progress();ribbon();openChapter(0);
+}
+function restartForBolts(){restartJourney(true);}
 function resolveAttempt(){const a=quest.active,hard=a.results.filter(r=>r.d==='h'&&r.ok).length,correct=a.results.filter(r=>r.ok).length;
  if(a.kind==='stage'){
    const earned=correct>=3,passed=earned||(hard===2);
    if(passed){quest.passed[a.level]=true;if(earned){quest.stars[a.level]=true;showRewardToast('stella','Stella Star earned!');}else showRewardToast('stella','Golden path unlocked · no Stella yet');repairProgress();}
    quest.last={kind:'stage',level:a.level,passed,earned,correct,hard,msg:earned?'Stella earned! At least three correct.':passed?'Both hard challenges passed — next chapter unlocked, but no Stella. Replay with fresh questions to earn it.':'The gate remains closed. Review the lesson and retry with unused questions.'};
  }else{
-   const passed=correct>=9&&hard>=4;quest.imperial=passed;quest.examPass=passed;
-   quest.last={kind:'exam',level:20,passed,correct,hard,msg:passed?'Imperial Scholar! The academy cape is unlocked. This is an in-game honor, not a scientific credential.':'Exam not passed. You need at least 9/10, including 4/5 hard questions. A new attempt requires unused questions.'};
-   if(passed){imgs.explorer.src=asset('explorer_scholar');showRewardToast('stella','Imperial Scholar · Academy cape unlocked!');}
+   const medium=a.results.filter(r=>r.d==='m'&&r.ok).length;
+   const passed=correct>=7;
+   const imperial=passed&&quest.stars.every(Boolean)&&medium>=2&&hard>=4;
+   quest.examPass=passed;quest.imperial=imperial;
+   if(imperial){
+     quest.imperialWins=(quest.imperialWins||0)+1;
+     if(!quest.firstWinAt)quest.firstWinAt=Date.now();
+     quest.eliteUnlocked=quest.imperialWins>=5;updateSelectedAvatar();
+     showRewardToast('stella','Imperial Scholar · win '+quest.imperialWins+' of 5');
+   }
+   quest.last={kind:'exam',level:20,passed,imperial,correct,medium,hard,
+     msg:imperial?'Imperial Scholar awarded: 20 Stellas and the advanced exam requirements satisfied.':
+       passed?'Exam passed, but Imperial Scholar needs at least 2 medium and 4 hard answers correct.':
+       'Exam not passed. At least 7/10 answers are needed; Imperial Scholar additionally requires 2 medium and 4 hard.'};
  }
  quest.last.breakdown=a.items.map(item=>{const reference=questionsFor(a.kind,a.level,item.d)[item.index];return {tier:item.d,ok:item.correct,prompt:reference.t,expected:item.answer.map(j=>item.options[j]),why:reference.why};});
  quest.active=null;storeQuest();ribbon();
 }
-if(quest.imperial){imgs.explorer.src=asset('explorer_scholar');}
+function updateSelectedAvatar(){
+ const key=quest.imperial?(quest.avatarChoice===1?'explorer_scholar_alt':'explorer_scholar'):
+   (quest.avatarChoice===1?'explorer_alt':'explorer');
+ if(INLINE_SPRITES[key]&&imgs.explorer)imgs.explorer.src=asset(key);
+ const current=document.getElementById('bv-avatar-current');
+ if(current)current.src=asset(quest.avatarChoice===1?'explorer_alt':'explorer');
+ for(const button of document.querySelectorAll('[data-avatar-choice]')){
+   const selected=Number(button.dataset.avatarChoice)===quest.avatarChoice;
+   button.setAttribute('aria-pressed',String(selected));button.classList.toggle('chosen',selected);
+ }
+}
+updateSelectedAvatar();
 function updateQuizArea(){const region=document.getElementById('quest-quiz');if(region)region.innerHTML=quizAreaContent();}
 function quizAreaContent(){const a=quest.active;if(!a)return '';
  const q=a.items[a.position];if(!q)return '';
