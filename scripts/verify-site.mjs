@@ -64,7 +64,7 @@ function validateQuestion(q, label, level) {
   test(label+" has a unique, nonempty stem", stem.length > 15 && !stems.has(stem));
   stems.set(stem,label);
   test(label+" includes an answer explanation", typeof q.why === "string" && q.why.length >= 25);
-  test(label+" correct answer count", q.a.length === (level < 5 ? 1 : 2));
+  test(label+" correct answer count", q.a.length === ((level < 5 || label.startsWith("imperial/e/")) ? 1 : 2));
   test(label+" includes plausible wrong options", q.b.length >= 2);
   const options=[...q.a,...q.b].map(normalizeStem);
   test(label+" has unique answer options", options.every(Boolean) && new Set(options).size===options.length);
