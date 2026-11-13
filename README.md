@@ -1,53 +1,34 @@
-# BV-Garden
-### Beyond Vision · The Latent Atlas Research Garden
+# Beyond Vision · The Latent Atlas Research Garden
 
-An interactive **2.5D pixel-art research-learning adventure** through AI foundations, mathematical reasoning, world models, embodied intelligence, safety and open scientific questions.
-
-## Highlights
-- **20 conceptual chapters**, from AI origins to open-ended intelligence.
-- **Four questions per chapter**: one easy, one medium, two hard.
-- **Stella**: at least 3/4 answers correct earns a star. Both hard answers correct can separately unlock the next chapter without a star.
-- **Tonitrus**: the 10th incorrect answer restarts the adventure at Chapter 1, retaining previously used question history.
-- **Exploration**: 2.5D pixel garden with keyboard and touch movement, camera panning, a map and 20 research companions.
-- **Autosave**: chapter and answer history, unfinished quiz, game awards, explorer position, camera pan and sound preference in local browser storage.
-- **Audio**: two embedded event sounds, subject to browser autoplay restrictions.
-
-This project is an educational game, you can revise concepts and check your existing knowledge level. 
+A 2.5D pixel-art browser game for learning AI, mathematics, world models and embodied intelligence. Development is ongoing.
 
 ## Play
-Open the standalone [index.html](index.html) in a browser. For an ordinary locally hosted preview:
 
-~~~sh
+Open `index.html` in a browser, or serve the folder locally:
+
+```sh
 python3 -m http.server 8000
-~~~
+```
 
-Visit http://localhost:8000/ and use the same browser/origin to resume. Storage may be lost when you change origin/device, clear site data, or browse privately.
+Then open http://localhost:8000/ .
 
-**Controls:** WASD or arrows to move; M to open the map; F to recenter; drag to pan. Touchscreen controls are available. Entering a locked location does not unlock its lesson.
+**Controls:** WASD or arrow keys to move, M for the map, F to recenter, and drag to pan. Touch controls are provided on supported screens.
 
+**Progress:** There are 20 chapters, each with one easy, one medium and two hard questions. At least 3/4 correct earns a Stella; answering both hard questions correctly can advance without a Stella. The tenth incorrect answer resets the current journey to Chapter 1. The final exam needs at least 7/10 correct to pass. Imperial Scholar additionally requires all 20 Stellas, at least two medium and four hard exam answers correct. Five qualifying Imperial journeys unlock the Elite Imperial League.
 
-**No dependencies or paid API are required to play.** With Node.js 20+ installed, contributors can use:
+Progress is saved **in this browser on this website origin**, not in an online account. Use the game's export/restore controls to make and load a save file; you can email that file to yourself. This is not automatic email synchronization. Browser storage may not survive clearing site data, switching devices or using private browsing.
+
+## Verify or rebuild locally
+
+Requires **Node.js 20+**. No package installation or paid service is needed.
 
 ```sh
 npm run build:check
 npm test
-npm run build
 ```
 
-Run `npm run build` only after intentionally editing source files, and review the generated HTML diff. See [build reproducibility](docs/BUILD.md) and [contributing](CONTRIBUTING.md).
+The checked-in `index.html` is the playable build; `build:check` verifies that it matches the `src/` files byte-for-byte. Run `npm run build` **only when deliberately regenerating** `index.html` after changing source files.
 
-## Deployment
+Research references: [source catalogue](docs/SOURCES_HARVARD.md).
 
-GitHub Pages on GitHub Free requires a public repository. This development repository is private and does **not** currently host a live GitHub Pages website. For a safe release, create a fresh-history public repository containing only the reviewed release files. The Pages workflow verifies the game and publishes only the root `index.html` as the website artifact; it skips private repositories.
-## Documentation
-- [Architecture and persistence](docs/ARCHITECTURE.md)
-- [Chapter cast and asset provenance](docs/CHARACTERS.md)
-- [Research catalogue](docs/SOURCES_HARVARD.md)
-- [Private deployment history](docs/DEPLOYMENT_PRIVACY.md)
-- [Public GitHub Pages publication guide](docs/PUBLISHING.md)
-- [Licensing and asset-rights notice](NOTICE.md)
-
-Run static checks with **node scripts/verify-site.mjs**. Passing checks does not replace real-browser and device testing.
-
-## Credits and scope
-This project uses characters inspired by *SPY×FAMILY* and two externally supplied sounds. 
+**Rights:** This is a proprietary project in development, **not MIT-licensed** and not open for external contributions. See [LICENSE](LICENSE) for access, reuse and third-party asset restrictions.
