@@ -41,7 +41,7 @@ ctx.pickQuestQuestion=(_,level,tier)=>({d:tier,level,index:0,options:["yes"],ans
 ctx.quizSelected=[];
 new Script(setup+"\n"+restart+"\n"+resolveAttempt+
   "\nthis.bvActions={beginQuest,restartJourney,resolveAttempt};").runInNewContext(ctx,{timeout:3000});
-const {beginQuest,restartJourney,resolveAttempt:resolve}=ctx.bvActions;
+const {beginQuest,restartJourney,resolveAttempt:gradeAttempt}=ctx.bvActions;
 const test=(name,fn)=>{fn();console.log("PASS "+name)};
 const tiers=["e","e","m","m","m","h","h","h","h","h"];
 function makeExam(correctEasy,correctMedium,correctHard){
@@ -73,7 +73,7 @@ test("Final examination is locked without all 20 Stella stars",()=>{
 // 7 total may pass the exam but without hard-tier competence no Imperial dress.
 test("Seven correct, easy-dominant result passes without Imperial Scholar",()=>{
  ctx.quest=initQuest();fullStellas();
- makeExam(2,3,2);resolve();
+ makeExam(2,3,2);gradeAttempt();
  assert.equal(ctx.quest.examPass,true);
  assert.equal(ctx.quest.imperial,false);
  assert.equal(ctx.quest.imperialWins,0);
@@ -84,7 +84,7 @@ test("Seven correct, easy-dominant result passes without Imperial Scholar",()=>{
 // 6/10 fails despite five hard correct; thresholds are conjunctive.
 test("Six correct never qualifies for the advanced uniform",()=>{
  ctx.quest=initQuest();fullStellas();
- makeExam(1,0,5);resolve();
+ makeExam(1,0,5);gradeAttempt();
  assert.equal(ctx.quest.examPass,false);
  assert.equal(ctx.quest.imperial,false);
  assert.equal(ctx.quest.imperialWins,0);
@@ -93,7 +93,7 @@ test("Six correct never qualifies for the advanced uniform",()=>{
 // Seven correct with 4 hard and 2 medium is sufficient only with 20 Stellas.
 test("Seven correct with advanced tiers still requires twenty Stellas",()=>{
  ctx.quest=initQuest();ctx.quest.stars.fill(true);ctx.quest.stars[8]=false;
- makeExam(1,2,4);resolve();
+ makeExam(1,2,4);gradeAttempt();
  assert.equal(ctx.quest.examPass,true);
  assert.equal(ctx.quest.imperial,false);
  assert.equal(ctx.quest.imperialWins,0);
@@ -102,11 +102,11 @@ test("Seven correct with advanced tiers still requires twenty Stellas",()=>{
 // Repeated successful attempts within a journey must not mint extra wins.
 test("Imperial wins count at most once per complete journey",()=>{
  ctx.quest=initQuest();fullStellas();
- makeExam(1,2,4);resolve();
+ makeExam(1,2,4);gradeAttempt();
  assert.equal(ctx.quest.imperial,true);
  assert.equal(ctx.quest.imperialWins,1);
  assert.equal(ctx.quest.journeyWins,1);
- makeExam(1,2,4);resolve();
+ makeExam(1,2,4);gradeAttempt();
  assert.equal(ctx.quest.imperialWins,1);
  assert.equal(ctx.quest.journeyWins,1);
 });
@@ -127,7 +127,7 @@ test("Exactly five distinct qualified journeys unlock the Elite Imperial League"
    assert.equal(ctx.quest.seenPrompts["a saved question"],true);
   }
   fullStellas();
-  makeExam(1,2,4);resolve();
+  makeExam(1,2,4);gradeAttempt();
   if(attempt===1)first=ctx.quest.firstWinAt;
   assert.equal(ctx.quest.firstWinAt,first);
   assert.equal(ctx.quest.imperialWins,attempt);
