@@ -3,8 +3,6 @@
 
 An interactive **2.5D pixel-art research-learning adventure** through AI foundations, mathematical reasoning, world models, embodied intelligence, safety and open scientific questions.
 
-**Status:** Private development repository. For GitHub Free Pages, publish a separate, fresh-history public website repository. Do not make this repository public simply to enable Pages.
-
 ## Highlights
 - **20 conceptual chapters**, from AI origins to open-ended intelligence.
 - **Four questions per chapter**: one easy, one medium, two hard.
@@ -14,7 +12,7 @@ An interactive **2.5D pixel-art research-learning adventure** through AI foundat
 - **Autosave**: chapter and answer history, unfinished quiz, game awards, explorer position, camera pan and sound preference in local browser storage.
 - **Audio**: two embedded event sounds, subject to browser autoplay restrictions.
 
-This project is an educational game, **not** a trained world model, a scientific benchmark, a robotics simulator or evidence of AGI/ASI.
+This project is an educational game, you can revise concepts and check your existing knowledge level. 
 
 ## Play
 Open the standalone [index.html](index.html) in a browser. For an ordinary locally hosted preview:
@@ -27,30 +25,6 @@ Visit http://localhost:8000/ and use the same browser/origin to resume. Storage 
 
 **Controls:** WASD or arrows to move; M to open the map; F to recenter; drag to pan. Touchscreen controls are available. Entering a locked location does not unlock its lesson.
 
-## Project structure
-
-~~~text
-BV-Garden/
-├── .github/workflows/
-│   ├── pages.yml                 # Stage only HTML for GitHub Pages
-│   └── verify.yml                # Automated static checks
-├── archive/
-│   └── research-garden-source-legacy.zip
-├── docs/
-│   ├── ARCHITECTURE.md
-│   ├── CHARACTERS.md
-│   ├── DEPLOYMENT_PRIVACY.md
-│   ├── PUBLISHING.md
-│   └── SOURCES_HARVARD.md
-├── scripts/
-│   └── verify-site.mjs
-├── .gitignore
-├── NOTICE.md
-├── README.md
-└── index.html                    # Authoritative, standalone playable game
-~~~
-
-The ZIP in archive is an **older snapshot** and must not replace the current index.html. The latest editable-source backup was stored separately in Google Drive.
 
 ## Documentation
 - [Architecture and persistence](docs/ARCHITECTURE.md)
@@ -63,4 +37,4 @@ The ZIP in archive is an **older snapshot** and must not replace the current ind
 Run static checks with **node scripts/verify-site.mjs**. Passing checks does not replace real-browser and device testing.
 
 ## Credits and scope
-The research bibliography is selective, not exhaustive. The fictional Imperial Scholar award is not a scientific qualification. This unofficial fan project uses characters inspired by *SPY×FAMILY* and two externally supplied sounds; no blanket open-source license is claimed for these materials. Public redistribution requires a separate asset-rights review.
+This project uses characters inspired by *SPY×FAMILY* and two externally supplied sounds. 
