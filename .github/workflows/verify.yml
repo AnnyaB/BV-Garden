@@ -6,6 +6,7 @@ on:
       - index.html
       - src/**
       - scripts/build.mjs
+      - scripts/test-progression.mjs
       - package.json
       - scripts/verify-site.mjs
       - .github/workflows/verify.yml
@@ -14,6 +15,7 @@ on:
       - index.html
       - src/**
       - scripts/build.mjs
+      - scripts/test-progression.mjs
       - package.json
       - scripts/verify-site.mjs
       - .github/workflows/verify.yml
@@ -36,3 +38,5 @@ jobs:
         run: node scripts/build.mjs --check
       - name: Verify standalone game
         run: node scripts/verify-site.mjs
+      - name: Verify award progression and win-history behavior
+        run: node scripts/test-progression.mjs
