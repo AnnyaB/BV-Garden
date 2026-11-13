@@ -157,26 +157,26 @@ const chapters=CONTENT.map((e,i)=>{
 
 /* Accessible, offline mathematical typesetting: native MathML with exact LaTeX sources. */
 const BV_TEX = [
-  String.raw`\mathrm{rules}\longrightarrow\mathrm{representations}\longrightarrow\mathrm{experience}\`,
-  String.raw`\mathrm{evidence}+\mathrm{assumptions}\longrightarrow\mathrm{testable\ hypothesis}\`,
-  String.raw`T(n)\in\{\mathcal{O}(n),\mathcal{O}(n\log n),\mathcal{O}(n^2)\}\`,
-  String.raw`\Pr(X\mid Y)=\frac{\Pr(Y\mid X)\Pr(X)}{\Pr(Y)}\`,
-  String.raw`\theta_{t+1}=\theta_t-\eta\nabla_\theta\mathcal{L}(\theta_t)\`,
-  String.raw`\mathcal{R}_{\mathrm{test}}\neq\mathcal{R}_{\mathrm{train}}\`,
-  String.raw`\frac{\partial\mathcal{L}}{\partial W}=\frac{\partial\mathcal{L}}{\partial h}\frac{\partial h}{\partial W}\`,
-  String.raw`\mathcal{L}_{\mathrm{SSL}}=d\big(f_\theta(x),g_\xi(x)\big)\`,
-  String.raw`z_t=f_\theta(o_{\le t})\`,
-  String.raw`\hat{s}=\underset{s}{\operatorname{argmin}}\,E_\theta(s,c)\`,
-  String.raw`\mathcal{L}=d\big(P_\theta(c),\operatorname{sg}(T_\xi(x))\big)\`,
-  String.raw`s_{t+1}=f_\theta(s_t,a_t)+\varepsilon_t\`,
-  String.raw`z_t\xrightarrow{a_t}z_{t+1}\longrightarrow\cdots\longrightarrow z_{t+H}\`,
-  String.raw`\mathbf{a}^{*}=\underset{\mathbf a}{\operatorname{argmin}}\sum_{k=0}^{H-1}\ell(\hat{s}_{t+k},a_{t+k})\`,
-  String.raw`\mathrm{select}\longrightarrow\mathrm{expand}\longrightarrow\mathrm{evaluate}\longrightarrow\mathrm{refine}\`,
-  String.raw`z=\{z_{\mathrm{object}},z_{\mathrm{relation}},z_{\mathrm{contact}}\}\`,
-  String.raw`a_t=\pi(b_t,g,\mathcal C)\`,
-  String.raw`\operatorname{allow}(a_t)\Longrightarrow a_t\in\mathcal A_{\mathrm{verified}}\`,
-  String.raw`\mathrm{observe}\longrightarrow\mathrm{hypothesize}\longrightarrow\mathrm{intervene}\longrightarrow\mathrm{update}\`,
-  String.raw`\mathrm{experience}\longrightarrow\mathrm{model\ revision}\longrightarrow\mathrm{novel\ tasks}\longrightarrow\mathrm{evaluation}\`
+  String.raw`\mathrm{rules}\longrightarrow\mathrm{representations}\longrightarrow\mathrm{experience}`,
+  String.raw`\mathrm{evidence}+\mathrm{assumptions}\longrightarrow\mathrm{testable\ hypothesis}`,
+  String.raw`T(n)\in\{\mathcal{O}(n),\mathcal{O}(n\log n),\mathcal{O}(n^2)\}`,
+  String.raw`\Pr(X\mid Y)=\frac{\Pr(Y\mid X)\Pr(X)}{\Pr(Y)}`,
+  String.raw`\theta_{t+1}=\theta_t-\eta\nabla_\theta\mathcal{L}(\theta_t)`,
+  String.raw`\mathcal{R}_{\mathrm{test}}\neq\mathcal{R}_{\mathrm{train}}`,
+  String.raw`\frac{\partial\mathcal{L}}{\partial W}=\frac{\partial\mathcal{L}}{\partial h}\frac{\partial h}{\partial W}`,
+  String.raw`\mathcal{L}_{\mathrm{SSL}}=d\big(f_\theta(x),g_\xi(x)\big)`,
+  String.raw`z_t=f_\theta(o_{\le t})`,
+  String.raw`\hat{s}=\underset{s}{\operatorname{argmin}}\,E_\theta(s,c)`,
+  String.raw`\mathcal{L}=d\big(P_\theta(c),\operatorname{sg}(T_\xi(x))\big)`,
+  String.raw`s_{t+1}=f_\theta(s_t,a_t)+\varepsilon_t`,
+  String.raw`z_t\xrightarrow{a_t}z_{t+1}\longrightarrow\cdots\longrightarrow z_{t+H}`,
+  String.raw`\mathbf{a}^{*}=\underset{\mathbf a}{\operatorname{argmin}}\sum_{k=0}^{H-1}\ell(\hat{s}_{t+k},a_{t+k})`,
+  String.raw`\mathrm{select}\longrightarrow\mathrm{expand}\longrightarrow\mathrm{evaluate}\longrightarrow\mathrm{refine}`,
+  String.raw`z=\{z_{\mathrm{object}},z_{\mathrm{relation}},z_{\mathrm{contact}}\}`,
+  String.raw`a_t=\pi(b_t,g,\mathcal C)`,
+  String.raw`\operatorname{allow}(a_t)\Longrightarrow a_t\in\mathcal A_{\mathrm{verified}}`,
+  String.raw`\mathrm{observe}\longrightarrow\mathrm{hypothesize}\longrightarrow\mathrm{intervene}\longrightarrow\mathrm{update}`,
+  String.raw`\mathrm{experience}\longrightarrow\mathrm{model\ revision}\longrightarrow\mathrm{novel\ tasks}\longrightarrow\mathrm{evaluation}`
 ];
 const bvNode=(tag,...children)=>'<'+tag+'>'+children.join('')+'</'+tag+'>';
 const bvMi=t=>bvNode('mi',t), bvMn=t=>bvNode('mn',String(t)), bvMo=t=>bvNode('mo',t), bvMt=t=>bvNode('mtext',t);
