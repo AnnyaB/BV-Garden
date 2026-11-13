@@ -1,39 +1,66 @@
-# BV-Garden — The Latent Atlas Research Garden
+# BV-Garden
+### Beyond Vision · The Latent Atlas Research Garden
 
-Private source repository for an interactive, offline-capable 2.5D pixel-art research adventure.
+An interactive **2.5D pixel-art research-learning adventure** through AI foundations, mathematical reasoning, world models, embodied intelligence, safety and open scientific questions.
+
+**Status:** Private development repository. For GitHub Free Pages, publish a separate, fresh-history public website repository. Do not make this repository public simply to enable Pages.
+
+## Highlights
+- **20 conceptual chapters**, from AI origins to open-ended intelligence.
+- **Four questions per chapter**: one easy, one medium, two hard.
+- **Stella**: at least 3/4 answers correct earns a star. Both hard answers correct can separately unlock the next chapter without a star.
+- **Tonitrus**: the 10th incorrect answer restarts the adventure at Chapter 1, retaining previously used question history.
+- **Exploration**: 2.5D pixel garden with keyboard and touch movement, camera panning, a map and 20 research companions.
+- **Autosave**: chapter and answer history, unfinished quiz, game awards, explorer position, camera pan and sound preference in local browser storage.
+- **Audio**: two embedded event sounds, subject to browser autoplay restrictions.
+
+This project is an educational game, **not** a trained world model, a scientific benchmark, a robotics simulator or evidence of AGI/ASI.
 
 ## Play
-Open `index.html` in a modern browser, or serve it through a static host. All artwork, learning material, questions and scoring logic are embedded in this standalone HTML. The complete editable multi-file source is also preserved as `research-garden-source.zip`.
+Open the standalone [index.html](index.html) in a browser. For an ordinary locally hosted preview:
 
-## Explore all 20 locations
-- **WASD / Arrow keys**: continuous movement. Touchscreen directional buttons also work.
-- **M** or **☷ Map**: accessible list of all 20 stations; choosing one moves the explorer there, without unlocking its lessons.
-- **Drag the garden**: pan the camera; **Shift + arrows**: keyboard camera panning.
-- **F** or **⌖**: recenter on the explorer.
-- **[ / ]**: visit previous / next research station.
-- **E**: talk with a nearby research companion (while the canvas is focused).
-- **Tab / Enter**: navigate and operate visible buttons, choices and journal controls.
+~~~sh
+python3 -m http.server 8000
+~~~
 
-## Learning progression
-20 chapters ordered from AI origins, logic, programming and mathematical foundations through world models, embodied learning, safety, physical reasoning and open-ended intelligence. Every chapter has four conceptual challenges; awarding and unlocking follow the Stella / Tonitrus rules in the supplied source package. Visiting a locked house does not unlock a lesson.
+Visit http://localhost:8000/ and use the same browser/origin to resume. Storage may be lost when you change origin/device, clear site data, or browse privately.
 
-20 established *SPY×FAMILY* characters are used as unofficial pixel fan-art guides; this game is not affiliated with the series' rights holders. Passing the in-game Imperial Scholar examination is a fictional achievement and not a scientific qualification. Research frontiers are described as open questions, not achieved AGI/ASI.
+**Controls:** WASD or arrows to move; M to open the map; F to recenter; drag to pan. Touchscreen controls are available. Entering a locked location does not unlock its lesson.
 
-## Visibility and deployment
-The repository is intentionally **private**. Publishing a game through a static web host can still make the website public, even if its source repository is private. Please check hosting access settings before distributing the playable URL.
+## Project structure
 
-## Documentation and scientific provenance
-- [20 chapter companions and their science topics](CHARACTERS.md) — identity map and unofficial fan-art notice.
-- [Harvard-style research source catalogue](SOURCES_HARVARD.md) — 64 selected foundational and frontier references, with peer-review status, primary links, scientific limitations and future research questions.
-- [Private deployment and safe preview](DEPLOYMENT_PRIVACY.md) — why a private source repository does **not** necessarily produce a private website.
+~~~text
+BV-Garden/
+├── .github/workflows/
+│   ├── pages.yml                 # Stage only HTML for GitHub Pages
+│   └── verify.yml                # Automated static checks
+├── archive/
+│   └── research-garden-source-legacy.zip
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── CHARACTERS.md
+│   ├── DEPLOYMENT_PRIVACY.md
+│   ├── PUBLISHING.md
+│   └── SOURCES_HARVARD.md
+├── scripts/
+│   └── verify-site.mjs
+├── .gitignore
+├── NOTICE.md
+├── README.md
+└── index.html                    # Authoritative, standalone playable game
+~~~
 
-The standalone game and source ZIP were committed in `main`; roaming, keyboard access and the 20-location map are included without changing the Stella/Tonitrus progression conditions. This bibliography is selective, not a claim to cite every AI paper in existence.
+The ZIP in archive is an **older snapshot** and must not replace the current index.html. The latest editable-source backup was stored separately in Google Drive.
 
-## Autosave and Stella / Tonitrus audio (13 November 2026)
-- The playable `index.html` automatically stores **chapter progress, awarded stars, bolt count, used question IDs, active quiz and chosen answers** in browser `localStorage`. It also remembers the explorer's map position, camera pan and currently viewed chapter.
-- Revisit **the same website origin in the same browser/device** to resume. Progress is not synchronized across devices, and clearing browser/site data, private browsing restrictions, or changing from `file://` to a hosted origin can prevent restoration.
-- A **new Stella after all four chapter questions** plays the user's supplied approximately two-second twinkle sound. The **10th Tonitrus Bolt** plays the supplied fail-trumpet sound and restarts at Chapter 1. Previously seen questions remain retired.
-- The existing `♪ mute sounds / ♪ enable sounds` button controls playback and remembers the preference. Audio may require a user interaction on mobile; autoplay policies can mute playback without warning.
-- Both supplied original MP3 files are **embedded inside the playable `index.html`** so no additional file downloads are needed to play.
-- The repository's `research-garden-source.zip` is an **older source snapshot**. The current updated editable ZIP (including the original audio files) is in the owner's [Google Drive Research Garden folder](https://drive.google.com/drive/folders/1FwTfNHQ1QJ1O8lOSfGmH4yTTX1UPmJHs) as `BV_Garden_AUTOSAVE_STELLA_TONITRUS_Source.zip`.
-- For public distribution, verify the licenses for the user-provided sound effects credited in filenames to **shidenbeatsmusic** and **universfield**; a supplied audio file is not by itself a redistribution license.
+## Documentation
+- [Architecture and persistence](docs/ARCHITECTURE.md)
+- [Chapter cast and asset provenance](docs/CHARACTERS.md)
+- [Research catalogue](docs/SOURCES_HARVARD.md)
+- [Private deployment history](docs/DEPLOYMENT_PRIVACY.md)
+- [Public GitHub Pages publication guide](docs/PUBLISHING.md)
+- [Licensing and asset-rights notice](NOTICE.md)
+
+Run static checks with **node scripts/verify-site.mjs**. Passing checks does not replace real-browser and device testing.
+
+## Credits and scope
+The research bibliography is selective, not exhaustive. The fictional Imperial Scholar award is not a scientific qualification. This unofficial fan project uses characters inspired by *SPY×FAMILY* and two externally supplied sounds; no blanket open-source license is claimed for these materials. Public redistribution requires a separate asset-rights review.
