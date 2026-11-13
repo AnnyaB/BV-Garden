@@ -38,4 +38,13 @@ const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)]
 test("At least two embedded script blocks", scripts.length >= 2);
 scripts.forEach(([, , code], index) => new Script(code, { filename: "inline-" + index + ".js" }));
 console.log("PASS embedded script syntax: " + scripts.length + " scripts");
+test("20 LaTeX chapter formulations", (html.match(/String\.raw`/g) || []).length === 20);
+test("Native MathML formulations are present", html.includes("const BV_MATHML=[") && html.includes("chapterEquation(i)"));
+test("Current chapter displays typeset mathematics", html.includes("${chapterEquation(i)}"));
+test("Current BV-Garden name", html.includes("BV <strong>GARDEN</strong>"));
+test("Dartmouth source corrected", html.includes("https://ai.dartmouth.edu/our-story") && !html.includes("www.dartmouth.edu/~ai50/homepage"));
+test("LeCun tutorial uses NYU-hosted PDF", html.includes("cs.nyu.edu/~yann/2010f-G22-2565-001/diglib/lecun-06.pdf"));
+test("MPC chapter links to actual TD-MPC2 paper", html.includes("cf73d57b6dcda32b293df7c2d5341f49-Abstract-Conference.html") && !html.includes("v235/hansen24a.html"));
+test("Legacy learning paper and controls preserved", html.includes("Monte Carlo Tree Diffusion") && html.includes("bv-garden-explorer-position-v1"));
+
 console.log("Static verification complete; separately test runtime and browser behavior.");
