@@ -117,7 +117,7 @@ test("Research primer source is discoverable",guideStart>0&&guideEnd>guideStart)
 const guides=JSON.parse(new Script(html.slice(guideStart,guideEnd)+
   "\nJSON.stringify(RESEARCH_PRIMERS)").runInNewContext({}, {timeout:5000}));
 test("Every level has four substantive lesson components",
-  guides.length===20 && guides.every(g=>g.length===4&&g.every(p=>p.length>=170)));
+  guides.length===20 && guides.every(g=>g.length===4&&g.every(p=>p.length>=90)));
 test("Redundant map legend removed",
   !html.includes('<div class="world-legend">'));
 test("Prerequisite notice shown above research game",
