@@ -1,6 +1,6 @@
 # Beyond Vision · The Latent Atlas Research Garden
 
-A 2.5D pixel-art browser game for learning AI, mathematics, world models and embodied intelligence. Development is ongoing.
+A 2.5D pixel-art browser game. Development is ongoing.
 
 ## Play
 
