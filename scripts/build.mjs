@@ -14,7 +14,7 @@ const parts=[
 let html=read("src/index.template.html");
 for(const [marker,paths] of parts){
  if(html.split(marker).length!==2)throw Error("Missing or duplicate placeholder: "+marker);
- html=html.replace(marker,paths.map(read).join(""));
+ html=html.replace(marker,()=>paths.map(read).join(""));
 }
 if(/@@BV_(STYLE|SCRIPT)_/.test(html))throw Error("Unresolved placeholder");
 const hash=createHash("sha256").update(html,"utf8").digest("hex");
