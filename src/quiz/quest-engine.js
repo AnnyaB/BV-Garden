@@ -1,7 +1,7 @@
 /* RESEARCH GARDEN QUEST ENGINE · 20 chapters, nonrepeating conceptual question IDs, real scoring. */
 'use strict';
 const QUEST_STORAGE='latent-atlas-research-quest-v1';
-const initQuest=()=>({passed:Array(20).fill(false),stars:Array(20).fill(false),bolts:0,used:{},seenPrompts:{},active:null,last:null,imperial:false,examPass:false,epoch:0,avatarChoice:0,imperialWins:0,firstWinAt:null,eliteUnlocked:false,league:{entered:false,answers:{},reviewed:false}});
+const initQuest=()=>({passed:Array(20).fill(false),stars:Array(20).fill(false),bolts:0,used:{},seenPrompts:{},active:null,last:null,imperial:false,examPass:false,epoch:0,avatarChoice:0,imperialWins:0,journeyWins:0,firstWinAt:null,journeyPassed:false,imperialThisJourney:false,eliteUnlocked:false,league:{entered:false,answers:{},reviewed:false}});
 let quest=initQuest();
 try{const old=JSON.parse(localStorage.getItem(QUEST_STORAGE)||'null');if(old&&Array.isArray(old.passed)&&old.passed.length===20&&Array.isArray(old.stars)&&old.stars.length===20){
  quest={...initQuest(),...old};quest.passed=old.passed.map(Boolean);quest.stars=old.stars.map(Boolean);quest.bolts=Math.max(0,Math.min(10,Number(old.bolts)||0));
@@ -9,7 +9,11 @@ try{const old=JSON.parse(localStorage.getItem(QUEST_STORAGE)||'null');if(old&&Ar
 quest.avatarChoice=quest.avatarChoice===1?1:0;
 quest.imperialWins=Number.isInteger(quest.imperialWins)&&quest.imperialWins>=0?Math.min(999,quest.imperialWins):(quest.imperial?1:0);
 if(quest.imperial&&!quest.imperialWins)quest.imperialWins=1;
+quest.journeyWins=Number.isInteger(quest.journeyWins)&&quest.journeyWins>=0?Math.min(999,quest.journeyWins):Math.max(quest.imperialWins,quest.examPass?1:0);
+quest.journeyPassed=Boolean(quest.journeyPassed||quest.examPass);
+quest.imperialThisJourney=Boolean(quest.imperialThisJourney||quest.imperial);
 quest.firstWinAt=Number.isFinite(quest.firstWinAt)?quest.firstWinAt:null;
+if(quest.journeyPassed&&!quest.firstWinAt)quest.firstWinAt=Date.now();
 quest.eliteUnlocked=quest.imperialWins>=5;
 if(!quest.league||typeof quest.league!=='object')quest.league={entered:false,answers:{},reviewed:false};
 if(!quest.league.answers||typeof quest.league.answers!=='object')quest.league.answers={};
@@ -86,7 +90,7 @@ function restartJourney(tenthBolt=false){
  const previous=quest;quest=initQuest();
  quest.used=previous.used;quest.seenPrompts=previous.seenPrompts;
  quest.avatarChoice=previous.avatarChoice===1?1:0;
- quest.imperialWins=previous.imperialWins||0;quest.firstWinAt=previous.firstWinAt||null;
+ quest.imperialWins=previous.imperialWins||0;quest.journeyWins=previous.journeyWins||0;quest.firstWinAt=previous.firstWinAt||null;
  quest.eliteUnlocked=quest.imperialWins>=5;quest.league=previous.league||{entered:false,answers:{},reviewed:false};
  quest.epoch=(previous.epoch||0)+1;
  if(tenthBolt)quest.last={kind:'stage',level:0,reset:true,msg:'Tenth Tonitrus Bolt! Back to chapter 01. Previously used questions remain retired.'};
@@ -104,9 +108,12 @@ function resolveAttempt(){const a=quest.active,hard=a.results.filter(r=>r.d==='h
    const passed=correct>=7;
    const imperial=passed&&quest.stars.every(Boolean)&&medium>=2&&hard>=4;
    quest.examPass=passed;quest.imperial=imperial;
-   if(imperial){
-     quest.imperialWins=(quest.imperialWins||0)+1;
+   if(passed&&!quest.journeyPassed){
+     quest.journeyPassed=true;quest.journeyWins=(quest.journeyWins||0)+1;
      if(!quest.firstWinAt)quest.firstWinAt=Date.now();
+   }
+   if(imperial&&!quest.imperialThisJourney){
+     quest.imperialThisJourney=true;quest.imperialWins=(quest.imperialWins||0)+1;
      quest.eliteUnlocked=quest.imperialWins>=5;updateSelectedAvatar();
      showRewardToast('stella','Imperial Scholar · win '+quest.imperialWins+' of 5');
    }
