@@ -975,7 +975,7 @@ quest.journeyWins=Number.isInteger(quest.journeyWins)&&quest.journeyWins>=0?Math
 quest.journeyPassed=Boolean(quest.journeyPassed||quest.examPass);
 quest.imperialThisJourney=Boolean(quest.imperialThisJourney||quest.imperial);
 quest.firstWinAt=Number.isFinite(quest.firstWinAt)?quest.firstWinAt:null;
-if(quest.journeyPassed&&!quest.firstWinAt)quest.firstWinAt=Date.now();
+/* Historical saves without a recorded completion time remain undated; do not fabricate a first-win timestamp. */
 quest.eliteUnlocked=quest.imperialWins>=5;
 if(!quest.league||typeof quest.league!=='object')quest.league={entered:false,answers:{},reviewed:false};
 if(!quest.league.answers||typeof quest.league.answers!=='object')quest.league.answers={};
