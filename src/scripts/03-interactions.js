@@ -6,18 +6,25 @@ function progress(){const count=state.completed.size,num=quest.stars.filter(Bool
 }
 function ribbon(){const root=document.getElementById('chapter-ribbon');root.innerHTML=chapters.map((ch,i)=>`<button type="button" role="listitem" class="chapter-button ${quest.passed[i]?'done':''} ${state.current===i?'active':''} ${i>state.current?'locked':''}" data-chapter="${i}" aria-label="Chapter ${i+1} ${qEsc(ch.short)}${i>state.current?' locked':''}"><span class="chapter-no">${String(i+1).padStart(2,'0')} / 20</span><span class="chapter-title">${qEsc(ch.short)}</span><span class="chapter-status">${i>state.current?`${iconBolt()} LOCKED`:quest.stars[i]?`${iconStar()} STELLA`:quest.passed[i]?'✓ cleared · Stella missing':'Face the challenge'}</span></button>`).join('');}
 function lockedArticle(i){return `<article class="chapter-article"><div class="chapter-tag">${iconBolt()} RESEARCH OBSTACLE LOCKED</div><h4>${qEsc(chapters[i].short)}</h4><p>Complete every prior chapter’s four-question gate in sequence. Future chapters cannot be reached by skipping the golden thread.</p><p>Current gate: <strong>${state.current<20?`${state.current+1} · ${qEsc(chapters[state.current].short)}`:'all research chapters passed'}</strong>.</p><button class="action-button" data-goto-next>Return to the current gate →</button></article>`;}
-function completeScreen(){const have=quest.stars.filter(Boolean).length;
+function completeScreen(){
+ const have=quest.stars.filter(Boolean).length;
  const last=quest.last?.kind==='exam'?quest.last:null;
- if(quest.imperial)return `<article class="chapter-article imperial-win"><div class="chapter-tag">20 STELLAS · IMPERIAL EXAM PASSED</div><img class="scholar-portrait" src="${asset('explorer_scholar')}" alt="Explorer wearing the black cape, dark-red lining and gold cord of an Imperial Scholar"><h4>Imperial Scholar</h4><p class="lede">A special in-game academic honor. Your explorer now wears a black cape with dark-red lining and gold fastening inspired by Eden Academy.</p><p>Real research credentials require independent evidence, publication and reproducibility. This game does not confer academic qualification.</p><button class="action-button" data-chapter="19">Review the theoretical frontier →</button></article>`;
- const need=quest.stars.map((s,i)=>!s?i:-1).filter(i=>i>=0);
- let html=`<article class="chapter-article"><div class="chapter-tag">THE IMPERIAL SCHOLAR QUALIFIER</div><h4>20 Stella Stars before the final exam</h4><p class="lede">${have}/20 Stella Stars earned. All 20 chapter gates may be passed without collecting every Stella; return to missing stages and earn their stars before entering the exam.</p><div class="scholar-gallery">${iconStar()} ${have}/20 Stellas · ${iconBolt()} ${quest.bolts}/10 Tonitrus</div>`;
- if(have<20){html+=`<div class="quest-notice"><strong>Imperial exam locked.</strong><p>Missing Stella stages: ${need.map(i=>String(i+1).padStart(2,'0')).join(', ')}. Every new attempt draws unused questions.</p></div><button class="action-button" data-chapter="${need[0]}">Return to missing Stella · level ${need[0]+1} →</button>`;}
- else if(quest.active?.kind==='exam'){html+=`<div id="quest-quiz">${quizAreaContent()}</div>`;}
- else{html+=`<p>Final exam: <strong>10 challenging questions</strong> — 2 easy, 3 medium, 5 advanced research questions. Scoring requires 9/10 correct and at least 4/5 hard questions.</p>`;
- if(last)html+=`<div class="quest-notice ${last.passed?'success':''}"><strong>${last.correct}/10 overall · ${last.hard}/5 hard</strong><p>${qEsc(last.msg)}</p></div>${reviewAfterRound(last)}`;
- if(!last?.exhausted)html+=`<button class="action-button" data-quest-start="exam:20">Begin the Imperial Scholar examination →</button>`;
+ const wins=quest.imperialWins||0;
+ const backup=`<div class="bv-backup-actions"><button type="button" class="action-button" data-save-backup>Save progress for email</button><button type="button" class="action-button" data-restore-backup>Restore saved progress</button><input id="bv-backup-file" type="file" accept=".json,application/json" hidden><p>Export a backup file and email it to yourself as an attachment. The offline game does not connect to an email account or store your address.</p></div>`;
+ if(quest.imperial){
+   return `<article class="chapter-article imperial-win"><div class="chapter-tag">20 STELLAS · IMPERIAL SCHOLAR · WIN ${wins}</div><img class="scholar-portrait" src="${asset(quest.avatarChoice===1?'explorer_scholar_alt':'explorer_scholar')}" alt="Explorer with a dark cape, burgundy lining and gold cord"><h4>Imperial Scholar</h4><p class="lede">All 20 Stellas and the advanced final examination completed. Your avatar now wears the academy-style black cape with dark-red lining and gold fastening.</p><p>Imperial wins: <strong>${wins}/5</strong> toward the Elite Imperial League. First win: ${quest.firstWinAt?new Date(quest.firstWinAt).toLocaleDateString():'recorded in an earlier save'}.</p><div class="scholar-gallery">${iconStar()} 20/20 Stellas · ${iconBolt()} ${quest.bolts}/10 Tonitrus</div>${backup}${quest.eliteUnlocked?'<button type="button" class="action-button" data-league-enter>Enter the Elite Imperial League →</button>':'<p class="quest-notice">Earn Imperial Scholar five times on separate 20-Stella journeys to unlock the Elite Imperial League.</p>'}<button type="button" class="action-button" data-new-journey>Begin another journey →</button><button type="button" class="action-button" data-chapter="19">Review Level 20 →</button></article>`;
  }
- return html+'</article>';
+ const missing=quest.stars.map((star,i)=>!star?i:-1).filter(i=>i>=0);
+ let html=`<article class="chapter-article"><div class="chapter-tag">THE IMPERIAL SCHOLAR QUALIFIER</div><h4>20 Stella Stars before the final exam</h4><p class="lede">${have}/20 Stella Stars earned. Every level must have its Stella; clearing a level without collecting its star does not satisfy this qualifier.</p><div class="scholar-gallery">${iconStar()} ${have}/20 Stellas · ${iconBolt()} ${quest.bolts}/10 Tonitrus · Imperial wins ${wins}/5</div>`;
+ if(have<20){html+=`<div class="quest-notice"><strong>Imperial exam locked.</strong><p>Missing Stella levels: ${missing.map(i=>String(i+1).padStart(2,'0')).join(', ')}. New attempts use unused questions.</p></div><button class="action-button" data-chapter="${missing[0]}">Return to Level ${missing[0]+1} →</button>`;}
+ else if(quest.active?.kind==='exam'){html+=`<div id="quest-quiz">${quizAreaContent()}</div>`;}
+ else {
+  html+='<p>Final exam: <strong>10 questions</strong> — 2 easy, 3 medium, 5 hard. Pass with at least 7/10 correct. Imperial Scholar requires at least 7/10, with 2/3 medium and 4/5 hard correct, plus 20 Stella Stars.</p>';
+  if(last)html+=`<div class="quest-notice ${last.passed?'success':''}"><strong>${last.correct}/10 · Medium ${last.medium||0}/3 · Hard ${last.hard}/5</strong><p>${qEsc(last.msg)}</p></div>${reviewAfterRound(last)}`;
+  if(!last?.exhausted)html+='<button type="button" class="action-button" data-quest-start="exam:20">Begin the Imperial Scholar examination →</button>';
+ }
+ if(quest.eliteUnlocked)html+='<button type="button" class="action-button" data-league-enter>Elite Imperial League →</button>';
+ return html+backup+'</article>';
 }
 function openChapter(i){if(state.travel)return;
  if(i>=20){state.selection=20;document.getElementById('journal-content').innerHTML=completeScreen();document.getElementById('journal-content').scrollTop=0;return;}
@@ -34,7 +41,7 @@ function beginNext(i){if(i>=20||!quest.passed[i])return;
 const resetControl=document.getElementById('reset-progress');const newReset=resetControl.cloneNode(true);resetControl.replaceWith(newReset);
 newReset.textContent='restart adventure';newReset.addEventListener('click',()=>{
  if(!window.confirm('Restart your adventure from level 01? Previous questions stay retired and are NEVER reused.'))return;
- const history=quest.used,seenHistory=quest.seenPrompts,epoch=(quest.epoch||0)+1;quest=initQuest();quest.used=history;quest.seenPrompts=seenHistory;quest.epoch=epoch;repairProgress();storeQuest();state.travel=null;state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};progress();ribbon();openChapter(0);
+ restartJourney(false);
 });
 document.addEventListener('click',ev=>{
  const start=ev.target.closest('[data-quest-start]');if(start){const [kind,index]=start.dataset.questStart.split(':');beginQuest(kind,Number(index));return;}
