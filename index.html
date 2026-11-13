@@ -944,7 +944,7 @@ for(const key of Object.keys(quest.used)){
 }
 const unseenQuest=(kind,level,tier,item,index)=>!quest.used[questionId(kind,level,tier,index)]&&!quest.seenPrompts[questionFingerprint(item.t)];
 function pickQuestQuestion(kind,level,d){
- const all=questionsFor(kind,level,d),eligible=all.map((r,i)=>i).filter(i=>unseenQuest(kind,level,d,r,i));
+ const all=questionsFor(kind,level,d),eligible=all.map((r,i)=>i).filter(i=>unseenQuest(kind,level,d,all[i],i));
  if(!eligible.length)return null;
  // Present the new case-based problems first while keeping all old content as
  // fallback. Original indices are never shifted, so legacy saves remain valid.
