@@ -909,7 +909,7 @@ Q('An alleged ASI breakthrough is demonstrated by passing a fictional educationa
 /* RESEARCH GARDEN QUEST ENGINE · 20 chapters, nonrepeating conceptual question IDs, real scoring. */
 'use strict';
 const QUEST_STORAGE='latent-atlas-research-quest-v1';
-const initQuest=()=>({passed:Array(20).fill(false),stars:Array(20).fill(false),bolts:0,used:{},active:null,last:null,imperial:false,examPass:false,epoch:0});
+const initQuest=()=>({passed:Array(20).fill(false),stars:Array(20).fill(false),bolts:0,used:{},seenPrompts:{},active:null,last:null,imperial:false,examPass:false,epoch:0});
 let quest=initQuest();
 try{const old=JSON.parse(localStorage.getItem(QUEST_STORAGE)||'null');if(old&&Array.isArray(old.passed)&&old.passed.length===20&&Array.isArray(old.stars)&&old.stars.length===20){
  quest={...initQuest(),...old};quest.passed=old.passed.map(Boolean);quest.stars=old.stars.map(Boolean);quest.bolts=Math.max(0,Math.min(10,Number(old.bolts)||0));
@@ -927,12 +927,39 @@ const iconBolt=()=>`<img class="reward-img" src="${asset('tonitrus')}" alt="Toni
 function shuffleQuest(values){const x=values.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
 const questionsFor=(kind,level,d)=>kind==='exam'?IMPERIAL_BANK[d]:CHALLENGE_BANK[level][d];
 const questionId=(kind,level,d,i)=>`${kind}:${level}:${d}:${i}`;
-function pickQuestQuestion(kind,level,d){const all=questionsFor(kind,level,d);const eligible=all.map((r,i)=>i).filter(i=>!quest.used[questionId(kind,level,d,i)]);
- if(!eligible.length)return null;const i=eligible[Math.floor(Math.random()*eligible.length)],source=all[i],options=shuffleQuest([...source.a.map(s=>({s,ok:true})),...source.b.map(s=>({s,ok:false}))]);
- const id=questionId(kind,level,d,i);quest.used[id]=true;
+// A full normalized stem (not an index or a truncated hash) prevents exact-wording
+// repeats across chapter tiers, across chapters, and in the final examination.
+const questionFingerprint=text=>String(text).normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+if(!quest.used||typeof quest.used!=='object'||Array.isArray(quest.used))quest.used={};
+if(!quest.seenPrompts||typeof quest.seenPrompts!=='object'||Array.isArray(quest.seenPrompts))quest.seenPrompts={};
+// Migrate historical v1 saves without reusing a single already displayed prompt.
+for(const key of Object.keys(quest.used)){
+ if(!quest.used[key])continue;
+ const match=/^(stage|exam):(\d+):(e|m|h):(\d+)$/.exec(key);
+ if(!match)continue;
+ const [,kind,levelText,tier,indexText]=match,level=Number(levelText),index=Number(indexText);
+ const source=kind==='exam'?IMPERIAL_BANK[tier]?.[index]:CHALLENGE_BANK[level]?.[tier]?.[index];
+ if(source?.t)quest.seenPrompts[questionFingerprint(source.t)]=true;
+}
+const unseenQuest=(kind,level,tier,item,index)=>!quest.used[questionId(kind,level,tier,index)]&&!quest.seenPrompts[questionFingerprint(item.t)];
+function pickQuestQuestion(kind,level,d){
+ const all=questionsFor(kind,level,d),eligible=all.map((r,i)=>i).filter(i=>unseenQuest(kind,level,d,r,i));
+ if(!eligible.length)return null;
+ // Present the new case-based problems first while keeping all old content as
+ // fallback. Original indices are never shifted, so legacy saves remain valid.
+ const beginning=kind==='stage'?{e:3,m:3,h:6}[d]:Infinity;
+ const advanced=eligible.filter(i=>i>=beginning),pool=advanced.length?advanced:eligible;
+ const i=pool[Math.floor(Math.random()*pool.length)],source=all[i];
+ const options=shuffleQuest([...source.a.map(s=>({s,ok:true})),...source.b.map(s=>({s,ok:false}))]);
+ const id=questionId(kind,level,d,i);
+ quest.used[id]=true;quest.seenPrompts[questionFingerprint(source.t)]=true;
  return{id,level,d,index:i,options:options.map(o=>o.s),answer:options.flatMap((o,j)=>o.ok?[j]:[]),chosen:null,correct:null};
 }
-function hasQuestions(kind,level){const needs=kind==='exam'?{e:2,m:3,h:5}:{e:1,m:1,h:2};return Object.entries(needs).every(([d,n])=>questionsFor(kind,level,d).filter((q,i)=>!quest.used[questionId(kind,level,d,i)]).length>=n);}
+function hasQuestions(kind,level){
+ const needs=kind==='exam'?{e:2,m:3,h:5}:{e:1,m:1,h:2};
+ return Object.entries(needs).every(([d,n])=>questionsFor(kind,level,d)
+   .filter((item,i)=>unseenQuest(kind,level,d,item,i)).length>=n);
+}
 function beginQuest(kind,level){if(quest.imperial)return;
  if(kind==='stage'&&level>state.current)return;
  if(kind==='stage'&&quest.stars[level])return;
@@ -956,7 +983,7 @@ function submitQuizAnswer(){const a=quest.active;if(!a)return;const q=a.items[a.
  if(a.position>=a.items.length)resolveAttempt();
  storeQuest();progress();if(a&&a.kind==='stage')openChapter(a.level);else openChapter(20);
 }
-function restartForBolts(){const history=quest.used,epoch=(quest.epoch||0)+1;quest=initQuest();quest.used=history;quest.epoch=epoch;repairProgress();quest.last={kind:'stage',level:0,reset:true,msg:'Tenth Tonitrus Bolt! Back to chapter 01. Previously used questions remain retired.'};state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};state.travel=null;storeQuest();progress();ribbon();openChapter(0);}
+function restartForBolts(){const history=quest.used,seenHistory=quest.seenPrompts,epoch=(quest.epoch||0)+1;quest=initQuest();quest.used=history;quest.seenPrompts=seenHistory;quest.epoch=epoch;repairProgress();quest.last={kind:'stage',level:0,reset:true,msg:'Tenth Tonitrus Bolt! Back to chapter 01. Previously used questions remain retired.'};state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};state.travel=null;storeQuest();progress();ribbon();openChapter(0);}
 function resolveAttempt(){const a=quest.active,hard=a.results.filter(r=>r.d==='h'&&r.ok).length,correct=a.results.filter(r=>r.ok).length;
  if(a.kind==='stage'){
    const earned=correct>=3,passed=earned||(hard===2);
@@ -1052,7 +1079,7 @@ function beginNext(i){if(i>=20||!quest.passed[i])return;
 const resetControl=document.getElementById('reset-progress');const newReset=resetControl.cloneNode(true);resetControl.replaceWith(newReset);
 newReset.textContent='restart adventure';newReset.addEventListener('click',()=>{
  if(!window.confirm('Restart your adventure from level 01? Previous questions stay retired and are NEVER reused.'))return;
- const history=quest.used,epoch=(quest.epoch||0)+1;quest=initQuest();quest.used=history;quest.epoch=epoch;repairProgress();storeQuest();state.travel=null;state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};progress();ribbon();openChapter(0);
+ const history=quest.used,seenHistory=quest.seenPrompts,epoch=(quest.epoch||0)+1;quest=initQuest();quest.used=history;quest.seenPrompts=seenHistory;quest.epoch=epoch;repairProgress();storeQuest();state.travel=null;state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};progress();ribbon();openChapter(0);
 });
 document.addEventListener('click',ev=>{
  const start=ev.target.closest('[data-quest-start]');if(start){const [kind,index]=start.dataset.questStart.split(':');beginQuest(kind,Number(index));return;}
