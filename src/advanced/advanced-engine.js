@@ -40,14 +40,15 @@ function bvAdvancedHasFullSet(level){
 function bvAdvancedMapHTML(){
  const adv=quest.advanced,current=bvAdvancedCurrent();
  return '<article class="chapter-article bv-advanced"><div class="chapter-tag">POST-LOID RESEARCH EXPEDITION · CHAPTERS 21–25</div>'+
- '<h4>The Five Hidden Research Houses</h4><p class="lede">Five distinct SPY×FAMILY companions guide harder studies. Enter after passing the first twenty chapters and the final examination; Imperial Scholar status is not required.</p>'+
- '<p class="bv-adv-rules">'+iconStar()+' '+adv.stars.filter(Boolean).length+'/5 advanced Stellas · '+iconBolt()+' '+adv.bolts+'/5 advanced Tonitrus Bolts. Each house presents 2 easy, 2 medium and 4 hard questions (8 total). At least 6/8 earns a Stella; a fifth incorrect answer restarts this advanced expedition at House 21, without erasing your original journey or question history.</p>'+
- '<div class="bv-adv-map" aria-label="Five advanced research houses">'+BV_ADVANCED_CHAPTERS.map((ch,i)=>{
-  const locked=i>current,star=adv.stars[i],here=i===current;
-  return '<button type="button" class="bv-adv-house '+(star?'won ':'')+(here?'active ':'')+'" data-bv-adv-stage="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' aria-label="Advanced chapter '+(21+i)+': '+qEsc(ch.name)+(locked?' locked':'')+'"><span class="bv-adv-houseno">HOUSE '+(21+i)+'</span><span class="bv-house-roof"></span><span class="bv-house-front"><span class="bv-house-door"></span></span><img class="bv-adv-guide" src="'+BV_ADVANCED_SPRITES[i]+'" alt="Pixel-art interpretation of '+qEsc(ch.guide)+'"><span class="bv-adv-housetitle">'+qEsc(ch.name)+'</span><span class="bv-adv-house-guide">'+qEsc(ch.guide)+'</span><span class="bv-adv-house-status">'+(star?iconStar()+' STELLA':locked?iconBolt()+' LOCKED':adv.active?.level===i?'Resume unfinished exam':'Face research questions')+'</span></button>';
+ '<h4>The Five Hidden Research Houses</h4><p class="lede">Anya, Bond, Damian, Yor and Loid guide these five research houses, after the original twenty chapters and a passing final examination. Imperial Scholar status is not required.</p>'+
+ '<p class="bv-adv-rules">'+iconStar()+' '+adv.stars.filter(Boolean).length+'/5 advanced Stellas · '+iconBolt()+' '+adv.bolts+'/5 advanced Tonitrus Bolts. Each house has 2 easy, 2 medium and 4 hard conceptual questions (8 in total). At least 6/8 earns a Stella; a fifth incorrect answer resets only the advanced expedition to House 21.</p>'+
+ '<div class="bv-advanced-world-shell"><canvas id="bv-advanced-world" width="940" height="470" role="img" aria-label="Five isometric garden houses 21 to 25, each with its original SPY×FAMILY companion and circular Tonitrus or Stella badges">The five advanced garden houses are listed below.</canvas></div>'+
+ '<div class="bv-adv-house-links" role="group" aria-label="Visit advanced houses">'+BV_ADVANCED_CHAPTERS.map((ch,i)=>{
+   const locked=i>current,star=adv.stars[i];
+   return '<button type="button" class="bv-adv-house-link '+(i===current?'active ':'')+'" data-bv-adv-stage="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' aria-label="House '+(21+i)+': '+qEsc(ch.guide)+', '+qEsc(ch.name)+(locked?', locked':'')+'"><b>'+(21+i)+'</b><span>'+qEsc(ch.guide)+'<small>'+qEsc(ch.name)+'</small></span><span class="bv-adv-link-state">'+(star?iconStar():locked?iconBolt():'✦')+'</span></button>';
  }).join('')+'</div>'+
- (adv.completedRecord?'<div class="quest-notice success">'+iconStar()+' Five advanced Stellas recorded: Elite Imperial League qualification unlocked.</div>':'')+
- '<div class="bv-adv-actions"><button type="button" class="action-button" data-chapter="20">Return to Loid\'s final record →</button>'+
+ (adv.completedRecord?'<div class="quest-notice success">'+iconStar()+' All five advanced Stellas recorded: Elite Imperial League qualification unlocked.</div>':'')+
+ '<div class="bv-adv-actions"><button type="button" class="action-button" data-chapter="20">Return to the Chapter 20 final record →</button>'+
  (quest.eliteUnlocked?'<button type="button" class="action-button" data-league-enter>Enter Elite Imperial League →</button>':'')+'</div></article>';
 }
 function bvAdvancedQuizHTML(){
@@ -85,6 +86,7 @@ function bvAdvancedShow(level=null){
  const pane=document.getElementById('journal-content');if(!pane)return;
  pane.innerHTML=(Number.isInteger(level)&&level>=0&&level<5&&level<=bvAdvancedCurrent())?bvAdvancedStageHTML(level):bvAdvancedMapHTML();
  pane.scrollTop=0;
+ if(document.getElementById('bv-advanced-world'))bvAdvancedRenderGarden();
 }
 function bvAdvancedStart(level){
  const adv=quest.advanced;
