@@ -43,7 +43,7 @@ test("Five full-length canon sprite images have correct dimensions and PNG signa
   html.includes("const BV_CAST_STRIDE=96;")&&html.includes("const BV_CAST_HEIGHT=152;"));
 test("All twenty-five houses render on the same interactive isometric world",
   html.includes("NX=48,NY=48")&&
-  html.includes("const BV_ADVANCED_PREVIEW_SITES=[[25,41],[29,37],[33,33],[37,29],[41,25]]")&&
+  html.includes("const BV_ADVANCED_PREVIEW_SITES=[[25.5,40.5],[29.25,36.75],[33,33],[36.75,29.25],[40.5,25.5]]")&&
   html.includes("bvAdvancedPreviewAddObjects(objects)")&&
   html.includes("bvAdvancedPreviewPathTile(x,y)")&&
   html.includes("bvAdvancedPreviewPath();"));
