@@ -2,112 +2,112 @@
    All claims are bounded; links specify research provenance and publication type. */
 const BV_ADVANCED_CHAPTERS=[
   {
-    "name": "Generative Systems & Agentic Intelligence",
+    "name": "Grounded Generative Agents & Tool Evaluation",
     "guide": "Anya Forger",
-    "role": "Language, generative models, inference and tools",
-    "intro": "Trace the full research stack: tokenization, conditional modeling, transformer attention, pretraining, diffusion, preference alignment, retrieval, multimodal generation and agent tools. Distinguish fluent sampling from verifiable claims about the world.",
-    "experiment": "Run matched-budget comparisons of an autoregressive baseline, retrieval-assisted policy and tool-using agent on independently written unseen problems; audit data exposure and costs.",
-    "challenge": "What evidence separates genuine capability transfer from benchmark reuse, search-time contamination and prompt-level overfitting?",
+    "role": "Tool-augmented inference, independent judges and multimodal grounding",
+    "intro": "Advanced focus beyond Chapter 7: autonomous generative-agent execution, trustworthy tool routing, retrieval contamination, provenance, preference and reward-model failure, multimodal grounding, prompt injection, inference-time search and calibrated verification. Evaluate external outcomes rather than fluency or benchmark familiarity.",
+    "experiment": "On independent sealed tasks, compare an LM-only system, retrieval agent and tool-using planner with matched tokens, search budgets and tool access. Audit tool side effects, ground-truth sources, citation errors, prompt injection and independent success checks.",
+    "challenge": "Which intervention or independent outcome can distinguish genuine agent competence from tool leakage, reward hacking or seemingly persuasive text?",
     "papers": [
       [
-        "Attention Is All You Need — NeurIPS 2017",
-        "https://arxiv.org/abs/1706.03762"
+        "ReAct: Synergizing Reasoning and Acting in Language Models — ICLR 2023",
+        "https://openreview.net/forum?id=WE_vluYUL-X"
+      ],
+      [
+        "Toolformer: Language Models Can Teach Themselves to Use Tools — NeurIPS 2023",
+        "https://proceedings.neurips.cc/paper_files/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html"
       ],
       [
         "Direct Preference Optimization — NeurIPS 2023",
         "https://arxiv.org/abs/2305.18290"
-      ],
-      [
-        "Search-Time Data Contamination — 2025 preprint",
-        "https://arxiv.org/abs/2508.13180"
       ]
     ]
   },
   {
-    "name": "Causal & Latent World Models",
+    "name": "Causal Identifiability & Intervention",
     "guide": "Bond Forger",
-    "role": "Predictive state, intervention and uncertainty",
-    "intro": "Study identifiability, partially observable Markov decision processes, action-conditioned latent transitions, uncertainty, long-horizon rollout fidelity, JEPA-style representation learning, belief filtering, causal inference and counterfactual control.",
-    "experiment": "Design a small controlled physical shift where two models fit passive observations equally well but differ under actions; estimate rollout and task success with known intervention conditions.",
-    "challenge": "When is a latent predictive model sufficient for safe decisions rather than visually plausible extrapolation?",
+    "role": "Latent causal variables, belief states and controlled physical interventions",
+    "intro": "Advanced focus beyond Chapter 13: formal identifiability limits of latent physical states, observational equivalence, intervention assumptions, causal abstractions, counterfactual tests, hidden-contact belief filtering, action-conditioned distribution shifts and long-horizon model-error propagation.",
+    "experiment": "Construct matched observational data for two latent physical hypotheses that diverge only under a safe intervention. Evaluate identifiability, calibration and downstream decision quality on unseen real or simulator-supported intervention conditions with explicit assumptions.",
+    "challenge": "What causal variables can be inferred from passive observation, what requires action, and when is any claimed recovered mechanism fundamentally unidentifiable?",
     "papers": [
       [
-        "DreamerV3 — 2025 Nature",
-        "https://arxiv.org/abs/2301.04104"
+        "Unifying Causal Representation Learning with the Invariance Principle — ICLR 2025",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/hash/85381f4549b5ddf1d48e2e287d7d3d15-Abstract-Conference.html"
       ],
       [
-        "V-JEPA 2 — 2025 preprint",
-        "https://arxiv.org/abs/2506.09985"
+        "On the Identifiability of Causal Abstractions — AISTATS 2025",
+        "https://proceedings.mlr.press/v258/li25g.html"
       ],
       [
-        "RoboJEPA — 2026 preprint",
-        "https://arxiv.org/abs/2610.10515"
+        "Mastering Diverse Domains through World Models (DreamerV3) — Nature 2025",
+        "https://www.nature.com/articles/s41586-025-08744-2"
       ]
     ]
   },
   {
-    "name": "Compositional Embodied Skills",
+    "name": "Unseen Skill Composition & Transfer",
     "guide": "Damian Desmond",
-    "role": "Skills, contact, hierarchy and sim-to-real",
-    "intro": "Cover object-centric graphs, skill preconditions/effects, compositional transfer, inverse dynamics, goal-conditioned policies, hierarchical planning, contact, active tactile sensing, sim-to-real mismatches and VLA versus latent world-action modeling.",
-    "experiment": "Build a two-object manipulation study with a held-out pairing of mass, material and goal. Compare a factored model, monolithic policy and robust planner at matched trials.",
-    "challenge": "Which missing factor or relation makes a previously reliable skill fail under new compositions?",
+    "role": "Compositional task generalization under physical and embodiment shifts",
+    "intro": "Advanced focus beyond Chapters 16–17: novel permutations of multi-stage skills, object–tool relations, relational preconditions, robot-embodiment transfer, tactile failure diagnosis, temporal constraints, long-horizon error recovery and open-vocabulary task specifications without training-set tuple memorization.",
+    "experiment": "Hold out entire action–object–goal combinations and a physical property shift. Compare factorized compositional and monolithic policies on unseen sequences while measuring contact outcomes, failure localization and rollback safety.",
+    "challenge": "When can an agent recombine independently reliable skills into a safe, previously unseen multi-object action sequence, and which interactions invalidate naive composition?",
     "papers": [
       [
-        "V-JEPA 2 — 2025 preprint",
-        "https://arxiv.org/abs/2506.09985"
+        "RoboDreamer: Learning Compositional World Models for Robot Imagination — ICML 2024",
+        "https://proceedings.mlr.press/v235/zhou24f.html"
       ],
       [
-        "JEPA-WAM — 2026 preprint",
-        "https://arxiv.org/abs/2608.09381"
+        "ClevrSkills: Compositional Language and Visual Reasoning in Robotics — NeurIPS 2024",
+        "https://proceedings.neurips.cc/paper_files/paper/2024/file/439539557e9ba0d04055773ff1f3241c-Paper-Datasets_and_Benchmarks_Track.pdf"
       ],
       [
-        "La-JEPA — 2026 preprint",
-        "https://arxiv.org/abs/2611.08156"
+        "Compositional Interfaces for Compositional Generalization — CoLLAs 2025",
+        "https://proceedings.mlr.press/v274/luketina25a.html"
       ]
     ]
   },
   {
-    "name": "Reliable Safety & OOD Evaluation",
+    "name": "Certified Runtime Risk & OOD",
     "guide": "Yor Forger",
-    "role": "Statistics, runtime contracts and adversarial shifts",
-    "intro": "Examine uncertainty calibration, covariate and dynamical shift, offline support constraints, abstention trade-offs, safety contracts, selective prediction, conformal assumptions, causal stress tests, latency and security of tool-using AI.",
-    "experiment": "Pre-register a matched-budget safety study reporting violations, abstentions, state uncertainty, task success and confidence intervals across independent seeds and shifts.",
-    "challenge": "When is a claimed safety improvement supported by assumptions, coverage, risk statistics and realistic deployment conditions?",
+    "role": "Verification assumptions, calibrated risk budgets and runtime enforcement",
+    "intro": "Advanced focus beyond Chapter 18: mathematical preconditions of conformal risk bounds, nonexchangeable distribution shift, symbolic neural control-barrier verification, runtime fallback policies, formally specified failure events, latency-tail constraints, safety coverage and empirical assumption-violation audits.",
+    "experiment": "Pre-register a runtime safety study at matched task coverage. Verify a candidate neural barrier or conformal bound under stated assumptions, stress-test sensor/actuator mismatches, and report risk, accepted actions, fallback latency and confidence intervals across multiple seeds.",
+    "challenge": "Which safety claims remain valid under violated exchangeability, unknown dynamics, deadlines or imperfect perception, and which guarantees are only conditional?",
     "papers": [
       [
-        "SPIBB — ICML 2019",
-        "https://proceedings.mlr.press/v97/laroche19a.html"
+        "Conformal Risk Control — ICLR 2024",
+        "https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html"
       ],
       [
-        "Direct Preference Optimization — NeurIPS 2023",
-        "https://arxiv.org/abs/2305.18290"
+        "Verification of Neural Control Barrier Functions with Symbolic Derivative Bounds Propagation — CoRL 2024",
+        "https://proceedings.mlr.press/v270/hu25a.html"
       ],
       [
-        "Search-Time Data Contamination — 2025 preprint",
-        "https://arxiv.org/abs/2508.13180"
+        "Perceive With Confidence: Statistical Safety Assurances for Navigation — CoRL 2024",
+        "https://proceedings.mlr.press/v270/dixit25a.html"
       ]
     ]
   },
   {
-    "name": "Open-Ended Scientific Invention",
+    "name": "Recursive Improvement & Scientific Discovery",
     "guide": "Loid Forger",
-    "role": "Novelty, proof, continual adaptation and bounded claims",
-    "intro": "Develop falsifiable research hypotheses, explicit assumptions, fair baselines, novelty searches, conditional guarantees, rigorous ablations, continual learning, OOD transfer, external evaluation and cautious AGI/ASI framing. No existing game or benchmark confers genuine invention credentials.",
-    "experiment": "Draft an original mechanism and rejection criterion, then independently reproduce baseline failures, test component necessity with ablations and compare statistically across unseen task families.",
-    "challenge": "What counts as an independently established scientific advance rather than an apparent gain from leakage, scale, assumptions or self-reported novelty?",
+    "role": "RSI, automated experimental science, meta-agent search and external falsification",
+    "intro": "Advanced focus beyond Chapter 20's open-ended intelligence introduction: operational recursive self-improvement (RSI), empirical code-self-modification, archive-guided meta-agent search, automated scientific experiment design, independent falsification, model and evaluator co-adaptation, rollback, compute and safety budgets, benchmark leakage, and the distinction between narrow verified gains and unproven AGI/ASI claims.",
+    "experiment": "Design a bounded recursive-improvement protocol: propose one source-code or model-selection change, execute it in a sandbox, measure sealed held-out gains and regressions with an independent evaluator, track lineage and computational cost, and reject, revert or retain changes according to pre-registered criteria. Compare against a fixed-agent baseline.",
+    "challenge": "Under what assumptions can an agent repeatedly improve itself without inflating self-evaluation metrics, sacrificing prior capabilities or equating local benchmark gains with general superintelligence?",
     "papers": [
       [
-        "DreamerV3 — 2025 Nature",
-        "https://arxiv.org/abs/2301.04104"
+        "Automated Design of Agentic Systems — ICLR 2025",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/hash/36b7acf6f6010652b3f2a433774a66fe-Abstract-Conference.html"
       ],
       [
-        "V-JEPA 2 — 2025 preprint",
-        "https://arxiv.org/abs/2506.09985"
+        "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents — ICLR 2026",
+        "https://openreview.net/pdf?id=pUpzQZTvGY"
       ],
       [
-        "RoboJEPA — 2026 preprint",
-        "https://arxiv.org/abs/2610.10515"
+        "Towards End-to-End Automation of AI Research — Nature 2026",
+        "https://www.nature.com/articles/s41586-026-10265-5"
       ]
     ]
   }
@@ -235,14 +235,14 @@ Q("ADV 24 · A proposed safety shield accepts updates based on its own predicted
 Q("ADV 24 · A proposed safety shield accepts updates based on its own predicted improvement. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A gate can be unsafe if the gate model shares the same failure mode","Independent feedback reduces but cannot eliminate epistemic risk"],["Any acceptance gate proves safety","Self-predicted improvement is equivalent to environmental ground truth","Treat one successful demonstration as an unconditional theorem"],"Self-acceptance risks using an uncalibrated evaluator. A discriminating evaluation is: Use independent witness metrics and post-update rollback criteria.")]},
 {e:[Q("ADV 25 · A claimed new planner wins against a much smaller baseline with fewer samples. What central scientific distinction applies?",["Resource mismatch confounds algorithmic attribution"],["Comparing one favorable seed proves invention","More parameters have zero cost in scientific comparisons","A larger model alone guarantees unrestricted reliability"],"Resource mismatch confounds algorithmic attribution. A discriminating evaluation is: Match compute, environment steps and tuning budgets."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. What central scientific distinction applies?",["One shift is insufficient to establish robust transfer"],["One test condition proves broad generalization","The benchmark name establishes robustness","A larger model alone guarantees unrestricted reliability"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. What central scientific distinction applies?",["Acquisition must be evaluated jointly with retention"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","A larger model alone guarantees unrestricted reliability"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. What central scientific distinction applies?",["Recursive self-improvement requires independent verification of each proposed self-modification"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","A larger model alone guarantees unrestricted reliability"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. What central scientific distinction applies?",["Self-evaluation can create self-confirming feedback loops"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","A larger model alone guarantees unrestricted reliability"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An algorithm claims ASI because it beats a set of expert exams. What central scientific distinction applies?",["Exam superiority does not demonstrate unrestricted superintelligence"],["One exam score certifies all-domain superiority","Creative writing implies stable physical control","A larger model alone guarantees unrestricted reliability"],"Exam superiority does not demonstrate unrestricted superintelligence. A discriminating evaluation is: Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators."),
 Q("ADV 25 · A proposed formal guarantee assumes perfect sensor calibration. What central scientific distinction applies?",["A theorem is conditional on assumptions and implementation correspondence"],["Mathematical syntax alone proves physical safety","A theorem removes all engineering uncertainty","A larger model alone guarantees unrestricted reliability"],"A theorem is conditional on assumptions and implementation correspondence. A discriminating evaluation is: Audit assumptions experimentally and give a counterexample for mismatch."),
 Q("ADV 25 · A paper reports positive results without disclosing preprocessing and data sources. What central scientific distinction applies?",["Omitted transformations prevent independent reproduction and leakage checks"],["An impressive figure substitutes for reproducibility","Reproducibility is irrelevant to scientific novelty","A larger model alone guarantees unrestricted reliability"],"Omitted transformations prevent independent reproduction and leakage checks. A discriminating evaluation is: Release precise protocols, train/test partitions and configuration hashes."),
 Q("ADV 25 · A new component improves benchmark average but increases rare catastrophic failures. What central scientific distinction applies?",["Average reward alone can hide unacceptable tail risk"],["Mean accuracy guarantees low worst-case risk","Once a component is novel, its negative side effects do not matter","A larger model alone guarantees unrestricted reliability"],"Average reward alone can hide unacceptable tail risk. A discriminating evaluation is: Evaluate safety-tail events, coverage and performance together.")],m:[Q("ADV 25 · A claimed new planner wins against a much smaller baseline with fewer samples. Which controlled evaluation most directly addresses the uncertainty?",["Match compute, environment steps and tuning budgets"],["Comparing one favorable seed proves invention","More parameters have zero cost in scientific comparisons","Choose only the most favorable seed from the public benchmark"],"Resource mismatch confounds algorithmic attribution. A discriminating evaluation is: Match compute, environment steps and tuning budgets."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. Which controlled evaluation most directly addresses the uncertainty?",["Pre-register independent shift families and a failure taxonomy"],["One test condition proves broad generalization","The benchmark name establishes robustness","Choose only the most favorable seed from the public benchmark"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. Which controlled evaluation most directly addresses the uncertainty?",["Measure forward learning and backward forgetting on a task stream"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","Choose only the most favorable seed from the public benchmark"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. Which controlled evaluation most directly addresses the uncertainty?",["Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","Choose only the most favorable seed from the public benchmark"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. Which controlled evaluation most directly addresses the uncertainty?",["Use independent measurements and sealed external task families"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","Choose only the most favorable seed from the public benchmark"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An algorithm claims ASI because it beats a set of expert exams. Which controlled evaluation most directly addresses the uncertainty?",["Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators"],["One exam score certifies all-domain superiority","Creative writing implies stable physical control","Choose only the most favorable seed from the public benchmark"],"Exam superiority does not demonstrate unrestricted superintelligence. A discriminating evaluation is: Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators."),
 Q("ADV 25 · A proposed formal guarantee assumes perfect sensor calibration. Which controlled evaluation most directly addresses the uncertainty?",["Audit assumptions experimentally and give a counterexample for mismatch"],["Mathematical syntax alone proves physical safety","A theorem removes all engineering uncertainty","Choose only the most favorable seed from the public benchmark"],"A theorem is conditional on assumptions and implementation correspondence. A discriminating evaluation is: Audit assumptions experimentally and give a counterexample for mismatch."),
@@ -251,8 +251,8 @@ Q("ADV 25 · A new component improves benchmark average but increases rare catas
 Q("ADV 25 · A claimed new planner wins against a much smaller baseline with fewer samples. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A score gap is not a causal estimate of algorithm novelty","Fair comparisons must account for hyperparameter-search budget"],["Comparing one favorable seed proves invention","More parameters have zero cost in scientific comparisons","Treat one successful demonstration as an unconditional theorem"],"Resource mismatch confounds algorithmic attribution. A discriminating evaluation is: Match compute, environment steps and tuning budgets."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. Select BOTH safeguards a rigorous research protocol needs.",["Measure failures and safety under true held-out shifts","Report when adaptation is worse than frozen control"],["One test condition proves broad generalization","The benchmark name establishes robustness","Select the metric only after inspecting the sealed test set"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A claimed universal fix is falsified by relevant counterexamples","Limitations are part of a reproducible research contribution"],["One test condition proves broad generalization","The benchmark name establishes robustness","Treat one successful demonstration as an unconditional theorem"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. Select BOTH safeguards a rigorous research protocol needs.",["Track task order and exposure opportunities","Report performance and compute across the entire stream"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","Select the metric only after inspecting the sealed test set"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["Current success can coexist with catastrophic forgetting","Task sequences create different interference effects"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","Treat one successful demonstration as an unconditional theorem"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. Select BOTH safeguards a rigorous research protocol needs.",["Track self-modification lineage and sealed evaluation exposure","Report compute, failures and rollback outcomes across the entire self-improvement trajectory"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","Select the metric only after inspecting the sealed test set"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A self-modifying system can improve one benchmark while degrading previously reliable capabilities","Successive code modifications can silently invalidate earlier safety assumptions"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","Treat one successful demonstration as an unconditional theorem"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. Select BOTH safeguards a rigorous research protocol needs.",["Log evaluator changes and ground-truth interventions","Compare frozen and co-adapted evaluator policies"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","Select the metric only after inspecting the sealed test set"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["Improvement of an internal reward is not independent discovery","Scientific autonomy requires falsifiable external outcomes"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","Treat one successful demonstration as an unconditional theorem"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An algorithm claims ASI because it beats a set of expert exams. Select BOTH safeguards a rigorous research protocol needs.",["Avoid conflating benchmark score with general capability","Report untested domains and unsupported claims"],["One exam score certifies all-domain superiority","Creative writing implies stable physical control","Select the metric only after inspecting the sealed test set"],"Exam superiority does not demonstrate unrestricted superintelligence. A discriminating evaluation is: Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators."),
