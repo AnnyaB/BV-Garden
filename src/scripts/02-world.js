@@ -143,7 +143,7 @@ function drawHouse(ch){const i=ch.index,p=iso(...ch.place),x=Math.round(p.x),y=M
  box(x-lw/2+3,ly+3,lw,22,'#5d866d');box(x-lw/2,ly,lw,22,active?'#fff8dc':'#fffaf1',active?'#e2af54':'#9eb09b');box(x-lw/2+4,ly+3,20,16,active?'#e6b964':done?'#8cb8a5':'#b9c8ba');txt(String(i+1).padStart(2,'0'),x-lw/2+14,ly+15,10,'#42594e');txt(label,x+10,ly+15,10,'#466556');
  state.hitBoxes.push({kind:'chapter',index:i,x:x-Math.max(52,lw/2),y:ly-5,w:Math.max(104,lw),h:y-ly+21,depth:ch.place[0]+ch.place[1]});
 }
-function drawNpc(ch){const p=iso(ch.place[0]+1.25,ch.place[1]+1.45),x=p.x,y=p.y,b=Math.sin(state.t*.002+ch.index)*1.5,im=imgs[ch.id],h=ch.id==='bond'?70:ch.id==='anya'?74:ch.id==='loid'?78:ch.id==='yor'?78:71;
+function drawNpc(ch){const p=iso(ch.place[0]+1.25,ch.place[1]+1.45),x=p.x,y=p.y,b=Math.sin(state.t*.002+ch.index)*1.5,im=imgs[ch.id],h=ch.id==='bill'?91:ch.id==='matthew'||ch.id==='olka'?78:ch.id==='daybreak'?77:71;
  ctx.fillStyle='#43735a60';ctx.beginPath();ctx.ellipse(x,y+2,ch.id==='bond'?25:15,5,0,0,Math.PI*2);ctx.fill();
  if(im.complete&&im.naturalWidth){const w=h*im.naturalWidth/im.naturalHeight;ctx.drawImage(im,x-w/2,y-h+b,w,h);}else {box(x-12,y-42,24,36,ch.color);box(x-9,y-53,18,17,'#f0d3be');}
  if(typeof quest!=='undefined'){const badge=quest.stars[ch.index]?'stella':ch.index>state.current?'tonitrus':null;if(badge&&imgs[badge].complete&&imgs[badge].naturalWidth)ctx.drawImage(imgs[badge],x+22,y-h+2+b,21,22);}
