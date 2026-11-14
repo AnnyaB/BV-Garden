@@ -54,35 +54,29 @@
 }
 
 
-/* Locked advanced sector appended after the original 20 chapter ribbons.
-   All 25 stations remain inspectable; entering research chapters is gated. */
-.bv-advanced-ribbon-gate{display:flex;flex-direction:column;align-items:center;justify-content:center;
-gap:5px;min-width:230px;max-width:310px;padding:13px 16px;background:linear-gradient(145deg,#473f50,#866276);
-border:3px ridge #d0a26b;border-radius:12px;color:#fff2d2;
-box-shadow:inset 0 3px #b1848a,inset 0 -5px #363843,0 5px #897869;text-align:center}
-.bv-advanced-ribbon-gate strong{font:900 12px ui-monospace,monospace;letter-spacing:.05em}
-.bv-advanced-ribbon-gate small{font:600 10px ui-monospace,monospace;line-height:1.4}
-.bv-advanced-ribbon-gate .bv-advanced-gate-symbol{position:relative;display:inline-flex;
-align-items:center;justify-content:center;width:66px;height:57px;border:3px solid #e8c49a;
-border-radius:50% 50% 25% 25%;background:linear-gradient(#783f5e,#302f42);
-box-shadow:inset 3px 4px #b16d8d,4px 6px #2c2a38}
-.bv-advanced-gate-symbol::before,.bv-advanced-gate-symbol::after{
-content:'';position:absolute;top:-13px;width:16px;height:24px;background:#ecc89f;
-clip-path:polygon(50% 0,100% 100%,0 84%)}
-.bv-advanced-gate-symbol::before{left:-2px;transform:rotate(-24deg)}
-.bv-advanced-gate-symbol::after{right:-2px;transform:rotate(24deg)}
-.bv-advanced-gate-symbol .reward-img{width:44px;height:44px;image-rendering:pixelated;object-fit:contain}
-.bv-advanced-ribbon-gate .action-button{font-size:10px;max-width:100%;white-space:normal;text-align:center;padding:8px 10px}
+/* A small preview tab after the first twenty; no ornamental card or fake horns. */
+.bv-advanced-ribbon-gate{
+ flex:0 0 95px;min-height:100px;display:flex;align-items:center;justify-content:center;
+ flex-direction:column;gap:3px;padding:8px;border:1px solid #cfcebf;
+ border-radius:8px;background:#f7f1e5;color:#5e675f;cursor:pointer;
+ font:800 12px ui-monospace,Menlo,monospace;
+}
+.bv-advanced-ribbon-gate img{display:block;width:49px;height:49px;object-fit:contain;image-rendering:pixelated}
+.bv-advanced-ribbon-gate:focus-visible,.bv-advanced-ribbon-gate:hover{outline:2px solid #b89b79;outline-offset:2px}
 .bv-advanced-ribbon-btn{border-color:#bd9b7e!important;background:#f7f0e6!important}
 .bv-advanced-ribbon-btn .chapter-status .reward-img{width:20px;height:20px;vertical-align:middle;image-rendering:pixelated}
 .bv-advanced-ribbon-btn.locked{opacity:1}
 .bv-advanced-ribbon-btn .chapter-no{color:#925e68}
-
-/* Compact, always-available link to the locked advanced sector. */
-.bv-adv-peek-button{padding:7px 9px;border-radius:7px;white-space:nowrap;
-border:1px solid #b58b75;background:linear-gradient(#f8e7d7,#e8c9b7);color:#79495c;
-font:900 11px ui-monospace,monospace;cursor:pointer;
-box-shadow:0 2px 0 #a98480;}
-.bv-adv-peek-button:hover{border-color:#965a65;background:#ffeddc;}
+/* Only the original user's spiked-ball sprite is used; no Unicode lightning icon. */
+.bv-adv-peek-button{
+ display:inline-flex;gap:4px;align-items:center;justify-content:center;
+ padding:6px 9px;border-radius:7px;white-space:nowrap;
+ border:1px solid #b58b75;background:linear-gradient(#f8e7d7,#e8c9b7);color:#79495c;
+ font:900 11px ui-monospace,Menlo,monospace;cursor:pointer;
+ box-shadow:0 2px 0 #a98480;
+}
+.bv-adv-peek-icon{display:inline-block;width:22px;height:22px;flex:0 0 22px;
+ background-size:contain;background-position:center;background-repeat:no-repeat;image-rendering:pixelated}
+.bv-adv-peek-button:hover{border-color:#965a65;background:#ffeddc}
 .bv-adv-peek-button:focus-visible{outline:3px solid #d6a24c;outline-offset:2px}
-@media(max-width:450px){.bv-adv-peek-button{padding:6px;font-size:10px}}
+@media(max-width:450px){.bv-adv-peek-button{padding:5px;font-size:10px}.bv-adv-peek-icon{width:19px;height:19px;flex-basis:19px}}
