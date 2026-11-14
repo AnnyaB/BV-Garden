@@ -59,6 +59,8 @@
   // trumpet once and keep the explicit notice visible after the new run begins.
   const originalRestart=restartForBolts;
   restartForBolts=function(){originalRestart();state.explorePan={x:0,y:0};storeExplorer();showRewardToast('tonitrus','10 Tonitrus Bolts · adventure restarted at Chapter 01');playSound('fail');};
+  // Advanced five-Bolt reset: reuse the existing sound without resetting the main journey.
+  document.addEventListener('bv-advanced-bolt-reset',()=>playSound('fail'));
   // Keep the last explored tile/pan even after sudden tab closure or device sleep.
   const flush=()=>storeExplorer();
   document.addEventListener('pointerup',()=>setTimeout(flush,0));
