@@ -115,7 +115,7 @@ function resolveAttempt(){const a=quest.active,hard=a.results.filter(r=>r.d==='h
    }
    if(imperial&&!quest.imperialThisJourney){
      quest.imperialThisJourney=true;quest.imperialWins=(quest.imperialWins||0)+1;
-     quest.eliteUnlocked=quest.imperialWins>=5;updateSelectedAvatar();
+     quest.eliteUnlocked=Boolean(quest.imperialWins>=5||quest.advanced?.completedRecord||quest.advanced?.stars?.every(Boolean));updateSelectedAvatar();
      showRewardToast('stella','Imperial Scholar · win '+quest.imperialWins+' of 5');
    }
    quest.last={kind:'exam',level:20,passed,imperial,correct,medium,hard,
