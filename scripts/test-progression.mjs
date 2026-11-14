@@ -59,15 +59,16 @@ function makeExam(correctEasy,correctMedium,correctHard){
 }
 function fullStellas(){ctx.quest.stars.fill(true);ctx.quest.passed.fill(true);ctx.state.current=20;}
 
-// No exam should begin until 20 distinct Stella awards have been earned.
-test("Final examination is locked without all 20 Stella stars",()=>{
- ctx.quest=initQuest();ctx.state.current=20;
- beginQuest("exam",20);
- assert.equal(ctx.quest.active,null);
- ctx.quest.stars.fill(true);
+// Ordinary exam access depends on finishing chapter gates, not collecting
+// every Stella; all Stellas remain mandatory for Imperial Scholar status.
+test("Ordinary final examination opens with missing Stellas, but not before chapter 20",()=>{
+ ctx.quest=initQuest();ctx.state.current=19;
+ beginQuest("exam",20);assert.equal(ctx.quest.active,null);
+ ctx.state.current=20;
  beginQuest("exam",20);
  assert.equal(ctx.quest.active.kind,"exam");
  assert.deepEqual(Array.from(ctx.quest.active.items,x=>x.d),tiers);
+ ctx.quest.active=null;
 });
 
 // 7 total may pass the exam but without hard-tier competence no Imperial dress.
@@ -148,5 +149,27 @@ test("Tonitrus reset retains cumulative achievement and seen-question history",(
  assert.equal(ctx.quest.bolts,0);
  assert.equal(ctx.quest.last.reset,true);
  assert.equal(ctx.quest.seenPrompts["a saved question"],true);
+});
+// Restarting the original adventure must not erase advanced Stellas or history.
+test("Original journey restart retains the separate advanced research progress",()=>{
+ ctx.quest=initQuest();
+ ctx.quest.advanced={passed:[true,false,false,false,false],stars:[true,false,false,false,false],bolts:2,
+  used:{"adv:0:h:0":true},seen:{"held-out advanced concept":true},completedRecord:false};
+ restartJourney(false);
+ assert.equal(ctx.quest.advanced.stars[0],true);
+ assert.equal(ctx.quest.advanced.bolts,2);
+ assert.equal(ctx.quest.advanced.used["adv:0:h:0"],true);
+ ctx.quest.advanced.completedRecord=true;
+ restartJourney(false);
+ assert.equal(ctx.quest.eliteUnlocked,true);
+});
+test("Advanced-Stella Elite qualification survives a subsequent Imperial Scholar win",()=>{
+ ctx.quest=initQuest();
+ ctx.quest.advanced={stars:[true,true,true,true,true],completedRecord:true,used:{},seen:{},passed:[true,true,true,true,true],bolts:0};
+ ctx.quest.eliteUnlocked=true;
+ fullStellas();
+ makeExam(1,2,4);gradeAttempt();
+ assert.equal(ctx.quest.imperialWins,1);
+ assert.equal(ctx.quest.eliteUnlocked,true);
 });
 console.log("Quest progression and award regression tests passed.");

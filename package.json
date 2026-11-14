@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:check": "node scripts/build.mjs --check",
-    "test": "node scripts/build.mjs --check && node scripts/verify-site.mjs && node scripts/test-progression.mjs"
+    "test": "node scripts/build.mjs --check && node scripts/verify-site.mjs && node scripts/test-progression.mjs && node scripts/test-advanced.mjs && node scripts/test-preview.mjs"
   },
   "engines": {
     "node": ">=20"

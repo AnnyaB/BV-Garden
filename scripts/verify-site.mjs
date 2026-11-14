@@ -25,6 +25,51 @@ assert.ok(cast, "Character IDs found");
 const ids = [...cast[1].matchAll(/'([^']+)'/g)].map(m => m[1]);
 test("20 unique chapter cast IDs", ids.length === 20 && new Set(ids).size === 20);
 
+test("Original twenty character placements use all five new canon guides", 
+  ids[0]==="george"&&ids[1]==="bill"&&ids[4]==="daybreak"&&
+  ids[18]==="matthew"&&ids[19]==="olka");
+const advIds=(html.match(/const BV_ADVANCED_IDS=\[([^\]]+)\]/)||[])[1];
+assert.ok(advIds,"Advanced companion list found");
+const advancedCast=[...advIds.matchAll(/'([^']+)'/g)].map(m=>m[1]);
+test("Advanced Houses 21–25 retain the original Anya Bond Damian Yor Loid portraits",
+  JSON.stringify(advancedCast)===JSON.stringify(["anya","bond","damian","yor","loid"]));
+test("All twenty-five chapter companions are distinct",new Set([...ids,...advancedCast]).size===25);
+const fiveAtlas=html.match(/const BV_CAST_ATLAS='data:image\/png;base64,([A-Za-z0-9+/=]+)'/);
+assert.ok(fiveAtlas,"Embedded five-character PNG atlas found");
+const fivePng=Buffer.from(fiveAtlas[1],"base64");
+test("Five full-length canon sprite images have correct dimensions and PNG signature",
+  fivePng.length>12000&&fivePng.toString("ascii",1,4)==="PNG"&&
+  fivePng.readUInt32BE(16)===480&&fivePng.readUInt32BE(20)===152&&
+  html.includes("const BV_CAST_STRIDE=96;")&&html.includes("const BV_CAST_HEIGHT=152;"));
+test("All twenty-five house companions render on one original canvas with clear spacing",
+ html.includes("NX=58,NY=58")&&
+ html.includes("const BV_ADVANCED_PREVIEW_SITES=[[29,48],[32.75,44.25],[36.5,40.5],[40.25,36.75],[44,33]]")&&
+ html.includes("bvAdvancedPreviewAddObjects(objects)")&&
+ html.includes("bvAdvancedPreviewOccupied(x,y)"));
+test("Single horizontal separator uses transparent user-supplied pixel spiked ball",
+ html.includes("const BV_SPIKED_BALL='data:image/png;base64,")&&
+ html.includes("function bvAdvancedPreviewGate()")&&
+ html.includes("for(let x=11;x<=55;x+=0.75)")&&
+ html.includes("ctx.drawImage(BV_SPIKED_IMG")&&
+ !html.includes("bvAdvancedPreviewHalo(")&&!html.includes("bvAdvancedPreviewPath();")&&
+ !html.includes("SEALED GATE"));
+test("Small advanced preview button displays actual spiked ball, not lightning emoji",
+ html.includes('class="bv-adv-peek-icon"')&&
+ html.includes("bvPeekIcon.style.backgroundImage")&&
+ !html.includes("⚡ 21–25"));
+test("Advanced houses remain inspectable while challenge gates stay locked",
+ html.includes("function bvAdvancedPreviewSelect(i)")&&
+ html.includes("function bvAdvancedPreviewRibbon()")&&
+ html.includes("data-bv-advanced-preview")&&
+ html.includes("data-bv-preview-focus")&&
+ html.includes("bvAdvancedPreviewSelect(h.index)")&&
+ html.includes("bvAdvancedShowWorld=function(){bvAdvancedPreviewFocus();}"));
+test("Advanced terrain traversal stays locked until ordinary final exam passes",
+ html.includes("const bvAdvancedPreviewZone=(x,y)=>x+y>=67")&&
+ html.includes("bvAdvancedPreviewZone(x,y)")&&
+ html.includes("bvAdvancedAllowed())")&&
+ html.includes("bvAdvancedPreviewOccupied(x,y)"));
+
 const sounds = [...html.matchAll(/\b(stella|fail):'data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)'/g)];
 test("Two embedded MP3 clips", sounds.length === 2 && new Set(sounds.map(s => s[1])).size === 2);
 for (const [, name, data] of sounds) {
@@ -54,7 +99,7 @@ const bankEnd = html.indexOf("/* RESEARCH GARDEN QUEST ENGINE", bankStart);
 test("Question-bank source is discoverable", bankStart > 0 && bankEnd > bankStart);
 const bankCode = html.slice(bankStart, bankEnd);
 const bankData = JSON.parse(new Script(bankCode +
-  "\nJSON.stringify({chapters:CHALLENGE_BANK,exam:IMPERIAL_BANK})").runInNewContext({}, {timeout:5000}));
+  "\nJSON.stringify({chapters:CHALLENGE_BANK,exam:IMPERIAL_BANK,adv:BV_ADVANCED_BANK,advChapters:BV_ADVANCED_CHAPTERS})").runInNewContext({}, {timeout:5000}));
 test("20 distinct research levels", bankData.chapters.length === 20);
 const normalizeStem = t=>String(t).normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
 const stems = new Map();
@@ -81,7 +126,38 @@ for (const tier of ["e","m","h"]) for (const [j,q] of bankData.exam[tier].entrie
   validateQuestion(q,"imperial/"+tier+"/"+j,20);
   examTotal++;
 }
-test("406 chapter questions for five complete unique journeys", chapterTotal === 406);
+test("430 chapter questions including LM and generative AI", chapterTotal === 430);
+test("Five different advanced guides",bankData.advChapters.length===5&&new Set(bankData.advChapters.map(x=>x.guide)).size===5&&
+  bankData.advChapters.every(x=>x.intro.length>100&&x.experiment.length>100&&x.papers.length>=3));
+test("25 distinct chapters with advanced RSI and verified conference research links",
+  new Set(bankData.advChapters.map(x=>x.name)).size===5&&
+  bankData.advChapters[4].name.includes("Recursive Improvement")&&
+  bankData.advChapters[4].intro.includes("RSI")&&
+  bankData.advChapters.every(x=>x.papers.length===3&&
+    new Set(x.papers.map(p=>p[1])).size===3&&x.papers.every(p=>/^https:\/\//.test(p[1])))&&
+  new Set(bankData.advChapters.flatMap(x=>x.papers.map(p=>p[1]))).size===15);
+test("160 advanced MCQs in exactly 5 houses",bankData.adv.length===5&&
+  bankData.adv.every(b=>b.e.length===8&&b.m.length===8&&b.h.length===16));
+for(const [i,b] of bankData.adv.entries()){
+ for(const tier of ["e","m","h"])for(const [j,q] of b[tier].entries()){
+   const name="advanced "+(i+21)+"/"+tier+"/"+j,stem=normalizeStem(q.t);
+   test(name+" unique stem",stem.length>40&&!stems.has(stem));
+   stems.set(stem,name);
+   test(name+" single or double correct answers",q.a.length===(tier==='h'?2:1));
+   test(name+" independent explanation",typeof q.why==='string'&&q.why.length>60);
+   const options=[...q.a,...q.b].map(x=>String(x).toLowerCase().trim());
+   test(name+" distinct options",q.b.length>=3&&new Set(options).size===options.length);
+ }
+}
+test("Advanced five-Bolt reset is separate from original ten-Bolt reset",
+  html.includes("if(adv.bolts>=5){bvAdvancedReset();return;}") &&
+  html.includes("quest.advanced=reset")&&html.includes("data-bv-advanced-enter") &&
+  html.includes("function bvAdvancedHydrate()"));
+test("Existing final examination open after finishing 20 gates",
+  html.includes("if(kind==='exam'&&state.current!==20)return;"));
+test("Advanced elite qualification accepts either route",
+  html.includes("quest.imperialWins>=5||quest.advanced.completedRecord")&&
+  html.includes("if(adv.stars.every(Boolean)){adv.completedRecord=true;quest.eliteUnlocked=true;}"));
 console.log("PASS authored bank: "+chapterTotal+" chapter MCQs + "+examTotal+
   " final examination MCQs, all unique normalized stems");
 test("Five full journeys have nonrepeating, globally unique stems",
