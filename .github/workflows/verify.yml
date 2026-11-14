@@ -7,6 +7,7 @@ on:
       - src/**
       - scripts/build.mjs
       - scripts/test-progression.mjs
+      - scripts/test-advanced.mjs
       - package.json
       - scripts/verify-site.mjs
       - .github/workflows/verify.yml
@@ -16,6 +17,7 @@ on:
       - src/**
       - scripts/build.mjs
       - scripts/test-progression.mjs
+      - scripts/test-advanced.mjs
       - package.json
       - scripts/verify-site.mjs
       - .github/workflows/verify.yml
@@ -40,3 +42,5 @@ jobs:
         run: node scripts/verify-site.mjs
       - name: Verify award progression and win-history behavior
         run: node scripts/test-progression.mjs
+      - name: Verify advanced research houses, Bolt reset and alternate League unlock
+        run: node scripts/test-advanced.mjs
