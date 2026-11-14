@@ -25,7 +25,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Causal & Latent World Models",
-    "guide": "Bill Watkins",
+    "guide": "Bond Forger",
     "role": "Predictive state, intervention and uncertainty",
     "intro": "Study identifiability, partially observable Markov decision processes, action-conditioned latent transitions, uncertainty, long-horizon rollout fidelity, JEPA-style representation learning, belief filtering, causal inference and counterfactual control.",
     "experiment": "Design a small controlled physical shift where two models fit passive observations equally well but differ under actions; estimate rollout and task success with known intervention conditions.",
