@@ -1,0 +1,42 @@
+name: Browser-only advanced-garden evidence (draft PR)
+on:
+  pull_request:
+    paths:
+      - index.html
+      - src/**
+      - scripts/capture-advanced-browser.mjs
+      - .github/workflows/preview-capture.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  actual-browser-capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out exactly the PR game build
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install temporary headless browser harness
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.56.1
+          npx playwright install chromium
+      - name: Serve checked-in game locally without deployment
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/bv-preview-http.log 2>&1 &
+          sleep 2
+      - name: Verify and photograph real locked Chapters 21–25 in Chromium
+        run: node scripts/capture-advanced-browser.mjs
+      - name: Upload exact Chromium screenshots for owner review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: BV-Garden-real-browser-evidence
+          path: artifacts/*.jpeg
+          if-no-files-found: warn
+          retention-days: 7
