@@ -144,7 +144,7 @@ function drawHouse(ch){const i=ch.index,p=iso(...ch.place),x=Math.round(p.x),y=M
  state.hitBoxes.push({kind:'chapter',index:i,x:x-Math.max(52,lw/2),y:ly-5,w:Math.max(104,lw),h:y-ly+21,depth:ch.place[0]+ch.place[1]});
 }
 function drawNpc(ch){const p=iso(ch.place[0]+1.25,ch.place[1]+1.45),x=p.x,y=p.y,b=Math.sin(state.t*.002+ch.index)*1.5,im=imgs[ch.id],h=ch.id==='bill'?91:ch.id==='matthew'||ch.id==='olka'?78:ch.id==='daybreak'?77:71;
- ctx.fillStyle='#43735a60';ctx.beginPath();ctx.ellipse(x,y+2,ch.id==='bond'?25:15,5,0,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#43735a60';ctx.beginPath();ctx.ellipse(x,y+2,ch.id==='bill'?25:15,5,0,0,Math.PI*2);ctx.fill();
  if(im.complete&&im.naturalWidth){const w=h*im.naturalWidth/im.naturalHeight;ctx.drawImage(im,x-w/2,y-h+b,w,h);}else {box(x-12,y-42,24,36,ch.color);box(x-9,y-53,18,17,'#f0d3be');}
  if(typeof quest!=='undefined'){const badge=quest.stars[ch.index]?'stella':ch.index>state.current?'tonitrus':null;if(badge&&imgs[badge].complete&&imgs[badge].naturalWidth)ctx.drawImage(imgs[badge],x+22,y-h+2+b,21,22);}
  if(state.current===ch.index){txt('✦',x,y-h-9+b,16,'#fff3c0');}
