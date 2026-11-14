@@ -35,7 +35,7 @@ function openChapter(i){if(state.travel)return;
 }
 function beginNext(i){if(i>=20||!quest.passed[i])return;
  if(i===19){openChapter(20);return;}
- const next=chapters[i+1];state.travel={start:performance.now(),from:{...state.player},to:{x:next.place[0]+.5,y:next.place[1]+.8}};
+ const next=chapters[i+1];state.travel={start:performance.now(),from:{...state.player},to:companionLeftArrival(next)};
  document.getElementById('worldTip').textContent=`Following the golden path to ${next.short} →`;
 }
 // The original reset handler would silently erase progress without preserving used questions; replace it.

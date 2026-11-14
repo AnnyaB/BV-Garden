@@ -9,6 +9,7 @@ import {Script} from 'node:vm';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const preview=readFileSync(resolve(root,'src/advanced/advanced-preview.js'),'utf8');
 const world=readFileSync(resolve(root,'src/scripts/02-world.js'),'utf8');
+const interactions=readFileSync(resolve(root,'src/scripts/03-interactions.js'),'utf8');
 const engine=readFileSync(resolve(root,'src/quiz/quest-engine.js'),'utf8');
 const context={
  BV_ADVANCED_IDS:['anya','bond','damian','yor','loid'],
@@ -92,5 +93,22 @@ test('Actual main movement guard prevents entering preview sector before qualify
  assert.equal(success,false);
  context.bvAdvancedAllowed=()=>true;
  assert.equal(context.zoneCheck(29,48),true);
+});
+test('Every automatic chapter arrival appears clearly left of its companion without changing roaming',()=>{
+  const match=world.match(/function companionLeftArrival\(ch\)\{return\{[^}]*\};\}/);
+  assert.ok(match,'Landing helper exists in the real world renderer');
+  new Script(match[0]+'\nthis.arrival=companionLeftArrival;').runInNewContext(context);
+  assert.match(world,/const pos=companionLeftArrival\(c\);state\.travel=/);
+  assert.match(interactions,/to:companionLeftArrival\(next\)/);
+  for(let i=0;i<20;i++){
+    const row=Math.floor(i/5),col=i%5,c=row%2?4-col:col;
+    const ch={place:[5+row*5+c*4,5+row*5+(4-c)*4]};
+    const target=context.arrival(ch);
+    const player=context.rawIso(target.x,target.y);
+    const npc=context.rawIso(ch.place[0]+1.25,ch.place[1]+1.45);
+    assert.ok(npc.x-player.x>=70,'Player stays visibly left of chapter '+(i+1));
+    assert.ok(Math.abs(npc.y-player.y)<=4,'Player keeps companion standing depth at chapter '+(i+1));
+    assert.ok(target.x>=0&&target.x<58&&target.y>=0&&target.y<58,'Arrival stays inside map');
+  }
 });
 console.log('Shared world spectator preview verified without granting awards.');
