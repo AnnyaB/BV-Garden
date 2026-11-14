@@ -150,38 +150,32 @@
 }
 
 
-/* Locked advanced sector appended after the original 20 chapter ribbons.
-   All 25 stations remain inspectable; entering research chapters is gated. */
-.bv-advanced-ribbon-gate{display:flex;flex-direction:column;align-items:center;justify-content:center;
-gap:5px;min-width:230px;max-width:310px;padding:13px 16px;background:linear-gradient(145deg,#473f50,#866276);
-border:3px ridge #d0a26b;border-radius:12px;color:#fff2d2;
-box-shadow:inset 0 3px #b1848a,inset 0 -5px #363843,0 5px #897869;text-align:center}
-.bv-advanced-ribbon-gate strong{font:900 12px ui-monospace,monospace;letter-spacing:.05em}
-.bv-advanced-ribbon-gate small{font:600 10px ui-monospace,monospace;line-height:1.4}
-.bv-advanced-ribbon-gate .bv-advanced-gate-symbol{position:relative;display:inline-flex;
-align-items:center;justify-content:center;width:66px;height:57px;border:3px solid #e8c49a;
-border-radius:50% 50% 25% 25%;background:linear-gradient(#783f5e,#302f42);
-box-shadow:inset 3px 4px #b16d8d,4px 6px #2c2a38}
-.bv-advanced-gate-symbol::before,.bv-advanced-gate-symbol::after{
-content:'';position:absolute;top:-13px;width:16px;height:24px;background:#ecc89f;
-clip-path:polygon(50% 0,100% 100%,0 84%)}
-.bv-advanced-gate-symbol::before{left:-2px;transform:rotate(-24deg)}
-.bv-advanced-gate-symbol::after{right:-2px;transform:rotate(24deg)}
-.bv-advanced-gate-symbol .reward-img{width:44px;height:44px;image-rendering:pixelated;object-fit:contain}
-.bv-advanced-ribbon-gate .action-button{font-size:10px;max-width:100%;white-space:normal;text-align:center;padding:8px 10px}
+/* A small preview tab after the first twenty; no ornamental card or fake horns. */
+.bv-advanced-ribbon-gate{
+ flex:0 0 95px;min-height:100px;display:flex;align-items:center;justify-content:center;
+ flex-direction:column;gap:3px;padding:8px;border:1px solid #cfcebf;
+ border-radius:8px;background:#f7f1e5;color:#5e675f;cursor:pointer;
+ font:800 12px ui-monospace,Menlo,monospace;
+}
+.bv-advanced-ribbon-gate img{display:block;width:49px;height:49px;object-fit:contain;image-rendering:pixelated}
+.bv-advanced-ribbon-gate:focus-visible,.bv-advanced-ribbon-gate:hover{outline:2px solid #b89b79;outline-offset:2px}
 .bv-advanced-ribbon-btn{border-color:#bd9b7e!important;background:#f7f0e6!important}
 .bv-advanced-ribbon-btn .chapter-status .reward-img{width:20px;height:20px;vertical-align:middle;image-rendering:pixelated}
 .bv-advanced-ribbon-btn.locked{opacity:1}
 .bv-advanced-ribbon-btn .chapter-no{color:#925e68}
-
-/* Compact, always-available link to the locked advanced sector. */
-.bv-adv-peek-button{padding:7px 9px;border-radius:7px;white-space:nowrap;
-border:1px solid #b58b75;background:linear-gradient(#f8e7d7,#e8c9b7);color:#79495c;
-font:900 11px ui-monospace,monospace;cursor:pointer;
-box-shadow:0 2px 0 #a98480;}
-.bv-adv-peek-button:hover{border-color:#965a65;background:#ffeddc;}
+/* Only the original user's spiked-ball sprite is used; no Unicode lightning icon. */
+.bv-adv-peek-button{
+ display:inline-flex;gap:4px;align-items:center;justify-content:center;
+ padding:6px 9px;border-radius:7px;white-space:nowrap;
+ border:1px solid #b58b75;background:linear-gradient(#f8e7d7,#e8c9b7);color:#79495c;
+ font:900 11px ui-monospace,Menlo,monospace;cursor:pointer;
+ box-shadow:0 2px 0 #a98480;
+}
+.bv-adv-peek-icon{display:inline-block;width:22px;height:22px;flex:0 0 22px;
+ background-size:contain;background-position:center;background-repeat:no-repeat;image-rendering:pixelated}
+.bv-adv-peek-button:hover{border-color:#965a65;background:#ffeddc}
 .bv-adv-peek-button:focus-visible{outline:3px solid #d6a24c;outline-offset:2px}
-@media(max-width:450px){.bv-adv-peek-button{padding:6px;font-size:10px}}
+@media(max-width:450px){.bv-adv-peek-button{padding:5px;font-size:10px}.bv-adv-peek-icon{width:19px;height:19px;flex-basis:19px}}
 </style></head>
 <body>
 <div class="app-shell">
@@ -202,7 +196,7 @@ box-shadow:0 2px 0 #a98480;}
       <div class="game-frame">
         <div class="game-frame-header"><div class="game-frame-title"><span class="window-dots"><i></i><i></i><i></i></span></div><button id="soundless" class="tiny-button" type="button" title="All animations are silent">♪ quiet mode</button></div>
         <div class="canvas-wrap"><canvas id="world" width="1070" height="626" tabindex="0" role="img" aria-label="Interactive 2.5D isometric research garden with twenty numbered concept houses, one continuous prerequisite path, chibi anime-inspired companions, and a blue-sweater explorer based on the supplied drawing. Use arrow keys, WASD, or tap places. Press M to visit any station; dragging pans the garden."></canvas><div class="world-tip" id="worldTip">Visit stage 01 · follow the golden thread ✦</div><section id="garden-tour" class="garden-tour" aria-label="All twenty research stations" hidden></section></div>
-        <div class="game-frame-footer"><div class="location"><button type="button" class="bv-avatar-toggle" id="bv-avatar-toggle" aria-label="Choose avatar" aria-haspopup="dialog" aria-controls="bv-avatar-dialog"><img id="bv-avatar-current" alt="" aria-hidden="true"><span>Choose avatar</span></button><span id="map-location" style="display:none">You are at: The Research Garden</span></div><div class="movement-controls"><button type="button" id="garden-index-toggle" class="garden-index-toggle" aria-expanded="false" aria-controls="garden-tour" title="Open all twenty chapter locations (M)">☷ Map</button><button type="button" class="bv-adv-peek-button" data-bv-preview-focus title="View the horned Tonitrus boundary and the visibly locked research houses 21–25">⚡ 21–25</button><button type="button" id="garden-center" class="garden-center" title="Center camera on explorer (F)">⌖</button><button type="button" data-move="up" aria-label="Move up">↑</button><button type="button" data-move="left" aria-label="Move left">←</button><button type="button" data-move="down" aria-label="Move down">↓</button><button type="button" data-move="right" aria-label="Move right">→</button></div></div>
+        <div class="game-frame-footer"><div class="location"><button type="button" class="bv-avatar-toggle" id="bv-avatar-toggle" aria-label="Choose avatar" aria-haspopup="dialog" aria-controls="bv-avatar-dialog"><img id="bv-avatar-current" alt="" aria-hidden="true"><span>Choose avatar</span></button><span id="map-location" style="display:none">You are at: The Research Garden</span></div><div class="movement-controls"><button type="button" id="garden-index-toggle" class="garden-index-toggle" aria-expanded="false" aria-controls="garden-tour" title="Open all twenty chapter locations (M)">☷ Map</button><button type="button" class="bv-adv-peek-button" data-bv-preview-focus aria-label="View advanced houses 21 through 25 beyond the spiked-ball divider" title="View advanced houses 21–25"><span class="bv-adv-peek-icon" aria-hidden="true"></span> 21–25</button><button type="button" id="garden-center" class="garden-center" title="Center camera on explorer (F)">⌖</button><button type="button" data-move="up" aria-label="Move up">↑</button><button type="button" data-move="left" aria-label="Move left">←</button><button type="button" data-move="down" aria-label="Move down">↓</button><button type="button" data-move="right" aria-label="Move right">→</button></div></div>
       </div>
 
       <aside class="journal" id="field-notes" aria-live="polite"><div class="journal-head"><div><span class="journal-kicker">✺ YOUR RESEARCH JOURNAL</span><h3>Field notes</h3></div><span class="journal-sticker">✧</span></div><div class="progress-card"><div class="progress-top"><span>IDEAS DISCOVERED</span><strong id="progress-numeric">00 <small>/ 20</small></strong></div><div class="progress-track"><span id="progress-fill"></span></div><p>There are no shortcuts to understanding. Every discovery begins with a question.</p></div><div id="journal-content" class="journal-content"><div class="welcome-card"><div class="hello-icon">✦</div><p class="micro-label">WELCOME, CURIOUS MIND</p><h4>Small steps. Really big questions.</h4><p>Begin with George Glooman at the first research station and follow the twenty-stage prerequisite path. Bill Watkins guides the second station, while Daybreak, Matthew McMahon and Olka Gretcher appear later along the same original garden route. After the final exam, the advanced five-house garden features Anya, Bond, Damian, Yor and Loid in Chapters 21–25.</p><button class="action-button" id="start-journey" type="button">Follow the first chapter <span>↗</span></button></div></div><div class="journal-bottom"><span>✳ Curiosity is a method.</span><button type="button" id="reset-progress">reset discoveries</button></div></aside>
@@ -361,7 +355,7 @@ function chapterEquation(i){
 }
 
 const canvas=document.getElementById('world'),ctx=canvas.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=false;
-const W=canvas.width,H=canvas.height,TW=60,TH=30,NX=48,NY=48,OX=535,OY=-100;
+const W=canvas.width,H=canvas.height,TW=60,TH=30,NX=58,NY=58,OX=535,OY=-100;
 const imgs={};for(const id of [...IDS,'anya','bond','damian','yor','loid','explorer','stella','tonitrus','explorer_scholar']){const im=new Image();if(INLINE_SPRITES[id])im.src=INLINE_SPRITES[id];imgs[id]=im;}
 const state={player:{x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8},cam:{x:0,y:0},current:0,completed:new Set(),selection:null,hover:null,hitBoxes:[],toy:{x:0,v:1,a:0},energy:null,correctAnswered:false,travel:null,t:0};
 try{const p=JSON.parse(localStorage.getItem('latent-atlas-thread-v2')||'[]');if(Array.isArray(p)){for(let i=0;i<chapters.length;i++){if(!p.includes(i))break;state.completed.add(i);}}}catch(_){}
@@ -375,7 +369,7 @@ function box(x,y,w,h,fill,stroke){ctx.fillStyle=fill;ctx.fillRect(Math.round(x),
 function polygon(points,fill,stroke){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}}
 function txt(str,x,y,size,color,align='center',weight='800'){ctx.textAlign=align;ctx.textBaseline='alphabetic';ctx.font=`${weight} ${size}px ui-monospace, Menlo, monospace`;ctx.fillStyle=color;ctx.fillText(str,x,y);}
 function betweenDistance(p,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],len=dx*dx+dy*dy,t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/(len||1)));return Math.hypot(p[0]-(a[0]+t*dx),p[1]-(a[1]+t*dy));}
-function pathTile(x,y){for(let i=0;i<chapters.length-1;i++)if(betweenDistance([x,y],chapters[i].place,chapters[i+1].place)<1.05)return true;return typeof bvAdvancedPreviewPathTile==='function'&&bvAdvancedPreviewPathTile(x,y);}
+function pathTile(x,y){for(let i=0;i<chapters.length-1;i++)if(betweenDistance([x,y],chapters[i].place,chapters[i+1].place)<1.05)return true;return false;}
 function tile(x,y){const p=iso(x,y);if(p.x<-44||p.x>W+44||p.y<-30||p.y>H+33)return;const f=hash(x,y),path=pathTile(x,y),c=path?(f>.5?'#e7d9b6':'#e1d2ae'):(f>.7?'#a6d2aa':f>.4?'#a9ce9b':'#a9d0b0');polygon([[p.x,p.y-TH/2],[p.x+TW/2,p.y],[p.x,p.y+TH/2],[p.x-TW/2,p.y]],c,path?'#d5c7a7':'#95bd91');if(x===NX-1||y===NY-1)polygon([[p.x+TW/2,p.y],[p.x,p.y+TH/2],[p.x,p.y+TH/2+13],[p.x+TW/2,p.y+13]],'#71a589');if(f>.84&&!path){box(p.x-6,p.y-4,3,3,'#84b98a');box(p.x+5,p.y+3,3,2,'#79af84');}}
 function drawFlower(p,seed){const x=p.x,y=p.y;box(x-1,y-9,2,11,'#709f77');box(x-6,y-8,11,6,seed>.6?'#f3b7c9':'#fff0b4');box(x-2,y-6,4,3,'#debd81');}
 function drawBush(p,f){const x=p.x,y=p.y;polygon([[x-16,y],[x-11,y-11],[x-2,y-14],[x+11,y-9],[x+17,y],[x,y+5]],'#417d5e');polygon([[x-11,y-3],[x-7,y-12],[x+5,y-12],[x+12,y-1]],'#79ad7b');box(x-4,y-9,5,2,'#b2d59b');if(f>.8)box(x+6,y-5,3,3,'#f6abbf');}
@@ -411,10 +405,10 @@ function drawHouse(ch){const i=ch.index,p=iso(...ch.place),x=Math.round(p.x),y=M
 }
 function drawNpc(ch){const p=iso(ch.place[0]+1.25,ch.place[1]+1.45),x=p.x,y=p.y,b=Math.sin(state.t*.002+ch.index)*1.5,im=imgs[ch.id],h=ch.index>=20?(ch.id==='bond'?70:ch.id==='anya'?74:ch.id==='loid'||ch.id==='yor'?78:74):ch.id==='bill'?91:ch.id==='matthew'||ch.id==='olka'?78:ch.id==='daybreak'?77:71;
  ctx.fillStyle='#43735a60';ctx.beginPath();ctx.ellipse(x,y+2,ch.id==='bill'?25:15,5,0,0,Math.PI*2);ctx.fill();
- if(ch.index>=20&&typeof bvAdvancedPreviewHalo==='function'){const n=ch.index-20,bvStar=!!quest?.advanced?.stars?.[n],locked=!bvAdvancedAllowed()||n>bvAdvancedCurrent();bvAdvancedPreviewHalo(x,y-h/2+b,ch.id==='bond'?49:43,locked,bvStar);}
+
  if(im?.complete&&im.naturalWidth){const w=h*im.naturalWidth/im.naturalHeight;ctx.drawImage(im,x-w/2,y-h+b,w,h);}else {box(x-12,y-42,24,36,ch.color);box(x-9,y-53,18,17,'#f0d3be');}
  if(typeof quest!=='undefined'){const advIndex=ch.index-20,advanced=ch.index>=20;
- const badge=advanced?(quest.advanced?.stars?.[advIndex]?'stella':(!bvAdvancedAllowed()||advIndex>bvAdvancedCurrent()?'tonitrus':null)):(quest.stars[ch.index]?'stella':ch.index>state.current?'tonitrus':null);if(badge&&imgs[badge].complete&&imgs[badge].naturalWidth)ctx.drawImage(imgs[badge],x+22,y-h+2+b,21,22);}
+ const badge=advanced?(quest.advanced?.stars?.[advIndex]?'stella':null):(quest.stars[ch.index]?'stella':ch.index>state.current?'tonitrus':null);if(badge&&imgs[badge].complete&&imgs[badge].naturalWidth)ctx.drawImage(imgs[badge],x+22,y-h+2+b,21,22);}
  if(state.current===ch.index){txt('✦',x,y-h-9+b,16,'#fff3c0');}
  state.hitBoxes.push({kind:ch.index>=20?'advanced-preview':'chapter',index:ch.index>=20?ch.index-20:ch.index,x:x-29,y:y-h-13,w:58,h:h+22,depth:ch.place[0]+ch.place[1]+2});
 }
@@ -423,8 +417,7 @@ function drawExplorer(){const p=iso(state.player.x,state.player.y),x=p.x,y=p.y,i
  if(im.complete&&im.naturalWidth){const h=75,w=h*im.naturalWidth/im.naturalHeight;ctx.drawImage(im,x-w/2,y-h+b,w,h);}else{box(x-10,y-34,20,36,'#266ec8');box(x-11,y-56,22,25,'#262631');}
  box(x-24,y-93+b,48,17,'#304c64','#e8e2d8');txt('YOU ✦',x,y-81+b,10,'#fff9ef');}
 function drawFountain(){const p=iso(23,22),x=p.x,y=p.y;polygon([[x-34,y],[x,y+17],[x+34,y],[x,y-17]],'#d3ddc6');polygon([[x-30,y-1],[x,y+12],[x+30,y-1],[x,y-14]],'#8ec9cf');box(x-3,y-32,6,28,'#e1ece5');box(x-14,y-15,29,5,'#e0e9d5');box(x-10,y-12,20,4,'#a0c2bf');box(x-1,y-41,2,13,'#a2dcde');}
-function drawPath(){for(let i=0;i<chapters.length-1;i++){const a=chapters[i].place,b=chapters[i+1].place,active=i<state.current;for(let k=1;k<=17;k++){const t=k/18,p=iso(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t);if(p.x<-20||p.x>W+20||p.y<-20||p.y>H+20)continue;box(p.x-2,p.y-3,4,5,active?'#f9d985':'#c6ac8e');if(k===9){ctx.fillStyle=active?'#fff2b2':'#e0cbbb';ctx.beginPath();ctx.arc(p.x,p.y-4,7,0,Math.PI*2);ctx.fill();txt('›',p.x,p.y,12,'#8c775f');if(!active&&imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)ctx.drawImage(imgs.tonitrus,p.x-14,p.y-34,28,28);}}}
- if(typeof bvAdvancedPreviewPath==='function')bvAdvancedPreviewPath();}
+function drawPath(){for(let i=0;i<chapters.length-1;i++){const a=chapters[i].place,b=chapters[i+1].place,active=i<state.current;for(let k=1;k<=17;k++){const t=k/18,p=iso(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t);if(p.x<-20||p.x>W+20||p.y<-20||p.y>H+20)continue;box(p.x-2,p.y-3,4,5,active?'#f9d985':'#c6ac8e');if(k===9){ctx.fillStyle=active?'#fff2b2':'#e0cbbb';ctx.beginPath();ctx.arc(p.x,p.y-4,7,0,Math.PI*2);ctx.fill();txt('›',p.x,p.y,12,'#8c775f');if(!active&&imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)ctx.drawImage(imgs.tonitrus,p.x-14,p.y-34,28,28);}}}}
 let last=0;
 function render(ms){requestAnimationFrame(render);if(ms-last<85)return;last=ms;state.t=ms;
  if(state.travel){const tr=state.travel,tt=Math.min(1,(ms-tr.start)/1150),ease=tt*tt*(3-2*tt);state.player.x=tr.from.x+(tr.to.x-tr.from.x)*ease;state.player.y=tr.from.y+(tr.to.y-tr.from.y)*ease;if(tt>=1){state.travel=null;openChapter(state.current);}}
@@ -1106,112 +1099,112 @@ for(const tier of ['e','m','h'])for(const x of BV_IMPERIAL_EXTENSION[tier])IMPER
    All claims are bounded; links specify research provenance and publication type. */
 const BV_ADVANCED_CHAPTERS=[
   {
-    "name": "Generative Systems & Agentic Intelligence",
+    "name": "Grounded Generative Agents & Tool Evaluation",
     "guide": "Anya Forger",
-    "role": "Language, generative models, inference and tools",
-    "intro": "Trace the full research stack: tokenization, conditional modeling, transformer attention, pretraining, diffusion, preference alignment, retrieval, multimodal generation and agent tools. Distinguish fluent sampling from verifiable claims about the world.",
-    "experiment": "Run matched-budget comparisons of an autoregressive baseline, retrieval-assisted policy and tool-using agent on independently written unseen problems; audit data exposure and costs.",
-    "challenge": "What evidence separates genuine capability transfer from benchmark reuse, search-time contamination and prompt-level overfitting?",
+    "role": "Tool-augmented inference, independent judges and multimodal grounding",
+    "intro": "Advanced focus beyond Chapter 7: autonomous generative-agent execution, trustworthy tool routing, retrieval contamination, provenance, preference and reward-model failure, multimodal grounding, prompt injection, inference-time search and calibrated verification. Evaluate external outcomes rather than fluency or benchmark familiarity.",
+    "experiment": "On independent sealed tasks, compare an LM-only system, retrieval agent and tool-using planner with matched tokens, search budgets and tool access. Audit tool side effects, ground-truth sources, citation errors, prompt injection and independent success checks.",
+    "challenge": "Which intervention or independent outcome can distinguish genuine agent competence from tool leakage, reward hacking or seemingly persuasive text?",
     "papers": [
       [
-        "Attention Is All You Need — NeurIPS 2017",
-        "https://arxiv.org/abs/1706.03762"
+        "ReAct: Synergizing Reasoning and Acting in Language Models — ICLR 2023",
+        "https://openreview.net/forum?id=WE_vluYUL-X"
+      ],
+      [
+        "Toolformer: Language Models Can Teach Themselves to Use Tools — NeurIPS 2023",
+        "https://proceedings.neurips.cc/paper_files/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html"
       ],
       [
         "Direct Preference Optimization — NeurIPS 2023",
         "https://arxiv.org/abs/2305.18290"
-      ],
-      [
-        "Search-Time Data Contamination — 2025 preprint",
-        "https://arxiv.org/abs/2508.13180"
       ]
     ]
   },
   {
-    "name": "Causal & Latent World Models",
+    "name": "Causal Identifiability & Intervention",
     "guide": "Bond Forger",
-    "role": "Predictive state, intervention and uncertainty",
-    "intro": "Study identifiability, partially observable Markov decision processes, action-conditioned latent transitions, uncertainty, long-horizon rollout fidelity, JEPA-style representation learning, belief filtering, causal inference and counterfactual control.",
-    "experiment": "Design a small controlled physical shift where two models fit passive observations equally well but differ under actions; estimate rollout and task success with known intervention conditions.",
-    "challenge": "When is a latent predictive model sufficient for safe decisions rather than visually plausible extrapolation?",
+    "role": "Latent causal variables, belief states and controlled physical interventions",
+    "intro": "Advanced focus beyond Chapter 13: formal identifiability limits of latent physical states, observational equivalence, intervention assumptions, causal abstractions, counterfactual tests, hidden-contact belief filtering, action-conditioned distribution shifts and long-horizon model-error propagation.",
+    "experiment": "Construct matched observational data for two latent physical hypotheses that diverge only under a safe intervention. Evaluate identifiability, calibration and downstream decision quality on unseen real or simulator-supported intervention conditions with explicit assumptions.",
+    "challenge": "What causal variables can be inferred from passive observation, what requires action, and when is any claimed recovered mechanism fundamentally unidentifiable?",
     "papers": [
       [
-        "DreamerV3 — 2025 Nature",
-        "https://arxiv.org/abs/2301.04104"
+        "Unifying Causal Representation Learning with the Invariance Principle — ICLR 2025",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/hash/85381f4549b5ddf1d48e2e287d7d3d15-Abstract-Conference.html"
       ],
       [
-        "V-JEPA 2 — 2025 preprint",
-        "https://arxiv.org/abs/2506.09985"
+        "On the Identifiability of Causal Abstractions — AISTATS 2025",
+        "https://proceedings.mlr.press/v258/li25g.html"
       ],
       [
-        "RoboJEPA — 2026 preprint",
-        "https://arxiv.org/abs/2610.10515"
+        "Mastering Diverse Domains through World Models (DreamerV3) — Nature 2025",
+        "https://www.nature.com/articles/s41586-025-08744-2"
       ]
     ]
   },
   {
-    "name": "Compositional Embodied Skills",
+    "name": "Unseen Skill Composition & Transfer",
     "guide": "Damian Desmond",
-    "role": "Skills, contact, hierarchy and sim-to-real",
-    "intro": "Cover object-centric graphs, skill preconditions/effects, compositional transfer, inverse dynamics, goal-conditioned policies, hierarchical planning, contact, active tactile sensing, sim-to-real mismatches and VLA versus latent world-action modeling.",
-    "experiment": "Build a two-object manipulation study with a held-out pairing of mass, material and goal. Compare a factored model, monolithic policy and robust planner at matched trials.",
-    "challenge": "Which missing factor or relation makes a previously reliable skill fail under new compositions?",
+    "role": "Compositional task generalization under physical and embodiment shifts",
+    "intro": "Advanced focus beyond Chapters 16–17: novel permutations of multi-stage skills, object–tool relations, relational preconditions, robot-embodiment transfer, tactile failure diagnosis, temporal constraints, long-horizon error recovery and open-vocabulary task specifications without training-set tuple memorization.",
+    "experiment": "Hold out entire action–object–goal combinations and a physical property shift. Compare factorized compositional and monolithic policies on unseen sequences while measuring contact outcomes, failure localization and rollback safety.",
+    "challenge": "When can an agent recombine independently reliable skills into a safe, previously unseen multi-object action sequence, and which interactions invalidate naive composition?",
     "papers": [
       [
-        "V-JEPA 2 — 2025 preprint",
-        "https://arxiv.org/abs/2506.09985"
+        "RoboDreamer: Learning Compositional World Models for Robot Imagination — ICML 2024",
+        "https://proceedings.mlr.press/v235/zhou24f.html"
       ],
       [
-        "JEPA-WAM — 2026 preprint",
-        "https://arxiv.org/abs/2608.09381"
+        "ClevrSkills: Compositional Language and Visual Reasoning in Robotics — NeurIPS 2024",
+        "https://proceedings.neurips.cc/paper_files/paper/2024/file/439539557e9ba0d04055773ff1f3241c-Paper-Datasets_and_Benchmarks_Track.pdf"
       ],
       [
-        "La-JEPA — 2026 preprint",
-        "https://arxiv.org/abs/2611.08156"
+        "Compositional Interfaces for Compositional Generalization — CoLLAs 2025",
+        "https://proceedings.mlr.press/v274/luketina25a.html"
       ]
     ]
   },
   {
-    "name": "Reliable Safety & OOD Evaluation",
+    "name": "Certified Runtime Risk & OOD",
     "guide": "Yor Forger",
-    "role": "Statistics, runtime contracts and adversarial shifts",
-    "intro": "Examine uncertainty calibration, covariate and dynamical shift, offline support constraints, abstention trade-offs, safety contracts, selective prediction, conformal assumptions, causal stress tests, latency and security of tool-using AI.",
-    "experiment": "Pre-register a matched-budget safety study reporting violations, abstentions, state uncertainty, task success and confidence intervals across independent seeds and shifts.",
-    "challenge": "When is a claimed safety improvement supported by assumptions, coverage, risk statistics and realistic deployment conditions?",
+    "role": "Verification assumptions, calibrated risk budgets and runtime enforcement",
+    "intro": "Advanced focus beyond Chapter 18: mathematical preconditions of conformal risk bounds, nonexchangeable distribution shift, symbolic neural control-barrier verification, runtime fallback policies, formally specified failure events, latency-tail constraints, safety coverage and empirical assumption-violation audits.",
+    "experiment": "Pre-register a runtime safety study at matched task coverage. Verify a candidate neural barrier or conformal bound under stated assumptions, stress-test sensor/actuator mismatches, and report risk, accepted actions, fallback latency and confidence intervals across multiple seeds.",
+    "challenge": "Which safety claims remain valid under violated exchangeability, unknown dynamics, deadlines or imperfect perception, and which guarantees are only conditional?",
     "papers": [
       [
-        "SPIBB — ICML 2019",
-        "https://proceedings.mlr.press/v97/laroche19a.html"
+        "Conformal Risk Control — ICLR 2024",
+        "https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html"
       ],
       [
-        "Direct Preference Optimization — NeurIPS 2023",
-        "https://arxiv.org/abs/2305.18290"
+        "Verification of Neural Control Barrier Functions with Symbolic Derivative Bounds Propagation — CoRL 2024",
+        "https://proceedings.mlr.press/v270/hu25a.html"
       ],
       [
-        "Search-Time Data Contamination — 2025 preprint",
-        "https://arxiv.org/abs/2508.13180"
+        "Perceive With Confidence: Statistical Safety Assurances for Navigation — CoRL 2024",
+        "https://proceedings.mlr.press/v270/dixit25a.html"
       ]
     ]
   },
   {
-    "name": "Open-Ended Scientific Invention",
+    "name": "Recursive Improvement & Scientific Discovery",
     "guide": "Loid Forger",
-    "role": "Novelty, proof, continual adaptation and bounded claims",
-    "intro": "Develop falsifiable research hypotheses, explicit assumptions, fair baselines, novelty searches, conditional guarantees, rigorous ablations, continual learning, OOD transfer, external evaluation and cautious AGI/ASI framing. No existing game or benchmark confers genuine invention credentials.",
-    "experiment": "Draft an original mechanism and rejection criterion, then independently reproduce baseline failures, test component necessity with ablations and compare statistically across unseen task families.",
-    "challenge": "What counts as an independently established scientific advance rather than an apparent gain from leakage, scale, assumptions or self-reported novelty?",
+    "role": "RSI, automated experimental science, meta-agent search and external falsification",
+    "intro": "Advanced focus beyond Chapter 20's open-ended intelligence introduction: operational recursive self-improvement (RSI), empirical code-self-modification, archive-guided meta-agent search, automated scientific experiment design, independent falsification, model and evaluator co-adaptation, rollback, compute and safety budgets, benchmark leakage, and the distinction between narrow verified gains and unproven AGI/ASI claims.",
+    "experiment": "Design a bounded recursive-improvement protocol: propose one source-code or model-selection change, execute it in a sandbox, measure sealed held-out gains and regressions with an independent evaluator, track lineage and computational cost, and reject, revert or retain changes according to pre-registered criteria. Compare against a fixed-agent baseline.",
+    "challenge": "Under what assumptions can an agent repeatedly improve itself without inflating self-evaluation metrics, sacrificing prior capabilities or equating local benchmark gains with general superintelligence?",
     "papers": [
       [
-        "DreamerV3 — 2025 Nature",
-        "https://arxiv.org/abs/2301.04104"
+        "Automated Design of Agentic Systems — ICLR 2025",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/hash/36b7acf6f6010652b3f2a433774a66fe-Abstract-Conference.html"
       ],
       [
-        "V-JEPA 2 — 2025 preprint",
-        "https://arxiv.org/abs/2506.09985"
+        "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents — ICLR 2026",
+        "https://openreview.net/pdf?id=pUpzQZTvGY"
       ],
       [
-        "RoboJEPA — 2026 preprint",
-        "https://arxiv.org/abs/2610.10515"
+        "Towards End-to-End Automation of AI Research — Nature 2026",
+        "https://www.nature.com/articles/s41586-026-10265-5"
       ]
     ]
   }
@@ -1339,14 +1332,14 @@ Q("ADV 24 · A proposed safety shield accepts updates based on its own predicted
 Q("ADV 24 · A proposed safety shield accepts updates based on its own predicted improvement. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A gate can be unsafe if the gate model shares the same failure mode","Independent feedback reduces but cannot eliminate epistemic risk"],["Any acceptance gate proves safety","Self-predicted improvement is equivalent to environmental ground truth","Treat one successful demonstration as an unconditional theorem"],"Self-acceptance risks using an uncalibrated evaluator. A discriminating evaluation is: Use independent witness metrics and post-update rollback criteria.")]},
 {e:[Q("ADV 25 · A claimed new planner wins against a much smaller baseline with fewer samples. What central scientific distinction applies?",["Resource mismatch confounds algorithmic attribution"],["Comparing one favorable seed proves invention","More parameters have zero cost in scientific comparisons","A larger model alone guarantees unrestricted reliability"],"Resource mismatch confounds algorithmic attribution. A discriminating evaluation is: Match compute, environment steps and tuning budgets."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. What central scientific distinction applies?",["One shift is insufficient to establish robust transfer"],["One test condition proves broad generalization","The benchmark name establishes robustness","A larger model alone guarantees unrestricted reliability"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. What central scientific distinction applies?",["Acquisition must be evaluated jointly with retention"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","A larger model alone guarantees unrestricted reliability"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. What central scientific distinction applies?",["Recursive self-improvement requires independent verification of each proposed self-modification"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","A larger model alone guarantees unrestricted reliability"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. What central scientific distinction applies?",["Self-evaluation can create self-confirming feedback loops"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","A larger model alone guarantees unrestricted reliability"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An algorithm claims ASI because it beats a set of expert exams. What central scientific distinction applies?",["Exam superiority does not demonstrate unrestricted superintelligence"],["One exam score certifies all-domain superiority","Creative writing implies stable physical control","A larger model alone guarantees unrestricted reliability"],"Exam superiority does not demonstrate unrestricted superintelligence. A discriminating evaluation is: Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators."),
 Q("ADV 25 · A proposed formal guarantee assumes perfect sensor calibration. What central scientific distinction applies?",["A theorem is conditional on assumptions and implementation correspondence"],["Mathematical syntax alone proves physical safety","A theorem removes all engineering uncertainty","A larger model alone guarantees unrestricted reliability"],"A theorem is conditional on assumptions and implementation correspondence. A discriminating evaluation is: Audit assumptions experimentally and give a counterexample for mismatch."),
 Q("ADV 25 · A paper reports positive results without disclosing preprocessing and data sources. What central scientific distinction applies?",["Omitted transformations prevent independent reproduction and leakage checks"],["An impressive figure substitutes for reproducibility","Reproducibility is irrelevant to scientific novelty","A larger model alone guarantees unrestricted reliability"],"Omitted transformations prevent independent reproduction and leakage checks. A discriminating evaluation is: Release precise protocols, train/test partitions and configuration hashes."),
 Q("ADV 25 · A new component improves benchmark average but increases rare catastrophic failures. What central scientific distinction applies?",["Average reward alone can hide unacceptable tail risk"],["Mean accuracy guarantees low worst-case risk","Once a component is novel, its negative side effects do not matter","A larger model alone guarantees unrestricted reliability"],"Average reward alone can hide unacceptable tail risk. A discriminating evaluation is: Evaluate safety-tail events, coverage and performance together.")],m:[Q("ADV 25 · A claimed new planner wins against a much smaller baseline with fewer samples. Which controlled evaluation most directly addresses the uncertainty?",["Match compute, environment steps and tuning budgets"],["Comparing one favorable seed proves invention","More parameters have zero cost in scientific comparisons","Choose only the most favorable seed from the public benchmark"],"Resource mismatch confounds algorithmic attribution. A discriminating evaluation is: Match compute, environment steps and tuning budgets."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. Which controlled evaluation most directly addresses the uncertainty?",["Pre-register independent shift families and a failure taxonomy"],["One test condition proves broad generalization","The benchmark name establishes robustness","Choose only the most favorable seed from the public benchmark"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. Which controlled evaluation most directly addresses the uncertainty?",["Measure forward learning and backward forgetting on a task stream"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","Choose only the most favorable seed from the public benchmark"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. Which controlled evaluation most directly addresses the uncertainty?",["Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","Choose only the most favorable seed from the public benchmark"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. Which controlled evaluation most directly addresses the uncertainty?",["Use independent measurements and sealed external task families"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","Choose only the most favorable seed from the public benchmark"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An algorithm claims ASI because it beats a set of expert exams. Which controlled evaluation most directly addresses the uncertainty?",["Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators"],["One exam score certifies all-domain superiority","Creative writing implies stable physical control","Choose only the most favorable seed from the public benchmark"],"Exam superiority does not demonstrate unrestricted superintelligence. A discriminating evaluation is: Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators."),
 Q("ADV 25 · A proposed formal guarantee assumes perfect sensor calibration. Which controlled evaluation most directly addresses the uncertainty?",["Audit assumptions experimentally and give a counterexample for mismatch"],["Mathematical syntax alone proves physical safety","A theorem removes all engineering uncertainty","Choose only the most favorable seed from the public benchmark"],"A theorem is conditional on assumptions and implementation correspondence. A discriminating evaluation is: Audit assumptions experimentally and give a counterexample for mismatch."),
@@ -1355,8 +1348,8 @@ Q("ADV 25 · A new component improves benchmark average but increases rare catas
 Q("ADV 25 · A claimed new planner wins against a much smaller baseline with fewer samples. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A score gap is not a causal estimate of algorithm novelty","Fair comparisons must account for hyperparameter-search budget"],["Comparing one favorable seed proves invention","More parameters have zero cost in scientific comparisons","Treat one successful demonstration as an unconditional theorem"],"Resource mismatch confounds algorithmic attribution. A discriminating evaluation is: Match compute, environment steps and tuning budgets."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. Select BOTH safeguards a rigorous research protocol needs.",["Measure failures and safety under true held-out shifts","Report when adaptation is worse than frozen control"],["One test condition proves broad generalization","The benchmark name establishes robustness","Select the metric only after inspecting the sealed test set"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
 Q("ADV 25 · An adaptation algorithm improves one familiar shift but fails an unseen one. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A claimed universal fix is falsified by relevant counterexamples","Limitations are part of a reproducible research contribution"],["One test condition proves broad generalization","The benchmark name establishes robustness","Treat one successful demonstration as an unconditional theorem"],"One shift is insufficient to establish robust transfer. A discriminating evaluation is: Pre-register independent shift families and a failure taxonomy."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. Select BOTH safeguards a rigorous research protocol needs.",["Track task order and exposure opportunities","Report performance and compute across the entire stream"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","Select the metric only after inspecting the sealed test set"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
-Q("ADV 25 · A lifelong robot learns new tasks but forgets old skills. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["Current success can coexist with catastrophic forgetting","Task sequences create different interference effects"],["The last task score determines lifelong competence","Memory capacity never affects continual learning","Treat one successful demonstration as an unconditional theorem"],"Acquisition must be evaluated jointly with retention. A discriminating evaluation is: Measure forward learning and backward forgetting on a task stream."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. Select BOTH safeguards a rigorous research protocol needs.",["Track self-modification lineage and sealed evaluation exposure","Report compute, failures and rollback outcomes across the entire self-improvement trajectory"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","Select the metric only after inspecting the sealed test set"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
+Q("ADV 25 · A recursive self-modifying coding agent improves its own edit-and-test loop on one familiar benchmark. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["A self-modifying system can improve one benchmark while degrading previously reliable capabilities","Successive code modifications can silently invalidate earlier safety assumptions"],["A final coding benchmark score establishes unlimited recursive intelligence","Recursive code changes automatically preserve all old capabilities","Treat one successful demonstration as an unconditional theorem"],"Recursive self-improvement requires independent verification of each proposed self-modification. A discriminating evaluation is: Measure held-out coding gains, regression rates and compute costs after each independently checked source-code change."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. Select BOTH safeguards a rigorous research protocol needs.",["Log evaluator changes and ground-truth interventions","Compare frozen and co-adapted evaluator policies"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","Select the metric only after inspecting the sealed test set"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An autonomous system designs experiments judged by its own reward model. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["Improvement of an internal reward is not independent discovery","Scientific autonomy requires falsifiable external outcomes"],["The agent choosing its own grading rubric proves originality","Self-confirmation eliminates hypothesis testing","Treat one successful demonstration as an unconditional theorem"],"Self-evaluation can create self-confirming feedback loops. A discriminating evaluation is: Use independent measurements and sealed external task families."),
 Q("ADV 25 · An algorithm claims ASI because it beats a set of expert exams. Select BOTH safeguards a rigorous research protocol needs.",["Avoid conflating benchmark score with general capability","Report untested domains and unsupported claims"],["One exam score certifies all-domain superiority","Creative writing implies stable physical control","Select the metric only after inspecting the sealed test set"],"Exam superiority does not demonstrate unrestricted superintelligence. A discriminating evaluation is: Test distribution breadth, autonomy, resource costs and failure modes with independent evaluators."),
@@ -1376,6 +1369,8 @@ const BV_ADVANCED_IDS=['anya','bond','damian','yor','loid'];
 const BV_ADVANCED_SPRITES=BV_ADVANCED_IDS.map(
  id=>typeof INLINE_SPRITES==='undefined'?id:INLINE_SPRITES[id]
 );
+/* Derived only from the user's supplied spiked-ball pixel art; 64×64 transparent icon. */
+const BV_SPIKED_BALL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAwFBMVEUAAABFRUZZWloDAwI1NTV0dXWXmZuEhIVoaWooKCqZnaHV2Nulp6kWFxe3t7fFx8o7PUFjYV2doaS8vsFGQz3Z3OAdHCIfICI+QUNCOzJeYWW0qpw+QD99gIRbXWKCd2QgHyQsJBd9foKVinfBtKzQxroAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABxCUgSAAAAQHRSTlMA/////////////////////////////////////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATiD8QwAABCNJREFUeNrVl+l24zYMhQ0CBEGRkrzESSbLdH//V+wFJcf2VPJxx39ansQni/DxYiW12fznV8eP2fOeHgSUxwCcCv32EGCj+u8lfLN4+lGP3QVgJ/cBZDgB3rWohlMeON4pRlRnm3d48AXgGO9VsFOLzPwh/abTjoyFucI+5jsBZhqZ6ImpdB0AmV+BiEb53iAas1DgtAVAKWQKJB9A3gvo+xB2wfit2ve3N9kSAUf00ve3zEIZuYWLySwGeBwTGxbUixBiAs4UTzyXFlrEtBRHUGjWsE8eSjcXklgYIjK7ea1pyRkm5KzDRmHaHwAg8IuFEKgo41Myc1c2lX5ZBATF/xR7NnNNbRl+Ni61cwCzVtTWSkXtckhdNxzpkKCl4rsRJOswqBEAOZdBPwOFtdaJZkj86wjAMIwzoa+ldIkcIOJ1Qede+acXTqBCDtAZMGxK1Rnwue32sOd1AAha4xXABXSGukIsYzajW/aRkKrY8qEnQNJOYYaOCAE7PEf+WCH8xZSff82a6QoQpSKEDhCkwWuBeE2A74BnYooXgL7uMxZ5PXoxok1oFSBeeNZ0eyabByhAdddQkOYeyhoA9jTXsKXzwu80FTS5AgfIsg8AnLvgbO+EKG0FagR3ZwlA3kUzwbsonO2nfggNkL0vtwv7e6DlJCFvQ9DQpzTzLgEm6cdmRouUY4ECABIQXAumqc/Wk72vPHnAmCpF98qXLVCPaDFyH1xCn3CmqhNmPaEhdFLAL2bFGczn86vlnGYC9j+gZ9TyBLArD4Rz+2NxxNmF6Z+088cS1Li9ZZsV0OQDWVPwPEH98yIMQ+0nBV6u0aZ8Se8D6WtJKyZBGDG1hz8X0ugE9ZbxWUoZclteQ06+fysjJ7yiG/5YrANxCephECcIS1Mg1bc3n+xu73UgyzPRp38Llzyj3Nrh4h7UeIogTRW5WspNgrSnp9L9WnRtv9LPIPQvfirNG4aLdbYWudHOJNvxwOHHNe3fbJtjawA/c0rOUeza3ib9rZGRIFrzAIBaur3mwLvd5MATghEySr3ihHQBFvLI6/awRg2j2+nJq8WV46t389zi2luO4++8ClC/T0SfiuTzeVaO5kYLt5nYtz5Ys+8r+iM1F+liSSSfylEaAE0wpn5Ysn86oiHNZ1HOc7LcnHgLYfodOpACNBAUjbYIUJShl2mekz1NUeHXDsqszUUfZ05YVGA+e1s1ZLla1HWlw6VlrkHcFsNiGE6xZZoJef7gqmX/BntM42/thmLh1jsAAK3YGLeBl+xOZE7HT+MbBXR9R8AtoD2ctUQcAgAI64H9ULvrfh6lZ8iEgjQip9FFkAPuswcgv89jMo3RD2XyO2vle199Lod1GlpiW3Z+5tWJAfhK2M8BDsbvD73wAPDgK9eDL42bR+0fB/wv1t+nOigWeOqgngAAAABJRU5ErkJggg==';
 /* Isometric advanced garden. Faithfully reuses the same roof geometry, tile palette,
    shadowing and original PNG companions used by the first twenty houses.
    It does not change the existing world renderer or its navigation. */
@@ -2318,102 +2313,44 @@ window.addEventListener('load',()=>{
    bvAdvancedShow(Number.isInteger(wanted)?wanted:null);
  }
 },{once:true});
-/* BV-Garden advanced spectatorship: five real original companion sprites and
-   house silhouettes remain visible after Chapter 20, even before qualification.
-   Passing the final exam unlocks learning; visibility itself never unlocks lessons.
-   Existing 20-chapter data, original rewards and save records are unchanged. */
-const BV_ADVANCED_PREVIEW_SITES=[[25.5,40.5],[29.25,36.75],[33,33],[36.75,29.25],[40.5,25.5]];
+/* Chapter 20/21 visual divider. The authentic user-supplied spiked-ball
+   sprite is rendered in one straight row, with open ground on both sides.
+   The five advanced houses remain visible without exposing locked lessons. */
+const BV_ADVANCED_PREVIEW_SITES=[[29,48],[32.75,44.25],[36.5,40.5],[40.25,36.75],[44,33]];
 const BV_ADVANCED_PREVIEW_ROOFS=['#f5babb','#f2d0a1','#b9ccd8','#dfb0c7','#b9c8ab'];
 const BV_ADVANCED_PREVIEW_HOUSES=BV_ADVANCED_PREVIEW_SITES.map((place,i)=>({
-  index:20+i,id:BV_ADVANCED_IDS[i],place,
-  short:BV_ADVANCED_CHAPTERS[i].name,
-  color:BV_ADVANCED_PREVIEW_ROOFS[i]
+ index:20+i,id:BV_ADVANCED_IDS[i],place,
+ short:BV_ADVANCED_CHAPTERS[i].name,
+ color:BV_ADVANCED_PREVIEW_ROOFS[i]
 }));
-const bvAdvancedPreviewZone=(x,y)=>x+y>=60;
-function bvAdvancedPreviewPathTile(x,y){
- return BV_ADVANCED_PREVIEW_HOUSES.some((ch,i)=>{
-   const before=i===0?chapters[19].place:BV_ADVANCED_PREVIEW_HOUSES[i-1].place;
-   return betweenDistance([x,y],before,ch.place)<1.05;
- });
-}
+const bvAdvancedPreviewZone=(x,y)=>x+y>=67;
+const BV_SPIKED_IMG=new Image();
+BV_SPIKED_IMG.src=BV_SPIKED_BALL;
 function bvAdvancedPreviewOccupied(x,y){
  return BV_ADVANCED_PREVIEW_HOUSES.some(ch=>Math.abs(ch.place[0]-x)+Math.abs(ch.place[1]-y)<3.2)
-    || (x+y>=60&&x+y<=62);
+   || Math.abs(x+y-66.5)<2.2;
 }
 function bvAdvancedPreviewAddObjects(objects){
- objects.push({place:[23.5,37.5],fn:bvAdvancedPreviewGate});
+ objects.push({place:[33.25,33.25],fn:bvAdvancedPreviewGate});
  BV_ADVANCED_PREVIEW_HOUSES.forEach(ch=>{
    objects.push({place:ch.place,fn:()=>drawHouse(ch)});
    objects.push({place:[ch.place[0]+1.25,ch.place[1]+1.45],fn:()=>drawNpc(ch)});
  });
 }
-function bvAdvancedPreviewPath(){
- const open=bvAdvancedAllowed(),all=[chapters[19],...BV_ADVANCED_PREVIEW_HOUSES];
- for(let i=0;i<all.length-1;i++){
-  const a=all[i].place,b=all[i+1].place;
-  for(let k=1;k<=17;k++){
-   const t=k/18,p=iso(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t);
-   if(p.x<-35||p.x>W+35||p.y<-35||p.y>H+45)continue;
-   box(p.x-3,p.y-4,6,6,open&&i<=bvAdvancedCurrent()?'#f9d985':'#b9988e');
-   if(k===9){
-    ctx.beginPath();ctx.arc(p.x,p.y-6,9,0,Math.PI*2);
-    ctx.fillStyle=open&&i<bvAdvancedCurrent()?'#fff2b2':'#f5dbd7';ctx.fill();
-    txt('›',p.x,p.y,13,'#8c775f');
-    if((!open||i>=bvAdvancedCurrent())&&imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)
-      ctx.drawImage(imgs.tonitrus,p.x-16,p.y-43,32,32);
-   }
-  }
- }
-}
-function bvAdvancedPreviewHalo(x,y,r,locked,star){
- const border=star?'#c69e45':locked?'#7e5a74':'#83a990',
-       hi=star?'#fff0ae':locked?'#f5c4d3':'#e5ffe4';
- for(let k=0;k<36;k++){
-   const t=k*Math.PI/18;
-   const bx=x+Math.cos(t)*r,by=y+Math.sin(t)*r*.72;
-   box(bx-4,by-4,8,8,k%7===0?hi:border);
-   if(k%9===0)box(bx-2,by-6,4,4,hi);
- }
- if(locked&&imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)
-   ctx.drawImage(imgs.tonitrus,x+r-14,y-r*.78-12,32,32);
- if(star&&imgs.stella.complete&&imgs.stella.naturalWidth)
-   ctx.drawImage(imgs.stella,x+r-14,y-r*.78-12,29,30);
-}
 function bvAdvancedPreviewGate(){
- const opened=bvAdvancedAllowed(),color=opened?'#5b896b':'#9d506a';
- const start=iso(17,44),end=iso(44,17),y=start.y,mid=iso(30.5,30.5);
- if(y<-100||y>H+120)return;
- const left=Math.min(start.x,end.x),right=Math.max(start.x,end.x);
- // Pixel stone/steel wall: isometric depth shaded into the garden, with a central arch.
- for(let x=left;x<right;x+=21){
-  if(x>W+50||x<-50)continue;
-  const gateHole=opened&&Math.abs(x-mid.x)<58;
-  if(gateHole)continue;
-  box(x,y-23,21,27,color,'#423d4e');
-  box(x+2,y-19,17,7,opened?'#93b39a':'#c07d8c');
-  box(x+1,y-2,19,9,'#50414e');
-  box(x+3,y-7,15,4,opened?'#76a386':'#e2b4bb');
-  if(((x-left)/21)%3===0)box(x,y-34,8,11,'#3d404b','#e4b58e');
- }
- // Horned Tonitrus portal at the actual 20/21 boundary, not a generic badge.
- const mx=mid.x,my=mid.y;
- if(mx>-140&&mx<W+140){
-   box(mx-51,my-59,102,52,'#2e323e','#e2b36c');
-   box(mx-47,my-55,94,43,opened?'#456a60':'#713f59','#b5a179');
-   box(mx-52,my-68,15,21,'#3b3540','#e3b67b');
-   box(mx+37,my-68,15,21,'#3b3540','#e3b67b');
-   polygon([[mx-51,my-67],[mx-62,my-93],[mx-30,my-65]],'#efc9a2','#8d6e68');
-   polygon([[mx+51,my-67],[mx+62,my-93],[mx+30,my-65]],'#efc9a2','#8d6e68');
-   if(imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)
-     ctx.drawImage(imgs.tonitrus,mx-18,my-57,36,38);
-   txt(opened?'GATE OPEN':'SEALED GATE',mx,my-13,11,'#fff6d9');
-   box(mx-104,my+8,208,25,'#fff6e0','#c39364');
-   txt('ADVANCED 21–25 '+(opened?'OPEN':'LOCKED'),mx,my+25,11,'#624c45');
+ if(!BV_SPIKED_IMG.complete||!BV_SPIKED_IMG.naturalWidth)return;
+ // Constant x+y makes an exactly horizontal isometric-space divider.
+ // Spacing matches the image's spiked silhouette; no fence, portals or text.
+ for(let x=11;x<=55;x+=0.75){
+   const p=iso(x,66.5-x);
+   if(p.x<-50||p.x>W+50||p.y<-52||p.y>H+52)continue;
+   ctx.drawImage(BV_SPIKED_IMG,Math.round(p.x-23),Math.round(p.y-23),46,46);
  }
 }
 function bvAdvancedPreviewFocus(){
- const player=rawIso(state.player.x,state.player.y),focus=rawIso(33,33);
- state.explorePan={x:player.x-focus.x,y:player.y-focus.y};
+ const player=rawIso(state.player.x,state.player.y);
+ const focusX=rawIso(36.5,40.5).x,focusY=rawIso(33.25,33.25).y;
+ state.explorePan={x:player.x-focusX,y:player.y-focusY};
  if(typeof storeExplorer==='function')storeExplorer();
  document.getElementById('world')?.scrollIntoView({block:'center',behavior:'smooth'});
 }
@@ -2424,18 +2361,17 @@ function bvAdvancedPreviewSelect(i){
        pane=document.getElementById('journal-content');
  if(!pane)return;
  pane.innerHTML='<article class="chapter-article bv-advanced"><div class="chapter-tag">'+iconBolt()+
- ' SEALED RESEARCH HOUSE · '+(21+i)+'/25</div>'+
+ ' ADVANCED CHAPTER · LOCKED · '+(21+i)+'/25</div>'+
  '<div class="guide-header"><img src="'+img+'" alt="Original pixel-art guide: '+qEsc(ch.guide)+'"><div><h4>House '+(21+i)+' · '+qEsc(ch.name)+'</h4><p>'+qEsc(ch.guide)+'</p></div></div>'+
- '<p class="lede">You can inspect this advanced house and its horned Tonitrus boundary now, but its research challenges remain locked.</p>'+
+ '<p class="lede">You can inspect this advanced house and its spiked-ball boundary now, but its research challenges remain locked.</p>'+
  '<p>Pass all first 20 chapter gates and the final examination with at least 7/10 correct to enter the five-house research expedition. Imperial Scholar status is NOT required. After entry, the advanced houses unlock in order.</p>'+
  '<p>'+iconBolt()+' Original garden: 10 incorrect answers restart Chapter 1; advanced garden: 5 incorrect answers restart House 21.</p>'+
- '<button type="button" class="action-button" data-bv-preview-focus>View the advanced garden and Tonitrus wall →</button>'+
+ '<button type="button" class="action-button" data-bv-preview-focus>View advanced houses 21–25 →</button>'+
  '<button type="button" class="action-button" data-chapter="20">Return to the original final exam →</button></article>';
  pane.scrollTop=0;bvAdvancedPreviewFocus();
 }
 function bvAdvancedPreviewRibbon(){
- return '<div class="bv-advanced-ribbon-gate" role="listitem"><span class="bv-advanced-gate-symbol">'+iconBolt()+'</span><strong>HORNED TONITRUS BOUNDARY</strong><small>Visible to everyone · Advanced lessons locked until final exam pass</small>'+
- '<button type="button" class="action-button" data-bv-preview-focus>View Houses 21–25 on the same garden →</button></div>'+
+ return '<button type="button" role="listitem" class="bv-advanced-ribbon-gate" data-bv-preview-focus aria-label="View advanced chapters 21 through 25 beyond the spiked-ball divider"><img src="'+BV_SPIKED_BALL+'" alt="" aria-hidden="true">21–25</button>'+
  BV_ADVANCED_CHAPTERS.map((ch,i)=>{
  const star=quest.advanced?.stars?.[i],can=bvAdvancedAllowed(),ready=can&&i<=bvAdvancedCurrent();
  return '<button type="button" role="listitem" class="chapter-button bv-advanced-ribbon-btn '+(ready?'active':'locked')+'" data-bv-advanced-preview="'+i+'" aria-label="Chapter '+(21+i)+' '+qEsc(ch.name)+(!ready?' locked':'')+'">'+
@@ -2457,6 +2393,10 @@ document.addEventListener('click',event=>{
  const choose=event.target.closest('[data-bv-advanced-preview]');
  if(choose){bvAdvancedPreviewSelect(Number(choose.dataset.bvAdvancedPreview));return;}
 });
+
+// The compact map button uses the exact same image as the in-world divider.
+const bvPeekIcon=document.querySelector('.bv-adv-peek-icon');
+if(bvPeekIcon)bvPeekIcon.style.backgroundImage='url('+BV_SPIKED_BALL+')';
 </script>
 
 
