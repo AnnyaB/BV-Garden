@@ -61,7 +61,7 @@ test("Advanced houses remain visible and inspectable even before final-exam qual
   html.includes("bvAdvancedPreviewSelect(h.index)")&&
   html.includes("bvAdvancedShowWorld=function(){bvAdvancedPreviewFocus();}"));
 test("Advanced terrain traversal stays locked until ordinary final exam passes",
-  html.includes("function bvAdvancedPreviewZone")&&
+  html.includes("const bvAdvancedPreviewZone=")&&
   html.includes("bvAdvancedPreviewZone(x,y)")&&
   html.includes("bvAdvancedAllowed())")&&
   html.includes("bvAdvancedPreviewOccupied(x,y)"));
