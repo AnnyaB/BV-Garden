@@ -54,7 +54,7 @@ const bankEnd = html.indexOf("/* RESEARCH GARDEN QUEST ENGINE", bankStart);
 test("Question-bank source is discoverable", bankStart > 0 && bankEnd > bankStart);
 const bankCode = html.slice(bankStart, bankEnd);
 const bankData = JSON.parse(new Script(bankCode +
-  "\nJSON.stringify({chapters:CHALLENGE_BANK,exam:IMPERIAL_BANK})").runInNewContext({}, {timeout:5000}));
+  "\nJSON.stringify({chapters:CHALLENGE_BANK,exam:IMPERIAL_BANK,adv:BV_ADVANCED_BANK,advChapters:BV_ADVANCED_CHAPTERS})").runInNewContext({}, {timeout:5000}));
 test("20 distinct research levels", bankData.chapters.length === 20);
 const normalizeStem = t=>String(t).normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
 const stems = new Map();
@@ -81,7 +81,31 @@ for (const tier of ["e","m","h"]) for (const [j,q] of bankData.exam[tier].entrie
   validateQuestion(q,"imperial/"+tier+"/"+j,20);
   examTotal++;
 }
-test("406 chapter questions for five complete unique journeys", chapterTotal === 406);
+test("430 chapter questions including LM and generative AI", chapterTotal === 430);
+test("Five different advanced guides",bankData.advChapters.length===5&&new Set(bankData.advChapters.map(x=>x.guide)).size===5&&
+  bankData.advChapters.every(x=>x.intro.length>100&&x.experiment.length>100&&x.papers.length>=3));
+test("160 advanced MCQs in exactly 5 houses",bankData.adv.length===5&&
+  bankData.adv.every(b=>b.e.length===8&&b.m.length===8&&b.h.length===16));
+for(const [i,b] of bankData.adv.entries()){
+ for(const tier of ["e","m","h"])for(const [j,q] of b[tier].entries()){
+   const name="advanced "+(i+21)+"/"+tier+"/"+j,stem=normalizeStem(q.t);
+   test(name+" unique stem",stem.length>40&&!stems.has(stem));
+   stems.set(stem,name);
+   test(name+" single or double correct answers",q.a.length===(tier==='h'?2:1));
+   test(name+" independent explanation",typeof q.why==='string'&&q.why.length>60);
+   const options=[...q.a,...q.b].map(x=>String(x).toLowerCase().trim());
+   test(name+" distinct options",q.b.length>=3&&new Set(options).size===options.length);
+ }
+}
+test("Advanced five-Bolt reset is separate from original ten-Bolt reset",
+  html.includes("if(adv.bolts>=5){bvAdvancedReset();return;}") &&
+  html.includes("quest.advanced=reset")&&html.includes("data-bv-advanced-enter") &&
+  html.includes("function bvAdvancedHydrate()"));
+test("Existing final examination open after finishing 20 gates",
+  html.includes("if(kind==='exam'&&state.current!==20)return;"));
+test("Advanced elite qualification accepts either route",
+  html.includes("quest.imperialWins>=5||quest.advanced.completedRecord")&&
+  html.includes("if(adv.stars.every(Boolean)){adv.completedRecord=true;quest.eliteUnlocked=true;}"));
 console.log("PASS authored bank: "+chapterTotal+" chapter MCQs + "+examTotal+
   " final examination MCQs, all unique normalized stems");
 test("Five full journeys have nonrepeating, globally unique stems",
