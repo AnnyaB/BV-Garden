@@ -19,7 +19,7 @@ const BV_ADVANCED_CHAPTERS=[
       ],
       [
         "Direct Preference Optimization — NeurIPS 2023",
-        "https://arxiv.org/abs/2305.18290"
+        "https://proceedings.neurips.cc/paper_files/paper/2023/hash/a85b405ed65c6477a4fe8302b5e06ce7-Abstract-Conference.html"
       ]
     ]
   },
@@ -40,7 +40,7 @@ const BV_ADVANCED_CHAPTERS=[
         "https://proceedings.mlr.press/v258/li25g.html"
       ],
       [
-        "Mastering Diverse Domains through World Models (DreamerV3) — Nature 2025",
+        "Mastering Diverse Control Tasks through World Models — Nature 2025",
         "https://www.nature.com/articles/s41586-025-08744-2"
       ]
     ]
