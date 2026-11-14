@@ -96,7 +96,7 @@ function chapterEquation(i){
 
 const canvas=document.getElementById('world'),ctx=canvas.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=false;
 const W=canvas.width,H=canvas.height,TW=60,TH=30,NX=38,NY=38,OX=535,OY=-100;
-const imgs={};for(const id of [...IDS,'explorer','stella','tonitrus','explorer_scholar']){const im=new Image();im.src=INLINE_SPRITES[id];imgs[id]=im;}
+const imgs={};for(const id of [...IDS,'explorer','stella','tonitrus','explorer_scholar']){const im=new Image();if(INLINE_SPRITES[id])im.src=INLINE_SPRITES[id];imgs[id]=im;}
 const state={player:{x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8},cam:{x:0,y:0},current:0,completed:new Set(),selection:null,hover:null,hitBoxes:[],toy:{x:0,v:1,a:0},energy:null,correctAnswered:false,travel:null,t:0};
 try{const p=JSON.parse(localStorage.getItem('latent-atlas-thread-v2')||'[]');if(Array.isArray(p)){for(let i=0;i<chapters.length;i++){if(!p.includes(i))break;state.completed.add(i);}}}catch(_){}
 state.current=state.completed.size;
