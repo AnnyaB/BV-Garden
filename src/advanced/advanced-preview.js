@@ -78,3 +78,7 @@ document.addEventListener('click',event=>{
  const choose=event.target.closest('[data-bv-advanced-preview]');
  if(choose){bvAdvancedPreviewSelect(Number(choose.dataset.bvAdvancedPreview));return;}
 });
+
+// The compact map button uses the exact same image as the in-world divider.
+const bvPeekIcon=document.querySelector('.bv-adv-peek-icon');
+if(bvPeekIcon)bvPeekIcon.style.backgroundImage='url('+BV_SPIKED_BALL+')';
