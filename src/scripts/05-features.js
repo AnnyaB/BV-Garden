@@ -44,7 +44,7 @@ const BV_LEAGUE_TASKS=[
 ];
 function leagueHTML(){
  const league=quest.league||{entered:false,answers:{},reviewed:false},answers=league.answers||{};
- let html='<article class="chapter-article"><div class="chapter-tag">ELITE IMPERIAL LEAGUE</div><h4>Independent scientific reasoning</h4><p class="lede">Unlocked after five separate 20-Stella journeys and qualifying final exams. Complete conceptual, mathematical, coding and short written exercises. The written answer is self-reviewed against a disclosed rubric; this offline game cannot certify scientific mastery.</p>';
+ let html='<article class="chapter-article"><div class="chapter-tag">ELITE IMPERIAL LEAGUE</div><h4>Independent scientific reasoning</h4><p class="lede">Unlocked after five separately qualifying Imperial Scholar journeys OR five Stellas across advanced Houses 21–25. Complete conceptual, mathematical, coding and short written exercises. The written answer is self-reviewed against a disclosed rubric; this offline game cannot certify scientific mastery.</p>';
  BV_LEAGUE_TASKS.forEach((task,i)=>{
   html+='<section class="bv-league-task"><h5>'+String(i+1).padStart(2,'0')+' · '+qEsc(task.type)+'</h5><p>'+qEsc(task.prompt)+'</p>';
   if(i===0)html+=task.options.map((option,j)=>'<label><input name="bv-league-mcq" type="radio" value="'+j+'" '+(answers.mcq===j?'checked':'')+'> '+qEsc(option)+'</label>').join('');
