@@ -84,8 +84,11 @@ function bvAdvancedStageHTML(i){
 function bvAdvancedShow(level=null){
  if(!bvAdvancedAllowed())return;
  const pane=document.getElementById('journal-content');if(!pane)return;
- pane.innerHTML=(Number.isInteger(level)&&level>=0&&level<5&&level<=bvAdvancedCurrent())?bvAdvancedStageHTML(level):bvAdvancedMapHTML();
+ const validLevel=Number.isInteger(level)&&level>=0&&level<5&&level<=bvAdvancedCurrent();
+ quest.advanced.view=validLevel?level:'map';
+ pane.innerHTML=validLevel?bvAdvancedStageHTML(level):bvAdvancedMapHTML();
  pane.scrollTop=0;
+ storeQuest();
  bvAdvancedShowWorld();
 }
 function bvAdvancedStart(level){
@@ -142,7 +145,7 @@ function bvAdvancedSubmit(){
    The original canvas, its camera and twenty-house progression are never modified. */
 function bvAdvancedHideWorld(){
  const overlay=document.getElementById('bv-advanced-overlay');
- if(overlay)overlay.hidden=true;
+ if(overlay&&!overlay.hidden){overlay.hidden=true;if(quest.advanced){quest.advanced.view=null;storeQuest();}}
 }
 function bvAdvancedShowWorld(){
  const host=document.querySelector('.canvas-wrap');if(!host)return;
@@ -189,3 +192,10 @@ document.addEventListener('click',event=>{
  if(t.closest('[data-bv-adv-submit]')){bvAdvancedSubmit();return;}
 });
 storeQuest();
+window.addEventListener('load',()=>{
+ const a=quest.advanced;
+ if(bvAdvancedAllowed()&&(a.active||a.view==='map'||Number.isInteger(a.view))){
+   const wanted=a.active?a.active.level:a.view;
+   bvAdvancedShow(Number.isInteger(wanted)?wanted:null);
+ }
+},{once:true});
