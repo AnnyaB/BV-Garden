@@ -18,7 +18,7 @@ quest.eliteUnlocked=quest.imperialWins>=5;
 if(!quest.league||typeof quest.league!=='object')quest.league={entered:false,answers:{},reviewed:false};
 if(!quest.league.answers||typeof quest.league.answers!=='object')quest.league.answers={};
 function storeQuest(){try{localStorage.setItem(QUEST_STORAGE,JSON.stringify(quest));}catch(_){}}
-function canEnterZone(x,y){return !chapters.some((ch,i)=>i>state.current&&Math.hypot(x-ch.place[0],y-ch.place[1])<3.5);}
+function canEnterZone(x,y){return !chapters.some((ch,i)=>i>state.current&&Math.hypot(x-ch.place[0],y-ch.place[1])<3.5)&&!(typeof bvAdvancedPreviewZone==='function'&&bvAdvancedPreviewZone(x,y)&&!(typeof bvAdvancedAllowed==='function'&&bvAdvancedAllowed()));}
 function move(dx,dy){if(state.travel)state.travel=null;const nx=Math.max(0,Math.min(NX-1,state.player.x+dx)),ny=Math.max(0,Math.min(NY-1,state.player.y+dy));if(!canEnterZone(nx,ny)){showRewardToast('tonitrus','Concept gate locked · resolve the four obstacles');return;}state.player.x=nx;state.player.y=ny;}
 function repairProgress(){state.completed.clear();for(let i=0;i<20;i++){if(!quest.passed[i])break;state.completed.add(i);}state.current=state.completed.size;state.correctAnswered=false;}
 repairProgress();
