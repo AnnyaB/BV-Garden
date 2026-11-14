@@ -47,7 +47,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Compositional Embodied Skills",
-    "guide": "Daybreak",
+    "guide": "Damian Desmond",
     "role": "Skills, contact, hierarchy and sim-to-real",
     "intro": "Cover object-centric graphs, skill preconditions/effects, compositional transfer, inverse dynamics, goal-conditioned policies, hierarchical planning, contact, active tactile sensing, sim-to-real mismatches and VLA versus latent world-action modeling.",
     "experiment": "Build a two-object manipulation study with a held-out pairing of mass, material and goal. Compare a factored model, monolithic policy and robust planner at matched trials.",
