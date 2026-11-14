@@ -82,7 +82,7 @@ function bvAdvancedPreviewRibbon(){
  return '<button type="button" role="listitem" class="chapter-button bv-advanced-ribbon-btn '+(ready?'active':'locked')+'" data-bv-advanced-preview="'+i+'" aria-label="Chapter '+(21+i)+' '+qEsc(ch.name)+(!ready?' locked':'')+'">'+
  '<span class="chapter-no">'+(21+i)+'/25</span>'+
  '<span class="chapter-title">'+qEsc(ch.name)+'</span>'+
- '<span class="chapter-status">'+(star?iconStar()+' STELLA':ready?'✦ Research house ready':iconBolt()+' VISIBLE · LOCKED')+'</span></button>';
+ '<span class="chapter-status">'+(star?iconStar()+' STELLA':ready?'✦ Research house ready':iconBolt()+' LOCKED')+'</span></button>';
  }).join('');
 }
 // Reuse the main world and its original sprites when entering the advanced course.

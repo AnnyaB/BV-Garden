@@ -56,7 +56,8 @@ test('Locked chapter ribbon shows five advanced entries and horned Bolt wall',()
  const html=p.ribbon();
  assert.equal((html.match(/data-bv-advanced-preview=/g)||[]).length,5);
  assert.match(html,/data-bv-preview-focus/);
- assert.match(html,/VISIBLE · LOCKED/);
+ assert.match(html,/LOCKED/);
+ assert.doesNotMatch(html,/VISIBLE · LOCKED/);
 });
 test('Clicking a locked advanced guide displays a preview but cannot open lessons',()=>{
  p.select(0);
