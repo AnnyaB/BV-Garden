@@ -2322,7 +2322,7 @@ window.addEventListener('load',()=>{
    house silhouettes remain visible after Chapter 20, even before qualification.
    Passing the final exam unlocks learning; visibility itself never unlocks lessons.
    Existing 20-chapter data, original rewards and save records are unchanged. */
-const BV_ADVANCED_PREVIEW_SITES=[[25,41],[29,37],[33,33],[37,29],[41,25]];
+const BV_ADVANCED_PREVIEW_SITES=[[25.5,40.5],[29.25,36.75],[33,33],[36.75,29.25],[40.5,25.5]];
 const BV_ADVANCED_PREVIEW_ROOFS=['#f5babb','#f2d0a1','#b9ccd8','#dfb0c7','#b9c8ab'];
 const BV_ADVANCED_PREVIEW_HOUSES=BV_ADVANCED_PREVIEW_SITES.map((place,i)=>({
   index:20+i,id:BV_ADVANCED_IDS[i],place,
@@ -2381,7 +2381,7 @@ function bvAdvancedPreviewHalo(x,y,r,locked,star){
 }
 function bvAdvancedPreviewGate(){
  const opened=bvAdvancedAllowed(),color=opened?'#5b896b':'#9d506a';
- const start=iso(17,44),end=iso(44,17),y=start.y,mid=iso(22.5,38.5);
+ const start=iso(17,44),end=iso(44,17),y=start.y,mid=iso(30.5,30.5);
  if(y<-100||y>H+120)return;
  const left=Math.min(start.x,end.x),right=Math.max(start.x,end.x);
  // Pixel stone/steel wall: isometric depth shaded into the garden, with a central arch.
