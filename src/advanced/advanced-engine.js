@@ -178,7 +178,7 @@ const bvOriginalCompleteScreen=completeScreen;
 completeScreen=function(){
  const html=bvOriginalCompleteScreen();
  if(!bvAdvancedAllowed())return html;
- return html+'<div class="bv-adv-portal"><h4>Research Expedition · Houses 21–25</h4><p>After passing Loid’s final examination, explore five new advanced research houses. Imperial Scholar status is optional; five advanced Stellas or five separate Imperial wins qualify for the Elite Imperial League.</p><button type="button" class="action-button" data-bv-advanced-enter>Enter the five research houses →</button></div>';
+ return html+'<div class="bv-adv-portal"><h4>Research Expedition · Houses 21–25</h4><p>After passing the Chapter 20 final examination, explore five new advanced research houses. Imperial Scholar status is optional; five advanced Stellas or five separate Imperial wins qualify for the Elite Imperial League.</p><button type="button" class="action-button" data-bv-advanced-enter>Enter the five research houses →</button></div>';
 };
 document.addEventListener('click',event=>{
  const t=event.target,enter=t.closest('[data-bv-advanced-enter]');
