@@ -72,6 +72,7 @@ test('Actual main movement guard prevents entering preview sector before qualify
  assert.ok(match);
  let success=false;
  context.bvAdvancedAllowed=()=>false;
+ context.bvAdvancedPreviewZone=(x,y)=>p.locked(x,y);
  new Script(match[0]+'\nthis.zoneCheck=canEnterZone;').runInNewContext(context);
  success=context.zoneCheck(25,41);
  assert.equal(success,false);
