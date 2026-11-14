@@ -19,6 +19,8 @@ const context={
   {name:'Safety',guide:'Yor Forger'},
   {name:'Invention',guide:'Loid Forger'}],
  BV_ADVANCED_SPRITES:['anya-src','bond-src','damian-src','yor-src','loid-src'],
+ BV_SPIKED_BALL:'data:image/png;base64,FAKE_FOR_VM',
+ Image:class{set src(x){this._src=x;}},
  chapters:Array.from({length:20},(_,i)=>({place:[i+3,i+4],short:'Main chapter '+i})),
  state:{player:{x:5,y:21},explorePan:null,current:0},
  quest:{advanced:{stars:[false,false,false,false,false],passed:[false,false,false,false,false]},passed:Array(20).fill(false)},
@@ -27,6 +29,7 @@ const context={
  betweenDistance:(p,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1];const t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/(dx*dx+dy*dy||1)));return Math.hypot(p[0]-(a[0]+t*dx),p[1]-(a[1]+t*dy));},
  document:{
   getElementById:id=>({innerHTML:'',scrollTop:0,scrollIntoView:()=>{}}),
+  querySelector:()=>null,
   addEventListener:()=>{}
  },
  qEsc:s=>String(s),iconBolt:()=>'<img class="bolt">',iconStar:()=>'<img class="star">',
@@ -46,13 +49,13 @@ test('Twenty original chapters and five distinct future houses',()=>{
 });
 test('Barrier separates the old twenty from the five visible houses',()=>{
  assert.equal(p.locked(20,36),false);
- assert.equal(p.locked(25,41),true);
- assert.equal(p.locked(41,25),true);
+ assert.equal(p.locked(29,48),true);
+ assert.equal(p.locked(44,33),true);
 });
 test('Locked chapter ribbon shows five advanced entries and horned Bolt wall',()=>{
  const html=p.ribbon();
  assert.equal((html.match(/data-bv-advanced-preview=/g)||[]).length,5);
- assert.match(html,/HORNED TONITRUS BOUNDARY/);
+ assert.match(html,/data-bv-preview-focus/);
  assert.match(html,/VISIBLE · LOCKED/);
 });
 test('Clicking a locked advanced guide displays a preview but cannot open lessons',()=>{
@@ -65,7 +68,17 @@ test('Original world renderer includes five future houses and their exact built-
  assert.ok(world.includes("bvAdvancedPreviewAddObjects(objects)"));
  assert.ok(world.includes("bvAdvancedPreviewSelect(h.index)"));
  assert.ok(world.includes("'anya','bond','damian','yor','loid'"));
- assert.ok(world.includes("bvAdvancedPreviewHalo("));
+ assert.ok(!world.includes("bvAdvancedPreviewHalo("));
+ assert.ok(!world.includes("bvAdvancedPreviewPath();"));
+});
+test('Original pixel spiked ball is the only new terrain boundary; no fence or circles',()=>{
+ assert.ok(preview.includes("const BV_SPIKED_IMG=new Image()"));
+ assert.ok(preview.includes("for(let x=11;x<=55;x+=0.75)"));
+ assert.ok(preview.includes("ctx.drawImage(BV_SPIKED_IMG"));
+ assert.ok(!preview.includes('SEALED GATE'));
+ assert.ok(!preview.includes('bvAdvancedPreviewHalo('));
+ assert.ok(!preview.includes('bvAdvancedPreviewPath()'));
+ assert.equal(p.houses.every(ch=>Math.abs(ch.place[0]+ch.place[1]-77)<0.001),true);
 });
 test('Actual main movement guard prevents entering preview sector before qualifying',()=>{
  const match=engine.match(/function canEnterZone\(x,y\)\{return [^}]+\}/);
@@ -74,9 +87,9 @@ test('Actual main movement guard prevents entering preview sector before qualify
  context.bvAdvancedAllowed=()=>false;
  context.bvAdvancedPreviewZone=(x,y)=>p.locked(x,y);
  new Script(match[0]+'\nthis.zoneCheck=canEnterZone;').runInNewContext(context);
- success=context.zoneCheck(25,41);
+ success=context.zoneCheck(29,48);
  assert.equal(success,false);
  context.bvAdvancedAllowed=()=>true;
- assert.equal(context.zoneCheck(25,41),true);
+ assert.equal(context.zoneCheck(29,48),true);
 });
 console.log('Shared world spectator preview verified without granting awards.');
