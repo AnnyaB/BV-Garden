@@ -16,6 +16,8 @@ Then open http://localhost:8000/ .
 
 **Controls:** WASD or arrow keys to move, M for the map, F to recenter, and drag to pan. Touch controls are provided on supported screens.
 
+**Found an issue?** If you encounter a bug or unexpected behaviour while playing, please [open a GitHub Issue](https://github.com/AnnyaB/BV-Garden/issues/new) with a description of the problem, steps to reproduce it, and screenshots where helpful.
+
 ## Progress and Game Rules
 
 ### Chapters 1–20 · Original Research Garden
@@ -36,7 +38,7 @@ If neither condition is met, the chapter remains locked until the player passes 
 
 The game does not repeat previously used question prompts. Its offline question bank is finite; further attempts may become unavailable if insufficient unused questions remain.
 
-### Final Examination · Original Garden
+### Final Examination
 
 After passing all 20 chapter gates, the player can attempt the final examination **without needing all 20 Stellas**.
 
@@ -98,16 +100,7 @@ Either route is sufficient. Completing both is not required.
 
 The existing Elite Imperial League contains conceptual, mathematical, coding and short written scientific-reasoning exercises. Written responses are self-reviewed against a disclosed rubric.
 
-### Question Integrity and Progress Preservation
-
-- Previously displayed question prompts are tracked to prevent their reuse across attempts and journeys.
-- Question choices can be single-select or multi-select, depending on the chapter and difficulty.
-- Submitted answers cannot be changed or retried within the same question.
-- Completed assessments provide explanations and answer reviews.
-- The original garden and advanced garden maintain separate Bolt-reset rules.
-- Ordinary examination passes, Imperial wins and advanced qualification are tracked separately.
-- Progress, active assessments, selected avatar, player position and map pan are saved locally.
-- Completing game assessments represents game achievement, **not certification of research mastery, scientific invention, AGI or ASI**.
+### Progress Preservation
 
 Progress is saved **in this browser on this website origin**, not in an online account. Use the game's export/restore controls to make and load a save file; you can email that file to yourself. This is not automatic email synchronization. Browser storage may not survive clearing site data, switching devices or using private browsing.
 
@@ -123,5 +116,10 @@ npm test
 The checked-in `index.html` is the playable build; `build:check` verifies that it matches the `src/` files byte-for-byte. Run `npm run build` **only when deliberately regenerating** `index.html` after changing source files.
 
 Research references: [source catalogue](docs/SOURCES_HARVARD.md).
+
+## Credits
+
+- **Sound effects:** [Pixabay](https://pixabay.com/sound-effects/).
+- **Character references:** *SPY×FAMILY* by Tatsuya Endo. This credit concerns the characters, not the game's scientific concepts, educational content or storytelling.
 
 **Rights:** This is a proprietary project in development, **not MIT-licensed** and not open for external contributions. See [LICENSE](LICENSE) for access, reuse and third-party asset restrictions.
