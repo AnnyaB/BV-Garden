@@ -41,31 +41,34 @@ test("Five full-length canon sprite images have correct dimensions and PNG signa
   fivePng.length>12000&&fivePng.toString("ascii",1,4)==="PNG"&&
   fivePng.readUInt32BE(16)===480&&fivePng.readUInt32BE(20)===152&&
   html.includes("const BV_CAST_STRIDE=96;")&&html.includes("const BV_CAST_HEIGHT=152;"));
-test("All twenty-five houses render on the same interactive isometric world",
-  html.includes("NX=48,NY=48")&&
-  html.includes("const BV_ADVANCED_PREVIEW_SITES=[[25.5,40.5],[29.25,36.75],[33,33],[36.75,29.25],[40.5,25.5]]")&&
-  html.includes("bvAdvancedPreviewAddObjects(objects)")&&
-  html.includes("bvAdvancedPreviewPathTile(x,y)")&&
-  html.includes("bvAdvancedPreviewPath();"));
-test("Visible 20/21 gate has pixel-horn geometry and the original horned Tonitrus sprite",
-  html.includes("function bvAdvancedPreviewGate()")&&
-  html.includes("ADVANCED 21–25 ")&&
-  html.includes("if(imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)")&&
-  html.includes("polygon([[mx-51,my-67],[mx-62,my-93]")&&
-  html.includes("bvAdvancedPreviewHalo("));
-test("Advanced houses remain visible and inspectable even before final-exam qualification",
-  html.includes("function bvAdvancedPreviewSelect(i)")&&
-  html.includes("function bvAdvancedPreviewRibbon()")&&
-  html.includes("data-bv-advanced-preview")&&
-  html.includes("data-bv-preview-focus")&&
-  html.includes("bvAdvancedPreviewSelect(h.index)")&&
-  html.includes("bvAdvancedShowWorld=function(){bvAdvancedPreviewFocus();}"));
+test("All twenty-five house companions render on one original canvas with clear spacing",
+ html.includes("NX=58,NY=58")&&
+ html.includes("const BV_ADVANCED_PREVIEW_SITES=[[29,48],[32.75,44.25],[36.5,40.5],[40.25,36.75],[44,33]]")&&
+ html.includes("bvAdvancedPreviewAddObjects(objects)")&&
+ html.includes("bvAdvancedPreviewOccupied(x,y)"));
+test("Single horizontal separator uses transparent user-supplied pixel spiked ball",
+ html.includes("const BV_SPIKED_BALL='data:image/png;base64,")&&
+ html.includes("function bvAdvancedPreviewGate()")&&
+ html.includes("for(let x=11;x<=55;x+=0.75)")&&
+ html.includes("ctx.drawImage(BV_SPIKED_IMG")&&
+ !html.includes("bvAdvancedPreviewHalo(")&&!html.includes("bvAdvancedPreviewPath();")&&
+ !html.includes("SEALED GATE"));
+test("Small advanced preview button displays actual spiked ball, not lightning emoji",
+ html.includes('class="bv-adv-peek-icon"')&&
+ html.includes("bvPeekIcon.style.backgroundImage")&&
+ !html.includes("⚡ 21–25"));
+test("Advanced houses remain inspectable while challenge gates stay locked",
+ html.includes("function bvAdvancedPreviewSelect(i)")&&
+ html.includes("function bvAdvancedPreviewRibbon()")&&
+ html.includes("data-bv-advanced-preview")&&
+ html.includes("data-bv-preview-focus")&&
+ html.includes("bvAdvancedPreviewSelect(h.index)")&&
+ html.includes("bvAdvancedShowWorld=function(){bvAdvancedPreviewFocus();}"));
 test("Advanced terrain traversal stays locked until ordinary final exam passes",
-  html.includes("const bvAdvancedPreviewZone=")&&
-  html.includes("bvAdvancedPreviewZone(x,y)")&&
-  html.includes("bvAdvancedAllowed())")&&
-  html.includes("bvAdvancedPreviewOccupied(x,y)"));
-
+ html.includes("const bvAdvancedPreviewZone=(x,y)=>x+y>=67")&&
+ html.includes("bvAdvancedPreviewZone(x,y)")&&
+ html.includes("bvAdvancedAllowed())")&&
+ html.includes("bvAdvancedPreviewOccupied(x,y)"));
 
 const sounds = [...html.matchAll(/\b(stella|fail):'data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)'/g)];
 test("Two embedded MP3 clips", sounds.length === 2 && new Set(sounds.map(s => s[1])).size === 2);
@@ -126,6 +129,13 @@ for (const tier of ["e","m","h"]) for (const [j,q] of bankData.exam[tier].entrie
 test("430 chapter questions including LM and generative AI", chapterTotal === 430);
 test("Five different advanced guides",bankData.advChapters.length===5&&new Set(bankData.advChapters.map(x=>x.guide)).size===5&&
   bankData.advChapters.every(x=>x.intro.length>100&&x.experiment.length>100&&x.papers.length>=3));
+test("25 distinct chapters with advanced RSI and verified conference research links",
+  new Set(bankData.advChapters.map(x=>x.name)).size===5&&
+  bankData.advChapters[4].name.includes("Recursive Improvement")&&
+  bankData.advChapters[4].intro.includes("RSI")&&
+  bankData.advChapters.every(x=>x.papers.length===3&&
+    new Set(x.papers.map(p=>p[1])).size===3&&x.papers.every(p=>/^https:\/\//.test(p[1])))&&
+  new Set(bankData.advChapters.flatMap(x=>x.papers.map(p=>p[1]))).size===15);
 test("160 advanced MCQs in exactly 5 houses",bankData.adv.length===5&&
   bankData.adv.every(b=>b.e.length===8&&b.m.length===8&&b.h.length===16));
 for(const [i,b] of bankData.adv.entries()){
