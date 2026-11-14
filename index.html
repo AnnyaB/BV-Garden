@@ -2339,8 +2339,17 @@ const bvAdvancedPreviewZone=(x,y)=>x+y>=67;
 const BV_SPIKED_IMG=new Image();
 BV_SPIKED_IMG.src=BV_SPIKED_BALL;
 function bvAdvancedPreviewOccupied(x,y){
- return BV_ADVANCED_PREVIEW_HOUSES.some(ch=>Math.abs(ch.place[0]-x)+Math.abs(ch.place[1]-y)<3.2)
-   || Math.abs(x+y-66.5)<2.2;
+ // Keep decorative trees, shrubs and flowers clear of every house, companion,
+ // signboard and front approach. The original twenty houses need this too.
+ if(Math.abs(x+y-66.5)<2.2)return true;
+ return chapters.concat(BV_ADVANCED_PREVIEW_HOUSES).some(ch=>{
+   const hx=ch.place[0],hy=ch.place[1];
+   const nearHouse=Math.abs(hx-x)+Math.abs(hy-y)<4.2;
+   const nearCompanion=Math.abs(hx+1.25-x)+Math.abs(hy+1.45-y)<3.4;
+   const nearSign=Math.abs(hx-0.2-x)+Math.abs(hy-3.1-y)<3.3;
+   const nearFront=Math.abs(hx+0.8-x)+Math.abs(hy+2.5-y)<2.7;
+   return nearHouse||nearCompanion||nearSign||nearFront;
+ });
 }
 function bvAdvancedPreviewAddObjects(objects){
  objects.push({place:[33.25,33.25],fn:bvAdvancedPreviewGate});
