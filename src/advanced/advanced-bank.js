@@ -69,7 +69,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Reliable Safety & OOD Evaluation",
-    "guide": "Matthew McMahon",
+    "guide": "Yor Forger",
     "role": "Statistics, runtime contracts and adversarial shifts",
     "intro": "Examine uncertainty calibration, covariate and dynamical shift, offline support constraints, abstention trade-offs, safety contracts, selective prediction, conformal assumptions, causal stress tests, latency and security of tool-using AI.",
     "experiment": "Pre-register a matched-budget safety study reporting violations, abstentions, state uncertainty, task success and confidence intervals across independent seeds and shifts.",
