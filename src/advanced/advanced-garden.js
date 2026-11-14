@@ -60,7 +60,7 @@ function bvAdvancedRenderGarden(){
   c.strokeStyle=locked?'#728c89':won?'#dfb64d':'#d6b26c';c.lineWidth=3;c.stroke();
   if(im.complete&&im.naturalWidth){
    const h=i===1?95:i===0||i===2?81:87,w=h*im.naturalWidth/im.naturalHeight;
-   c.globalAlpha=locked?.58:1;c.drawImage(im,x-w/2,y-h,w,h);c.globalAlpha=1;
+   c.globalAlpha=locked?0.58:1;c.drawImage(im,x-w/2,y-h,w,h);c.globalAlpha=1;
   }else{block(x-18,y-57,36,45,'#d2a88e');}
   const icon=won?iconStella:locked?iconBoltImg:null;
   if(icon?.complete&&icon.naturalWidth)c.drawImage(icon,x+26,y-83,27,29);
