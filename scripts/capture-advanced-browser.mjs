@@ -25,7 +25,7 @@ try{
  assert.deepEqual(original.advanced.map(ch=>ch.index),[20,21,22,23,24]);
  assert.equal(original.examQualified,false);
  assert.equal(original.progress,0);
- assert.deepEqual(original.worldSize,[48,48]);
+ assert.deepEqual(original.worldSize,[58,58]);
  mkdirSync('artifacts',{recursive:true});
  await page.locator('#explore').scrollIntoViewIfNeeded();
  await page.waitForTimeout(600);
@@ -40,7 +40,7 @@ try{
    viewCameraPan:state.explorePan
  }));
  assert.equal(after.qualified,false);
- assert.match(after.selected,/SEALED RESEARCH HOUSE/);
+ assert.match(after.selected,/ADVANCED CHAPTER · LOCKED/);
  assert.equal(after.advancedUnlocked,false);
  assert.ok(Number.isFinite(after.viewCameraPan?.x));
  await page.locator('#explore').scrollIntoViewIfNeeded();
