@@ -3,7 +3,7 @@
 const BV_ADVANCED_CHAPTERS=[
   {
     "name": "Generative Systems & Agentic Intelligence",
-    "guide": "George Glooman",
+    "guide": "Anya Forger",
     "role": "Language, generative models, inference and tools",
     "intro": "Trace the full research stack: tokenization, conditional modeling, transformer attention, pretraining, diffusion, preference alignment, retrieval, multimodal generation and agent tools. Distinguish fluent sampling from verifiable claims about the world.",
     "experiment": "Run matched-budget comparisons of an autoregressive baseline, retrieval-assisted policy and tool-using agent on independently written unseen problems; audit data exposure and costs.",
