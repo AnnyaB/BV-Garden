@@ -1,4 +1,4 @@
-const IDS=['anya','bond','chimera','becky','damian','emile','ewen','henry','franky','yuri','sylvia','fiona','martha','melinda','donovan','demetrius','camilla','shopkeeper','yor','loid'];
+const IDS=['george','bill','chimera','becky','daybreak','emile','ewen','henry','franky','yuri','sylvia','fiona','martha','melinda','donovan','demetrius','camilla','shopkeeper','matthew','olka'];
 const COLORS=['#f5babb','#f2d0a1','#b8d3c0','#d5c5ae','#b9ccd8','#e9bc92','#d2bfde','#b6d5d2','#ebc6a4','#e9b9c7','#acbad4','#d4c2a2','#c6d4bd','#e6baa8','#c4c1df','#f1d1aa','#afd4bf','#bfccd5','#dfb0c7','#b9c8ab'];
 const chapters=CONTENT.map((e,i)=>{
  const row=Math.floor(i/5),col=i%5,c=row%2?4-col:col;
