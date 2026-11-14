@@ -11,6 +11,16 @@ function bvLoadCast(){
       canvas.width=BV_CAST_STRIDE;canvas.height=BV_CAST_HEIGHT;
       const context=canvas.getContext('2d');
       context.drawImage(atlas,i*BV_CAST_STRIDE,0,BV_CAST_STRIDE,BV_CAST_HEIGHT,0,0,BV_CAST_STRIDE,BV_CAST_HEIGHT);
+      // Bill's canonical reflective rectangular glasses, retained at native pixel resolution.
+      if(BV_CAST_NAMES[i]==='bill'){
+        context.fillStyle='#29323a';
+        context.fillRect(21,17,11,8);context.fillRect(33,17,11,8);
+        context.fillRect(31,20,3,2);
+        context.fillStyle='#b8cbd1';
+        context.fillRect(23,18,8,5);context.fillRect(35,18,8,5);
+        context.fillStyle='#e1e7e6';
+        context.fillRect(24,18,5,1);context.fillRect(36,18,5,1);
+      }
       const id=BV_CAST_NAMES[i],url=canvas.toDataURL('image/png');
       INLINE_SPRITES[id]=url;
       if(typeof imgs!=='undefined'&&imgs[id])imgs[id].src=url;
