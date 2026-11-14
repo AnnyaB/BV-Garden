@@ -66,7 +66,7 @@ function hasQuestions(kind,level){
 function beginQuest(kind,level){if(quest.imperial)return;
  if(kind==='stage'&&level>state.current)return;
  if(kind==='stage'&&quest.stars[level])return;
- if(kind==='exam'&&!(state.current===20&&quest.stars.every(Boolean)))return;
+ if(kind==='exam'&&state.current!==20)return;
  if(quest.active){if(quest.active.kind===kind&&quest.active.level===level){openChapter(kind==='exam'?20:level);return;}
    quest.last={kind,level,blocked:true,msg:`Finish your current ${quest.active.kind==='exam'?'Imperial exam':`chapter ${quest.active.level+1}`} trial before starting another.`};openChapter(kind==='exam'?20:level);return;}
  if(!hasQuestions(kind,level)){quest.last={kind,level,exhausted:true,msg:'This chapter has no unused questions left in the offline bank. Repeating a previously seen question would violate the no-repeat rule.'};storeQuest();openChapter(kind==='exam'?20:level);return;}
@@ -92,6 +92,7 @@ function restartJourney(tenthBolt=false){
  quest.avatarChoice=previous.avatarChoice===1?1:0;
  quest.imperialWins=previous.imperialWins||0;quest.journeyWins=previous.journeyWins||0;quest.firstWinAt=previous.firstWinAt||null;
  quest.eliteUnlocked=quest.imperialWins>=5;quest.league=previous.league||{entered:false,answers:{},reviewed:false};
+ quest.advanced=previous.advanced||null;quest.eliteUnlocked=Boolean(quest.imperialWins>=5||quest.advanced?.completedRecord||quest.advanced?.stars?.every(Boolean));
  quest.epoch=(previous.epoch||0)+1;
  if(tenthBolt)quest.last={kind:'stage',level:0,reset:true,msg:'Tenth Tonitrus Bolt! Back to chapter 01. Previously used questions remain retired.'};
  repairProgress();state.player={x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8};state.travel=null;
