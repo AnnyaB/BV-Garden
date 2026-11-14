@@ -39,7 +39,7 @@ function bvAdvancedHasFullSet(level){
 }
 function bvAdvancedMapHTML(){
  const adv=quest.advanced,current=bvAdvancedCurrent();
- return '<article class="chapter-article bv-advanced"><div class="chapter-tag">POST-LOID RESEARCH EXPEDITION · CHAPTERS 21–25</div>'+
+ return '<article class="chapter-article bv-advanced"><div class="chapter-tag">ADVANCED RESEARCH EXPEDITION · CHAPTERS 21–25</div>'+
  '<h4>The Five Hidden Research Houses</h4><p class="lede">These five research houses follow the original twenty chapters and a passing final examination. Imperial Scholar status is not required.</p>'+
  '<p class="bv-adv-rules">'+iconStar()+' '+adv.stars.filter(Boolean).length+'/5 advanced Stellas · '+iconBolt()+' '+adv.bolts+'/5 advanced Tonitrus Bolts. Each house has 2 easy, 2 medium and 4 hard conceptual questions (8 in total). At least 6/8 earns a Stella; a fifth incorrect answer resets only the advanced expedition to House 21.</p>'+
  '<p class="bv-adv-map-tip">Explore the five isometric research houses on the large map to the left. Select a house there or use the accessible chapter links below.</p>'+
@@ -163,7 +163,7 @@ function bvAdvancedShowWorld(){
   layer.id='bv-advanced-overlay';layer.className='bv-advanced-overlay';
   layer.setAttribute('aria-label','Advanced five-house isometric research garden');
   layer.innerHTML='<div class="bv-advanced-map-header"><strong>MAP 02 · ADVANCED RESEARCH GARDEN</strong><button type="button" class="bv-adv-exit" data-bv-advanced-exit aria-label="Return to the original garden">Return to Main Garden ✕</button></div>'+
-   '<canvas id="bv-advanced-world" width="940" height="470" tabindex="0" role="img" aria-label="Interactive 2.5D map with five isometric houses, characters Anya, Bond, Damian, Yor and Loid, and Stella and Tonitrus icons. Select the matching house from the chapter links at right if using a keyboard."></canvas>';
+   '<canvas id="bv-advanced-world" width="940" height="470" tabindex="0" role="img" aria-label="Interactive 2.5D map with five isometric research houses, pixel-art companions, and Stella and Tonitrus icons. Select the matching house from the chapter links at right if using a keyboard."></canvas>';
   host.append(layer);
  }
  layer.hidden=false;

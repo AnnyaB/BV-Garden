@@ -47,7 +47,7 @@ function bvAdvancedPreviewSelect(i){
  if(!pane)return;
  pane.innerHTML='<article class="chapter-article bv-advanced"><div class="chapter-tag">'+iconBolt()+
  ' ADVANCED CHAPTER · LOCKED · '+(21+i)+'/25</div>'+
- '<div class="guide-header"><img src="'+img+'" alt="Original pixel-art guide: '+qEsc(ch.guide)+'"><div><h4>House '+(21+i)+' · '+qEsc(ch.name)+'</h4><p>'+qEsc(ch.guide)+'</p></div></div>'+
+ '<div class="guide-header"><img src="'+img+'" alt="Pixel-art research companion for House '+(21+i)+'"><div><h4>House '+(21+i)+' · '+qEsc(ch.name)+'</h4><p>Research companion</p></div></div>'+
  '<p class="lede">You can inspect this advanced house and its spiked-ball boundary now, but its research challenges remain locked.</p>'+
  '<p>Pass all first 20 chapter gates and the final examination with at least 7/10 correct to enter the five-house research expedition. Imperial Scholar status is NOT required. After entry, the advanced houses unlock in order.</p>'+
  '<p>'+iconBolt()+' Original garden: 10 incorrect answers restart Chapter 1; advanced garden: 5 incorrect answers restart House 21.</p>'+
@@ -60,7 +60,7 @@ function bvAdvancedPreviewRibbon(){
  BV_ADVANCED_CHAPTERS.map((ch,i)=>{
  const star=quest.advanced?.stars?.[i],can=bvAdvancedAllowed(),ready=can&&i<=bvAdvancedCurrent();
  return '<button type="button" role="listitem" class="chapter-button bv-advanced-ribbon-btn '+(ready?'active':'locked')+'" data-bv-advanced-preview="'+i+'" aria-label="Chapter '+(21+i)+' '+qEsc(ch.name)+(!ready?' locked':'')+'">'+
- '<span class="chapter-no">'+(21+i)+'/25 · '+qEsc(ch.guide)+'</span>'+
+ '<span class="chapter-no">'+(21+i)+'/25</span>'+
  '<span class="chapter-title">'+qEsc(ch.name)+'</span>'+
  '<span class="chapter-status">'+(star?iconStar()+' STELLA':ready?'✦ Research house ready':iconBolt()+' VISIBLE · LOCKED')+'</span></button>';
  }).join('');

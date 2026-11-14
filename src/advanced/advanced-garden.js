@@ -66,7 +66,7 @@ function bvAdvancedRenderGarden(){
   if(icon?.complete&&icon.naturalWidth)c.drawImage(icon,x+26,y-83,27,29);
   if(!locked&&!won){c.fillStyle='#ffebb4';c.beginPath();c.arc(x+30,y-83,14,0,Math.PI*2);c.fill();label('✦',x+30,y-84,17,'#b48440');}
   block(x-56,y+8,112,23,locked?'#dfe2dd':won?'#f7eac2':'#fff9ed','#99b59e');
-  label(BV_ADVANCED_CHAPTERS[i].guide.split(' ')[0].toUpperCase(),x,y+20,10,'#405a4c');
+  label('HOUSE '+(21+i),x,y+20,10,'#405a4c');
  }
  function grass(){
   const fill=c.createLinearGradient(0,0,0,H);
