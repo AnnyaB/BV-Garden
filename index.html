@@ -2353,6 +2353,17 @@ function bvAdvancedPreviewOccupied(x,y){
 }
 function bvAdvancedPreviewAddObjects(objects){
  objects.push({place:[33.25,33.25],fn:bvAdvancedPreviewGate});
+ // Move the three obstructing tree sprites to empty ground, retaining the
+ // source tile's exact pink/green appearance instead of deleting the trees.
+ const movedTrees=[
+  {source:[10,19],place:[4,25]}, // Bill: pink tree farther left
+  {source:[38,43],place:[37,45]}, // House 23: left foreground tree
+  {source:[39,42],place:[42,42]}  // House 23: right foreground tree
+ ];
+ movedTrees.forEach(tree=>{
+   const seed=hash(tree.source[0]+31,tree.source[1]+87);
+   objects.push({place:tree.place,fn:()=>drawTree(iso(...tree.place),seed)});
+ });
  BV_ADVANCED_PREVIEW_HOUSES.forEach(ch=>{
    objects.push({place:ch.place,fn:()=>drawHouse(ch)});
    objects.push({place:[ch.place[0]+1.25,ch.place[1]+1.45],fn:()=>drawNpc(ch)});
