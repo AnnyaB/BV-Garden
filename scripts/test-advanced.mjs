@@ -10,14 +10,14 @@ const bank=readFileSync(resolve(root,'src/advanced/advanced-bank.js'),'utf8');
 const engine=readFileSync(resolve(root,'src/advanced/advanced-engine.js'),'utf8');
 function setup({passes=true,imperialWins=0}={}){
  const main=document=>({
-   getElementById:()=>({innerHTML:'',scrollTop:0}),
+   getElementById:()=>({innerHTML:'',scrollTop:0}),querySelector:()=>null,
    addEventListener:()=>{},dispatchEvent:()=>{}
  });
  const ctx={
    state:{current:passes?20:19},
    quest:{journeyPassed:passes,examPass:false,imperial:false,imperialWins,eliteUnlocked:false,
      passed:Array(20).fill(true),stars:Array(20).fill(false),used:{},seenPrompts:{},league:{}},
-   document:main(),
+   document:main(),window:{addEventListener:()=>{}},openChapter:()=>{},showLeague:()=>{},
    CustomEvent:class {constructor(name){this.type=name;}},
    completeScreen:()=>'<article>Main exam remains</article>',
    qEsc:x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;'),
@@ -99,5 +99,13 @@ test('Every advanced stem can only be sampled once; exhausted pool is rejected',
  }
  assert.equal(x.actions.pick(0,'e'),null);
  assert.equal(x.actions.has(0),false);
+});
+test('Advanced view is recorded without modifying main-world progress',()=>{
+ const x=setup();
+ x.actions.show(0);
+ assert.equal(x.quest.advanced.view,0);
+ assert.equal(x.quest.passed.every(Boolean),true);
+ x.actions.show();
+ assert.equal(x.quest.advanced.view,'map');
 });
 console.log('Advanced independent progression and scoring regression tests passed.');
