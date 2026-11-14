@@ -25,6 +25,29 @@ assert.ok(cast, "Character IDs found");
 const ids = [...cast[1].matchAll(/'([^']+)'/g)].map(m => m[1]);
 test("20 unique chapter cast IDs", ids.length === 20 && new Set(ids).size === 20);
 
+test("Original twenty character placements use all five new canon guides", 
+  ids[0]==="george"&&ids[1]==="bill"&&ids[4]==="daybreak"&&
+  ids[18]==="matthew"&&ids[19]==="olka");
+const advIds=(html.match(/const BV_ADVANCED_IDS=\[([^\]]+)\]/)||[])[1];
+assert.ok(advIds,"Advanced companion list found");
+const advancedCast=[...advIds.matchAll(/'([^']+)'/g)].map(m=>m[1]);
+test("Advanced Houses 21–25 retain the original Anya Bond Damian Yor Loid portraits",
+  JSON.stringify(advancedCast)===JSON.stringify(["anya","bond","damian","yor","loid"]));
+test("All twenty-five chapter companions are distinct",new Set([...ids,...advancedCast]).size===25);
+const fiveAtlas=html.match(/const BV_CAST_ATLAS='data:image\/png;base64,([A-Za-z0-9+/=]+)'/);
+assert.ok(fiveAtlas,"Embedded five-character PNG atlas found");
+const fivePng=Buffer.from(fiveAtlas[1],"base64");
+test("Five full-length canon sprite images have correct dimensions and PNG signature",
+  fivePng.length>12000&&fivePng.toString("ascii",1,4)==="PNG"&&
+  fivePng.readUInt32BE(16)===480&&fivePng.readUInt32BE(20)===152&&
+  html.includes("const BV_CAST_STRIDE=96;")&&html.includes("const BV_CAST_HEIGHT=152;"));
+test("Advanced map uses large isometric house canvas with Tonitrus and Stella",
+  html.includes('width="940" height="470"')&&
+  html.includes('id="bv-advanced-world"')&&
+  html.includes('const iconStella=new Image(),iconBoltImg=new Image();')&&
+  html.includes('data-bv-adv-stage')&&html.includes("function bvAdvancedRenderGarden()"));
+
+
 const sounds = [...html.matchAll(/\b(stella|fail):'data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)'/g)];
 test("Two embedded MP3 clips", sounds.length === 2 && new Set(sounds.map(s => s[1])).size === 2);
 for (const [, name, data] of sounds) {
