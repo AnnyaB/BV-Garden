@@ -41,11 +41,30 @@ test("Five full-length canon sprite images have correct dimensions and PNG signa
   fivePng.length>12000&&fivePng.toString("ascii",1,4)==="PNG"&&
   fivePng.readUInt32BE(16)===480&&fivePng.readUInt32BE(20)===152&&
   html.includes("const BV_CAST_STRIDE=96;")&&html.includes("const BV_CAST_HEIGHT=152;"));
-test("Advanced map uses large isometric house canvas with Tonitrus and Stella",
-  html.includes('width="940" height="470"')&&
-  html.includes('id="bv-advanced-world"')&&
-  html.includes('const iconStella=new Image(),iconBoltImg=new Image();')&&
-  html.includes('data-bv-adv-stage')&&html.includes("function bvAdvancedRenderGarden()"));
+test("All twenty-five houses render on the same interactive isometric world",
+  html.includes("NX=48,NY=48")&&
+  html.includes("const BV_ADVANCED_PREVIEW_SITES=[[25,41],[29,37],[33,33],[37,29],[41,25]]")&&
+  html.includes("bvAdvancedPreviewAddObjects(objects)")&&
+  html.includes("bvAdvancedPreviewPathTile(x,y)")&&
+  html.includes("bvAdvancedPreviewPath();"));
+test("Visible 20/21 gate has pixel-horn geometry and the original horned Tonitrus sprite",
+  html.includes("function bvAdvancedPreviewGate()")&&
+  html.includes("ADVANCED 21–25 ")&&
+  html.includes("if(imgs.tonitrus.complete&&imgs.tonitrus.naturalWidth)")&&
+  html.includes("polygon([[mx-51,my-67],[mx-62,my-93]")&&
+  html.includes("bvAdvancedPreviewHalo("));
+test("Advanced houses remain visible and inspectable even before final-exam qualification",
+  html.includes("function bvAdvancedPreviewSelect(i)")&&
+  html.includes("function bvAdvancedPreviewRibbon()")&&
+  html.includes("data-bv-advanced-preview")&&
+  html.includes("data-bv-preview-focus")&&
+  html.includes("bvAdvancedPreviewSelect(h.index)")&&
+  html.includes("bvAdvancedShowWorld=function(){bvAdvancedPreviewFocus();}"));
+test("Advanced terrain traversal stays locked until ordinary final exam passes",
+  html.includes("function bvAdvancedPreviewZone")&&
+  html.includes("bvAdvancedPreviewZone(x,y)")&&
+  html.includes("bvAdvancedAllowed())")&&
+  html.includes("bvAdvancedPreviewOccupied(x,y)"));
 
 
 const sounds = [...html.matchAll(/\b(stella|fail):'data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)'/g)];
