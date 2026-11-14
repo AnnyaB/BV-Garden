@@ -112,11 +112,11 @@ function bvAdvancedRenderGarden(){
  }
  draw();
  const hits=sites.map(([x,y])=>({left:x-70,right:x+100,top:y-152,bottom:y+40}));
- canvas.addEventListener('click',event=>{
+ canvas.onclick=event=>{
   const rect=canvas.getBoundingClientRect(),
   x=(event.clientX-rect.left)*canvas.width/rect.width,
   y=(event.clientY-rect.top)*canvas.height/rect.height;
   const i=hits.findIndex(hit=>x>=hit.left&&x<=hit.right&&y>=hit.top&&y<=hit.bottom);
   if(i>=0&&i<=bvAdvancedCurrent())bvAdvancedShow(i);
- });
+ };
 }
