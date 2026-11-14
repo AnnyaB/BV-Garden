@@ -5,7 +5,7 @@ const BV_ADVANCED_CHAPTERS=[
     "name": "Grounded Generative Agents & Tool Evaluation",
     "guide": "Anya Forger",
     "role": "Tool-augmented inference, independent judges and multimodal grounding",
-    "intro": "Advanced focus beyond Chapter 7: autonomous generative-agent execution, trustworthy tool routing, retrieval contamination, provenance, preference and reward-model failure, multimodal grounding, prompt injection, inference-time search and calibrated verification. Evaluate external outcomes rather than fluency or benchmark familiarity.",
+    "intro": "Advanced focus beyond Chapter 7: external evaluation of LM/VLM grounding, autonomous tool execution, retrieval contamination, provenance, preference/reward-model failures, prompt injection, inference-time search and calibrated verification. Evaluate a VLA policy by independent physical outcomes, not captions. Evaluate external outcomes rather than fluency or benchmark familiarity.",
     "experiment": "On independent sealed tasks, compare an LM-only system, retrieval agent and tool-using planner with matched tokens, search budgets and tool access. Audit tool side effects, ground-truth sources, citation errors, prompt injection and independent success checks.",
     "challenge": "Which intervention or independent outcome can distinguish genuine agent competence from tool leakage, reward hacking or seemingly persuasive text?",
     "papers": [
@@ -93,7 +93,7 @@ const BV_ADVANCED_CHAPTERS=[
     "name": "Recursive Improvement & Scientific Discovery",
     "guide": "Loid Forger",
     "role": "RSI, automated experimental science, meta-agent search and external falsification",
-    "intro": "Advanced focus beyond Chapter 20's open-ended intelligence introduction: operational recursive self-improvement (RSI), empirical code-self-modification, archive-guided meta-agent search, automated scientific experiment design, independent falsification, model and evaluator co-adaptation, rollback, compute and safety budgets, benchmark leakage, and the distinction between narrow verified gains and unproven AGI/ASI claims.",
+    "intro": "Advanced focus beyond Chapter 20's bounded lifelong-learning studies: operational recursive self-improvement (RSI), empirical code-self-modification, archive-guided meta-agent search, automated scientific experiment design, independent falsification, model and evaluator co-adaptation, rollback, compute and safety budgets, benchmark leakage, and the distinction between narrow verified gains and unproven AGI/ASI claims.",
     "experiment": "Design a bounded recursive-improvement protocol: propose one source-code or model-selection change, execute it in a sandbox, measure sealed held-out gains and regressions with an independent evaluator, track lineage and computational cost, and reject, revert or retain changes according to pre-registered criteria. Compare against a fixed-agent baseline.",
     "challenge": "Under what assumptions can an agent repeatedly improve itself without inflating self-evaluation metrics, sacrificing prior capabilities or equating local benchmark gains with general superintelligence?",
     "papers": [

@@ -40,12 +40,12 @@ function bvAdvancedHasFullSet(level){
 function bvAdvancedMapHTML(){
  const adv=quest.advanced,current=bvAdvancedCurrent();
  return '<article class="chapter-article bv-advanced"><div class="chapter-tag">POST-LOID RESEARCH EXPEDITION · CHAPTERS 21–25</div>'+
- '<h4>The Five Hidden Research Houses</h4><p class="lede">Anya, Bond, Damian, Yor and Loid guide these five research houses, after the original twenty chapters and a passing final examination. Imperial Scholar status is not required.</p>'+
+ '<h4>The Five Hidden Research Houses</h4><p class="lede">These five research houses follow the original twenty chapters and a passing final examination. Imperial Scholar status is not required.</p>'+
  '<p class="bv-adv-rules">'+iconStar()+' '+adv.stars.filter(Boolean).length+'/5 advanced Stellas · '+iconBolt()+' '+adv.bolts+'/5 advanced Tonitrus Bolts. Each house has 2 easy, 2 medium and 4 hard conceptual questions (8 in total). At least 6/8 earns a Stella; a fifth incorrect answer resets only the advanced expedition to House 21.</p>'+
  '<p class="bv-adv-map-tip">Explore the five isometric research houses on the large map to the left. Select a house there or use the accessible chapter links below.</p>'+
  '<div class="bv-adv-house-links" role="group" aria-label="Visit advanced houses">'+BV_ADVANCED_CHAPTERS.map((ch,i)=>{
    const locked=i>current,star=adv.stars[i];
-   return '<button type="button" class="bv-adv-house-link '+(i===current?'active ':'')+'" data-bv-adv-stage="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' aria-label="House '+(21+i)+': '+qEsc(ch.guide)+', '+qEsc(ch.name)+(locked?', locked':'')+'"><b>'+(21+i)+'</b><span>'+qEsc(ch.guide)+'<small>'+qEsc(ch.name)+'</small></span><span class="bv-adv-link-state">'+(star?iconStar():locked?iconBolt():'✦')+'</span></button>';
+   return '<button type="button" class="bv-adv-house-link '+(i===current?'active ':'')+'" data-bv-adv-stage="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' aria-label="House '+(21+i)+': '+qEsc(ch.name)+(locked?', locked':'')+'"><b>'+(21+i)+'</b><span>House '+(21+i)+'<small>'+qEsc(ch.name)+'</small></span><span class="bv-adv-link-state">'+(star?iconStar():locked?iconBolt():'✦')+'</span></button>';
  }).join('')+'</div>'+
  (adv.completedRecord?'<div class="quest-notice success">'+iconStar()+' All five advanced Stellas recorded: Elite Imperial League qualification unlocked.</div>':'')+
  '<div class="bv-adv-actions"><button type="button" class="action-button" data-chapter="20">Return to the Chapter 20 final record →</button>'+
@@ -64,11 +64,19 @@ function bvAdvancedQuizHTML(){
  '<button type="button" class="action-button" data-bv-adv-submit '+(a.selected.length?'':'disabled')+'>Lock this answer →</button>'+
  '<div class="quest-score">'+iconBolt()+' Advanced bolts: '+quest.advanced.bolts+'/5 · Correct: '+a.results.filter(r=>r.ok).length+'/'+a.position+'</div></div>';
 }
+/* Advanced equations reuse the offline, accessible MathML/LaTeX pattern of the original 20. */
+const BV_ADVANCED_TEX=["\\widehat{S}=\\frac{1}{N}\\sum_{i=1}^{N}\\mathbf{1}[V(y_i)=1]","\\mathbb{E}[Y\\mid\\operatorname{do}(A=a)]","\\operatorname{Post}(\\pi_i)\\subseteq\\operatorname{Pre}(\\pi_{i+1})","R_{\\mathrm{accept}}=\\Pr(\\mathrm{failure}\\mid\\mathrm{accept})","\\Delta_k=J_{\\mathrm{sealed}}(\\pi_{k+1})-J_{\\mathrm{sealed}}(\\pi_k)"];
+const BV_ADVANCED_MATHML=["<mrow><mover><mi>S</mi><mo>^</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mi>𝟙</mi><mo>[</mo><mi>V</mi><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>)</mo><mo>=</mo><mn>1</mn><mo>]</mo></mrow>","<mrow><mi>𝔼</mi><mo>[</mo><mi>Y</mi><mo>|</mo><mi>do</mi><mo>(</mo><mi>A</mi><mo>=</mo><mi>a</mi><mo>)</mo><mo>]</mo></mrow>","<mrow><mi>Post</mi><mo>(</mo><msub><mi>π</mi><mi>i</mi></msub><mo>)</mo><mo>⊆</mo><mi>Pre</mi><mo>(</mo><msub><mi>π</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow>","<mrow><msub><mi>R</mi><mtext>accept</mtext></msub><mo>=</mo><mi>Pr</mi><mo>(</mo><mtext>failure</mtext><mo>|</mo><mtext>accept</mtext><mo>)</mo></mrow>","<mrow><msub><mi>Δ</mi><mi>k</mi></msub><mo>=</mo><msub><mi>J</mi><mtext>sealed</mtext></msub><mo>(</mo><msub><mi>π</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo><mo>−</mo><msub><mi>J</mi><mtext>sealed</mtext></msub><mo>(</mo><msub><mi>π</mi><mi>k</mi></msub><mo>)</mo></mrow>"];
+function bvAdvancedEquation(i){
+ if(!Number.isInteger(i)||i<0||i>=5)return '';
+ return '<div class="math-line bv-typeset-math"><div class="bv-math-scroll"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics>'+BV_ADVANCED_MATHML[i]+'<annotation encoding="application/x-tex">'+qEsc(BV_ADVANCED_TEX[i])+'</annotation></semantics></math></div></div>';
+}
+
 function bvAdvancedStageHTML(i){
  const ch=BV_ADVANCED_CHAPTERS[i],adv=quest.advanced,last=adv.last?.level===i?adv.last:null,star=adv.stars[i];
  let html='<article class="chapter-article bv-advanced"><div class="chapter-tag">ADVANCED CHAPTER '+(21+i)+'/25 · '+qEsc(ch.role)+'</div>'+
- '<div class="guide-header"><img src="'+BV_ADVANCED_SPRITES[i]+'" alt="Pixel-art companion '+qEsc(ch.guide)+'"><div><h4>'+qEsc(ch.name)+'</h4><p>'+qEsc(ch.guide)+'</p></div></div>'+
- '<h5>01 · Scientific foundations</h5><p>'+qEsc(ch.intro)+'</p><h5>02 · Reproducible experimental design</h5><p>'+qEsc(ch.experiment)+'</p>'+
+ '<div class="guide-header"><img src="'+BV_ADVANCED_SPRITES[i]+'" alt="Pixel-art research companion"><div><h4>'+qEsc(ch.name)+'</h4><p>Research House '+(21+i)+'</p></div></div>'+
+ '<h5>01 · Scientific foundations</h5><p>'+qEsc(ch.intro)+'</p>'+bvAdvancedEquation(i)+'<h5>02 · Reproducible experimental design</h5><p>'+qEsc(ch.experiment)+'</p>'+
  '<div class="frontier"><h5>03 · Open invention problem</h5><p>'+qEsc(ch.challenge)+'</p></div>'+
  '<h5>Verified research readings</h5>'+ch.papers.map(p=>'<p><a class="paper-link" target="_blank" rel="noopener noreferrer" href="'+qEsc(p[1])+'">'+qEsc(p[0])+' ↗</a></p>').join('')+
  '<div class="challenge-stage"><h5>04 · Tonitrus research obstacle course</h5><p>2 easy + 2 medium + 4 hard · at least <strong>6/8</strong> correct earns a Stella and unlocks the next house. Every incorrect answer adds one advanced Bolt; five Bolts restart at House 21. The original 20-chapter record is never reset.</p>';

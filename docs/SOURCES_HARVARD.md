@@ -31,6 +31,8 @@
 18. Vaswani, A. *et al.* (2017) 'Attention is all you need', *Advances in Neural Information Processing Systems*, 30. [Peer-reviewed] Available at: https://arxiv.org/abs/1706.03762
 19. Dosovitskiy, A. *et al.* (2021) 'An image is worth 16x16 words: transformers for image recognition at scale', *International Conference on Learning Representations*. [Peer-reviewed] Available at: https://arxiv.org/abs/2010.11929
 
+19a. Chen, X. *et al.* (2023) 'PaLI: A jointly-scaled multilingual language-image model', *International Conference on Learning Representations*. [Peer-reviewed; VLM] Available at: https://openreview.net/forum?id=mWVoBz4W0u
+
 ## Representation learning, self-supervision, energies and JEPA (chapters 08–11)
 20. Bengio, Y., Courville, A. and Vincent, P. (2013) 'Representation learning: a review and new perspectives', *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 35(8), pp. 1798–1828. [Peer-reviewed] Available at: https://doi.org/10.1109/TPAMI.2013.50
 21. LeCun, Y., Chopra, S., Hadsell, R., Ranzato, M. and Huang, F. (2006) 'A tutorial on energy-based learning', in *Predicting Structured Data*. Cambridge, MA: MIT Press. [Book chapter] Available at: https://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf
@@ -69,7 +71,7 @@
 48. Octo Model Team *et al.* (2024) 'Octo: an open-source generalist robot policy'. *arXiv* 2405.12213. [Preprint; confirm final venue separately] Available at: https://arxiv.org/abs/2405.12213
 49. Nasiriany, S. *et al.* (2024) 'RoboCasa: large-scale simulation of everyday tasks for generalist robots'. *arXiv* 2406.02523. [Preprint; simulation benchmark] Available at: https://arxiv.org/abs/2406.02523
 50. DROID Collaboration (2024) 'DROID: a large-scale in-the-wild robot manipulation dataset'. *arXiv* 2403.12945. [Preprint; real-robot dataset] Available at: https://arxiv.org/abs/2403.12945
-51. Kim, M.J. *et al.* (2024) 'OpenVLA: an open-source vision-language-action model'. *arXiv* 2406.09246. [Preprint; language-conditioned robotics] Available at: https://arxiv.org/abs/2406.09246
+51. Kim, M.J. *et al.* (2025) 'OpenVLA: an open-source vision-language-action model', *Proceedings of the 8th Conference on Robot Learning*, PMLR 270, pp. 2679–2713. [Peer-reviewed] Available at: https://proceedings.mlr.press/v270/kim25c.html
 52. Meng, Y., Bing, Z., Yao, X. *et al.* (2025) 'Preserving and combining knowledge in robotic lifelong reinforcement learning', *Nature Machine Intelligence*, 7, pp. 256–269. [Peer-reviewed] Available at: https://doi.org/10.1038/s42256-025-00983-2
 
 ## Reliability, generalization and scientific rigor (chapters 18–20)
@@ -79,7 +81,7 @@
 56. Munafò, M.R. *et al.* (2017) 'A manifesto for reproducible science', *Nature Human Behaviour*, 1, article 0021. [Peer-reviewed] Available at: https://doi.org/10.1038/s41562-016-0021
 57. Bengio, Y. *et al.* (2026) *International AI Safety Report 2026*, DSIT 2026/001. [Expert synthesis; not a proof of future capability] Available at: https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026 (Accessed: 12 November 2026).
 
-## Conceptual frontier, not a finished achievement (chapter 20)
+## Bounded continual learning (chapter 20) and unproven general-intelligence frontier (chapter 25)
 58. LeCun, Y. (2022) 'A path towards autonomous machine intelligence', version 0.9.2. [Position paper; not peer-reviewed as a research experiment] Available at: https://openreview.net/pdf/315d43ba26f55357a84cec9a7ed15a6610094f79.pdf
 59. Chollet, F. (2019) 'On the measure of intelligence'. *arXiv* 1911.01547. [Position/research preprint] Available at: https://arxiv.org/abs/1911.01547
 60. Silver, D., Singh, S., Precup, D. and Sutton, R.S. (2021) 'Reward is enough', *Artificial Intelligence*, 299, article 103535. [Peer-reviewed; a viewpoint, not proof that general intelligence exists] Available at: https://doi.org/10.1016/j.artint.2021.103535
@@ -100,6 +102,12 @@ D. **Compute-efficient open-ended learning:** Can embodied agents autonomously d
 E. **Evaluation beyond benchmark memorization:** Can pre-registered OOD test suites, multiple seeds, and public negative results discriminate adaptation from leakage or shortcut learning?
 
 These are proposals and remain open until a specific method, evaluation, and independently reproducible evidence exist. They are **not** evidence of AGI, ASI, consciousness, or hypothetical beyond-human intelligence.
+
+
+## Research chapter sequencing (draft branch; 14 November 2026)
+01–06: history, logic/data, programming, mathematics, optimization, statistical ML. 07: deep networks, LMs, LLMs, VLMs, generative models (not physical-action policies). 08–11: self-supervision, representations, EBMs, JEPA. 12: MDP/POMDP, basic RL and dynamics. 13–16: world models, MPC, search/MCTD, object–skill factorization. 17: robot embodiment, imitation/diffusion policies and VLA action models (not automatically a world model). 18–20: uncertainty and OOD safety, active physical reasoning, bounded continual learning. 21–25: grounded agent/tool evaluation, advanced causal identifiability, novel long-horizon skill composition, formal runtime risk, recursive self-improvement and scientific discovery.
+
+This is a selected research pathway, not an exhaustive 25-step ordering of all AI topics. Model families overlap, and unrestricted AGI/ASI, guaranteed safe self-improvement and scientific invention are not established by this game.
 
 ## Quality and maintenance
 - The list includes influential historical works and **selected** current sources, not every paper ever published. Coverage is deliberately bounded and tied to the game's curriculum.
