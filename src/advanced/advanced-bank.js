@@ -91,7 +91,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Open-Ended Scientific Invention",
-    "guide": "Olka Gretcher",
+    "guide": "Loid Forger",
     "role": "Novelty, proof, continual adaptation and bounded claims",
     "intro": "Develop falsifiable research hypotheses, explicit assumptions, fair baselines, novelty searches, conditional guarantees, rigorous ablations, continual learning, OOD transfer, external evaluation and cautious AGI/ASI framing. No existing game or benchmark confers genuine invention credentials.",
     "experiment": "Draft an original mechanism and rejection criterion, then independently reproduce baseline failures, test component necessity with ablations and compare statistically across unseen task families.",
