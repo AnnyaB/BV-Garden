@@ -8,7 +8,7 @@ const read=p=>readFileSync(resolve(root,p),"utf8");
 const parts=[
 ["@@BV_STYLE_MAIN@@",["src/styles/main.css"]],
 ["@@BV_STYLE_RESPONSIVE@@",["src/styles/responsive.css","src/styles/advanced.css"]],
-["@@BV_SCRIPT_MAIN@@",["src/scripts/01-curriculum.js","src/assets/embedded-sprites.js","src/assets/avatar-variants.js","src/scripts/02-world.js","src/quiz/chapter-bank.js","src/advanced/llm-chapter-extension.js","src/quiz/imperial-bank.js","src/advanced/advanced-bank.js","src/advanced/advanced-art.js","src/quiz/quest-engine.js","src/lessons/primers.js","src/scripts/03-interactions.js","src/scripts/05-features.js","src/advanced/advanced-engine.js"]],
+["@@BV_SCRIPT_MAIN@@",["src/scripts/01-curriculum.js","src/assets/embedded-sprites.js","src/assets/avatar-variants.js","src/scripts/02-world.js","src/assets/five-canon-portraits.js","src/quiz/chapter-bank.js","src/advanced/llm-chapter-extension.js","src/quiz/imperial-bank.js","src/advanced/advanced-bank.js","src/advanced/advanced-art.js","src/advanced/advanced-garden.js","src/quiz/quest-engine.js","src/lessons/primers.js","src/scripts/03-interactions.js","src/scripts/05-features.js","src/advanced/advanced-engine.js"]],
 ["@@BV_SCRIPT_PERSISTENCE@@",["src/scripts/04-persistence-audio.js"]]
 ];
 let html=read("src/index.template.html");
