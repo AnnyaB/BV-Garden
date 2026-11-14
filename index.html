@@ -117,6 +117,37 @@
 .bv-advanced .paper-link{display:block;line-height:1.5;margin:4px 0;font-size:12px}
 @media(max-width:650px){.bv-adv-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bv-adv-house{min-height:271px;padding-inline:5px}.bv-adv-housetitle{font-size:11px}.bv-adv-guide{height:100px}.bv-adv-portal{padding:12px}}
 @media(max-width:340px){.bv-adv-map{grid-template-columns:minmax(0,1fr)}}
+
+
+/* The second map replaces ONLY the map viewport while advanced mode is open. */
+.bv-advanced-overlay{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;
+ background:linear-gradient(160deg,#dfe9da,#b5d6bf);border-radius:4px;overflow:hidden;}
+.bv-advanced-overlay[hidden]{display:none!important}
+.bv-advanced-map-header{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;padding:10px 15px;background:#f9f5e5;border-bottom:2px solid #aabfae;color:#3b6954;
+ font:800 12px ui-monospace,monospace;letter-spacing:.03em;}
+.bv-advanced-map-header .bv-adv-exit{cursor:pointer;background:#fffdf5;border:1px solid #b9c5ad;
+ border-radius:6px;padding:7px 10px;color:#486052;font-weight:700}
+#bv-advanced-world{flex:1;display:block;width:100%;height:auto;min-height:0;object-fit:contain;
+ image-rendering:pixelated;cursor:pointer;touch-action:manipulation}
+.bv-adv-map-tip{font-size:12px;color:#456655;background:#e4f0e2;border:1px solid #c6d9c3;padding:10px;border-radius:10px}
+.bv-adv-house-links{display:grid;grid-template-columns:1fr;gap:7px;margin-top:12px}
+.bv-adv-house-link{display:flex;align-items:center;gap:10px;width:100%;min-height:45px;
+ border:1px solid #c3d4c3;border-radius:9px;background:#fff9ee;color:#466456;
+ padding:7px 9px;text-align:left;cursor:pointer}
+.bv-adv-house-link b{display:grid;place-items:center;min-width:29px;height:29px;
+ background:#c4ddc5;border-radius:6px;color:#345747}
+.bv-adv-house-link span{font-size:12px;font-weight:800;flex:1}
+.bv-adv-house-link small{display:block;font-size:10px;font-weight:500;margin-top:2px}
+.bv-adv-house-link.active{border:2px solid #c69f5a;background:#fff8dc}
+.bv-adv-house-link:disabled{opacity:.56;cursor:not-allowed}
+.bv-adv-house-link .bv-adv-link-state{flex:0 0 auto;min-width:26px;text-align:center}
+.bv-adv-house-link .reward-img{height:23px;width:23px;object-fit:contain;vertical-align:middle}
+@media(max-width:650px){
+ .bv-advanced-map-header{padding:5px 7px;font-size:9px}
+ .bv-advanced-map-header .bv-adv-exit{padding:5px 6px;font-size:10px}
+ #bv-advanced-world{min-height:100px}
+}
 </style></head>
 <body>
 <div class="app-shell">
@@ -140,7 +171,7 @@
         <div class="game-frame-footer"><div class="location"><button type="button" class="bv-avatar-toggle" id="bv-avatar-toggle" aria-label="Choose avatar" aria-haspopup="dialog" aria-controls="bv-avatar-dialog"><img id="bv-avatar-current" alt="" aria-hidden="true"><span>Choose avatar</span></button><span id="map-location" style="display:none">You are at: The Research Garden</span></div><div class="movement-controls"><button type="button" id="garden-index-toggle" class="garden-index-toggle" aria-expanded="false" aria-controls="garden-tour" title="Open all twenty chapter locations (M)">☷ Map</button><button type="button" id="garden-center" class="garden-center" title="Center camera on explorer (F)">⌖</button><button type="button" data-move="up" aria-label="Move up">↑</button><button type="button" data-move="left" aria-label="Move left">←</button><button type="button" data-move="down" aria-label="Move down">↓</button><button type="button" data-move="right" aria-label="Move right">→</button></div></div>
       </div>
 
-      <aside class="journal" id="field-notes" aria-live="polite"><div class="journal-head"><div><span class="journal-kicker">✺ YOUR RESEARCH JOURNAL</span><h3>Field notes</h3></div><span class="journal-sticker">✧</span></div><div class="progress-card"><div class="progress-top"><span>IDEAS DISCOVERED</span><strong id="progress-numeric">00 <small>/ 20</small></strong></div><div class="progress-track"><span id="progress-fill"></span></div><p>There are no shortcuts to understanding. Every discovery begins with a question.</p></div><div id="journal-content" class="journal-content"><div class="welcome-card"><div class="hello-icon">✦</div><p class="micro-label">WELCOME, CURIOUS MIND</p><h4>Small steps. Really big questions.</h4><p>The first pink-haired guide begins a strict 20-stage path. Your blue-sweater explorer can wander freely, but each scientific lesson unlocks only the next concept. The white dog is stage 02; physical reasoning leads to the black-haired guide, and open-ended intelligence is the final theoretical frontier.</p><button class="action-button" id="start-journey" type="button">Follow the first chapter <span>↗</span></button></div></div><div class="journal-bottom"><span>✳ Curiosity is a method.</span><button type="button" id="reset-progress">reset discoveries</button></div></aside>
+      <aside class="journal" id="field-notes" aria-live="polite"><div class="journal-head"><div><span class="journal-kicker">✺ YOUR RESEARCH JOURNAL</span><h3>Field notes</h3></div><span class="journal-sticker">✧</span></div><div class="progress-card"><div class="progress-top"><span>IDEAS DISCOVERED</span><strong id="progress-numeric">00 <small>/ 20</small></strong></div><div class="progress-track"><span id="progress-fill"></span></div><p>There are no shortcuts to understanding. Every discovery begins with a question.</p></div><div id="journal-content" class="journal-content"><div class="welcome-card"><div class="hello-icon">✦</div><p class="micro-label">WELCOME, CURIOUS MIND</p><h4>Small steps. Really big questions.</h4><p>Begin with George Glooman at the first research station and follow the twenty-stage prerequisite path. Bill Watkins guides the second station, while Daybreak, Matthew McMahon and Olka Gretcher appear later along the same original garden route. After the final exam, the advanced five-house garden features Anya, Bond, Damian, Yor and Loid in Chapters 21–25.</p><button class="action-button" id="start-journey" type="button">Follow the first chapter <span>↗</span></button></div></div><div class="journal-bottom"><span>✳ Curiosity is a method.</span><button type="button" id="reset-progress">reset discoveries</button></div></aside>
     </div>
 
     <div class="chapter-section"><div class="chapter-head"><div><p class="eyebrow">THE RESEARCH PATH</p><h2>From first principles to the frontier</h2></div><span>20 stations · one strictly sequential prerequisite thread</span></div><div id="chapter-ribbon" class="chapter-ribbon" role="list" aria-label="Research chapters"></div></div>
@@ -199,7 +230,7 @@ const BV_AVATAR_OPTION_2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABm
 const BV_AVATAR_SCHOLAR_2="data:image/png;base64,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";
 INLINE_SPRITES.explorer_alt=BV_AVATAR_OPTION_2;
 INLINE_SPRITES.explorer_scholar_alt=BV_AVATAR_SCHOLAR_2;
-const IDS=['anya','bond','chimera','becky','damian','emile','ewen','henry','franky','yuri','sylvia','fiona','martha','melinda','donovan','demetrius','camilla','shopkeeper','yor','loid'];
+const IDS=['george','bill','chimera','becky','daybreak','emile','ewen','henry','franky','yuri','sylvia','fiona','martha','melinda','donovan','demetrius','camilla','shopkeeper','matthew','olka'];
 const COLORS=['#f5babb','#f2d0a1','#b8d3c0','#d5c5ae','#b9ccd8','#e9bc92','#d2bfde','#b6d5d2','#ebc6a4','#e9b9c7','#acbad4','#d4c2a2','#c6d4bd','#e6baa8','#c4c1df','#f1d1aa','#afd4bf','#bfccd5','#dfb0c7','#b9c8ab'];
 const chapters=CONTENT.map((e,i)=>{
  const row=Math.floor(i/5),col=i%5,c=row%2?4-col:col;
@@ -297,7 +328,7 @@ function chapterEquation(i){
 
 const canvas=document.getElementById('world'),ctx=canvas.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=false;
 const W=canvas.width,H=canvas.height,TW=60,TH=30,NX=38,NY=38,OX=535,OY=-100;
-const imgs={};for(const id of [...IDS,'explorer','stella','tonitrus','explorer_scholar']){const im=new Image();im.src=INLINE_SPRITES[id];imgs[id]=im;}
+const imgs={};for(const id of [...IDS,'explorer','stella','tonitrus','explorer_scholar']){const im=new Image();if(INLINE_SPRITES[id])im.src=INLINE_SPRITES[id];imgs[id]=im;}
 const state={player:{x:chapters[0].place[0]+.5,y:chapters[0].place[1]+.8},cam:{x:0,y:0},current:0,completed:new Set(),selection:null,hover:null,hitBoxes:[],toy:{x:0,v:1,a:0},energy:null,correctAnswered:false,travel:null,t:0};
 try{const p=JSON.parse(localStorage.getItem('latent-atlas-thread-v2')||'[]');if(Array.isArray(p)){for(let i=0;i<chapters.length;i++){if(!p.includes(i))break;state.completed.add(i);}}}catch(_){}
 state.current=state.completed.size;
@@ -344,8 +375,8 @@ function drawHouse(ch){const i=ch.index,p=iso(...ch.place),x=Math.round(p.x),y=M
  box(x-lw/2+3,ly+3,lw,22,'#5d866d');box(x-lw/2,ly,lw,22,active?'#fff8dc':'#fffaf1',active?'#e2af54':'#9eb09b');box(x-lw/2+4,ly+3,20,16,active?'#e6b964':done?'#8cb8a5':'#b9c8ba');txt(String(i+1).padStart(2,'0'),x-lw/2+14,ly+15,10,'#42594e');txt(label,x+10,ly+15,10,'#466556');
  state.hitBoxes.push({kind:'chapter',index:i,x:x-Math.max(52,lw/2),y:ly-5,w:Math.max(104,lw),h:y-ly+21,depth:ch.place[0]+ch.place[1]});
 }
-function drawNpc(ch){const p=iso(ch.place[0]+1.25,ch.place[1]+1.45),x=p.x,y=p.y,b=Math.sin(state.t*.002+ch.index)*1.5,im=imgs[ch.id],h=ch.id==='bond'?70:ch.id==='anya'?74:ch.id==='loid'?78:ch.id==='yor'?78:71;
- ctx.fillStyle='#43735a60';ctx.beginPath();ctx.ellipse(x,y+2,ch.id==='bond'?25:15,5,0,0,Math.PI*2);ctx.fill();
+function drawNpc(ch){const p=iso(ch.place[0]+1.25,ch.place[1]+1.45),x=p.x,y=p.y,b=Math.sin(state.t*.002+ch.index)*1.5,im=imgs[ch.id],h=ch.id==='bill'?91:ch.id==='matthew'||ch.id==='olka'?78:ch.id==='daybreak'?77:71;
+ ctx.fillStyle='#43735a60';ctx.beginPath();ctx.ellipse(x,y+2,ch.id==='bill'?25:15,5,0,0,Math.PI*2);ctx.fill();
  if(im.complete&&im.naturalWidth){const w=h*im.naturalWidth/im.naturalHeight;ctx.drawImage(im,x-w/2,y-h+b,w,h);}else {box(x-12,y-42,24,36,ch.color);box(x-9,y-53,18,17,'#f0d3be');}
  if(typeof quest!=='undefined'){const badge=quest.stars[ch.index]?'stella':ch.index>state.current?'tonitrus':null;if(badge&&imgs[badge].complete&&imgs[badge].naturalWidth)ctx.drawImage(imgs[badge],x+22,y-h+2+b,21,22);}
  if(state.current===ch.index){txt('✦',x,y-h-9+b,16,'#fff3c0');}
@@ -406,6 +437,28 @@ document.getElementById('soundless').addEventListener('click',ev=>{ev.currentTar
 state.cam.x=W*.5-rawIso(state.player.x,state.player.y).x;state.cam.y=H*.58-rawIso(state.player.x,state.player.y).y;
 requestAnimationFrame(()=>{progress();ribbon();render(performance.now());});
 
+/* BV-Garden: five distinct full-body pixel-art fan portraits, source-referenced and transparent. */
+const BV_CAST_ATLAS='data:image/png;base64,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';
+const BV_CAST_NAMES=['george','bill','daybreak','matthew','olka'];
+const BV_CAST_STRIDE=96;
+const BV_CAST_HEIGHT=152;
+function bvLoadCast(){
+  const atlas=new Image();
+  atlas.onload=()=>{
+    for(let i=0;i<BV_CAST_NAMES.length;i++){
+      const canvas=document.createElement('canvas');
+      canvas.width=BV_CAST_STRIDE;canvas.height=BV_CAST_HEIGHT;
+      const context=canvas.getContext('2d');
+      context.drawImage(atlas,i*BV_CAST_STRIDE,0,BV_CAST_STRIDE,BV_CAST_HEIGHT,0,0,BV_CAST_STRIDE,BV_CAST_HEIGHT);
+      const id=BV_CAST_NAMES[i],url=canvas.toDataURL('image/png');
+      INLINE_SPRITES[id]=url;
+      if(typeof imgs!=='undefined'&&imgs[id])imgs[id].src=url;
+      for(const pic of document.querySelectorAll('[data-bv-cast-image="'+id+'"]'))pic.src=url;
+    }
+  };
+  atlas.src=BV_CAST_ATLAS;
+}
+bvLoadCast();
 /* Curated, locally scored research questions. All keys are inspectable; browser games cannot prevent deliberate source-code inspection. */
 'use strict';
 const Q=(t,a,b,why)=>({t,a:Array.isArray(a)?a:[a],b,why});
@@ -1016,7 +1069,7 @@ for(const tier of ['e','m','h'])for(const x of BV_IMPERIAL_EXTENSION[tier])IMPER
 const BV_ADVANCED_CHAPTERS=[
   {
     "name": "Generative Systems & Agentic Intelligence",
-    "guide": "George Glooman",
+    "guide": "Anya Forger",
     "role": "Language, generative models, inference and tools",
     "intro": "Trace the full research stack: tokenization, conditional modeling, transformer attention, pretraining, diffusion, preference alignment, retrieval, multimodal generation and agent tools. Distinguish fluent sampling from verifiable claims about the world.",
     "experiment": "Run matched-budget comparisons of an autoregressive baseline, retrieval-assisted policy and tool-using agent on independently written unseen problems; audit data exposure and costs.",
@@ -1038,7 +1091,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Causal & Latent World Models",
-    "guide": "Bill Watkins",
+    "guide": "Bond Forger",
     "role": "Predictive state, intervention and uncertainty",
     "intro": "Study identifiability, partially observable Markov decision processes, action-conditioned latent transitions, uncertainty, long-horizon rollout fidelity, JEPA-style representation learning, belief filtering, causal inference and counterfactual control.",
     "experiment": "Design a small controlled physical shift where two models fit passive observations equally well but differ under actions; estimate rollout and task success with known intervention conditions.",
@@ -1060,7 +1113,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Compositional Embodied Skills",
-    "guide": "Daybreak",
+    "guide": "Damian Desmond",
     "role": "Skills, contact, hierarchy and sim-to-real",
     "intro": "Cover object-centric graphs, skill preconditions/effects, compositional transfer, inverse dynamics, goal-conditioned policies, hierarchical planning, contact, active tactile sensing, sim-to-real mismatches and VLA versus latent world-action modeling.",
     "experiment": "Build a two-object manipulation study with a held-out pairing of mass, material and goal. Compare a factored model, monolithic policy and robust planner at matched trials.",
@@ -1082,7 +1135,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Reliable Safety & OOD Evaluation",
-    "guide": "Matthew McMahon",
+    "guide": "Yor Forger",
     "role": "Statistics, runtime contracts and adversarial shifts",
     "intro": "Examine uncertainty calibration, covariate and dynamical shift, offline support constraints, abstention trade-offs, safety contracts, selective prediction, conformal assumptions, causal stress tests, latency and security of tool-using AI.",
     "experiment": "Pre-register a matched-budget safety study reporting violations, abstentions, state uncertainty, task success and confidence intervals across independent seeds and shifts.",
@@ -1104,7 +1157,7 @@ const BV_ADVANCED_CHAPTERS=[
   },
   {
     "name": "Open-Ended Scientific Invention",
-    "guide": "Olka Gretcher",
+    "guide": "Loid Forger",
     "role": "Novelty, proof, continual adaptation and bounded claims",
     "intro": "Develop falsifiable research hypotheses, explicit assumptions, fair baselines, novelty searches, conditional guarantees, rigorous ablations, continual learning, OOD transfer, external evaluation and cautious AGI/ASI framing. No existing game or benchmark confers genuine invention credentials.",
     "experiment": "Draft an original mechanism and rejection criterion, then independently reproduce baseline failures, test component necessity with ablations and compare statistically across unseen task families.",
@@ -1278,42 +1331,135 @@ Q("ADV 25 · A new component improves benchmark average but increases rare catas
 Q("ADV 25 · A new component improves benchmark average but increases rare catastrophic failures. Under a new held-out operating condition, select BOTH conclusions justified by the evidence.",["Innovation should include measured trade-offs rather than only mean gains","A component may improve one objective while worsening another"],["Mean accuracy guarantees low worst-case risk","Once a component is novel, its negative side effects do not matter","Treat one successful demonstration as an unconditional theorem"],"Average reward alone can hide unacceptable tail risk. A discriminating evaluation is: Evaluate safety-tail events, coverage and performance together.")]}
 ];
 if(BV_ADVANCED_BANK.length!==5||BV_ADVANCED_BANK.some(b=>b.e.length!==8||b.m.length!==8||b.h.length!==16))throw Error('Advanced question-bank contract failed');
-/* Small hand-authored pixel-shaded chibi fan sprites for five distinct canon characters.
-   These are illustrative interpretations, not official anime imagery. */
-function bvAdvancedSprite(v){
- const px=(x,y,w,h,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+c+'"/>';
- const skin='#efc8a5',skinShade='#d7a884',outline='#25303b';
- let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 88" shape-rendering="crispEdges">';
- s+='<ellipse cx="32" cy="81" rx="19" ry="4" fill="#67867b" opacity=".28"/>';
- s+=px(18,70,11,8,'#2d343c')+px(36,70,11,8,'#2d343c')+px(18,76,12,5,outline)+px(35,76,12,5,outline);
- s+=px(20,56,10,16,v.pants||'#333844')+px(35,56,10,16,v.pants||'#333844');
- s+=px(16,38,32,23,outline)+px(18,40,28,19,v.coat||'#2c3644');
- s+=px(20,40,4,19,v.shade||'#18212b')+px(40,41,5,17,v.shade||'#18212b');
- s+=px(9,42,7,18,outline)+px(10,43,6,15,v.coat||'#2c3644')+px(48,42,7,18,outline)+px(49,43,5,15,v.coat||'#2c3644');
- s+=px(10,59,6,7,skinShade)+px(49,59,5,7,skin);
- s+=px(29,37,7,5,skinShade);
- s+=px(17,15,30,26,outline)+px(19,17,26,22,skin);
- s+=px(18,31,4,5,skinShade)+px(41,29,4,5,skinShade);
- s+=px(23,28,4,3,outline)+px(37,28,4,3,outline)+px(25,27,2,1,'#f8f8f5')+px(39,27,2,1,'#f8f8f5');
- s+=px(31,33,3,2,'#b77b75')+px(30,36,6,1,'#bd8f8d');
- s+=px(17,14,31,8,v.hair||'#43372e')+px(18,20,6,8,v.hair||'#43372e')+px(41,20,7,8,v.hair||'#43372e');
- s+=px(22,14,18,3,v.highlight||'#7b6754');
- if(v.school){s+=px(30,43,5,16,'#ddd5ae')+px(29,46,7,2,'#d6b26d')+px(20,59,9,8,'#1a232d')+px(36,59,9,8,'#1a232d')+px(20,67,9,5,'#f3f1e9')+px(36,67,9,5,'#f3f1e9');}
- if(v.glasses){s+=px(21,25,11,9,'#313740')+px(33,25,11,9,'#313740')+px(23,26,8,6,'#c4dbe0')+px(35,26,8,6,'#c4dbe0')+px(31,28,3,2,'#313740')+px(24,27,3,2,outline)+px(38,27,3,2,outline);}
- if(v.tie)s+=px(29,41,7,13,v.tie)+px(30,54,5,5,v.tie);
- if(v.hat){s+=px(14,12,37,6,'#bca87d')+px(20,4,26,11,'#dac798')+px(21,11,24,3,'#30303e')+px(12,16,41,4,'#b2a07a');}
- if(v.longHair){s+=px(12,19,8,34,v.hair)+px(44,19,8,34,v.hair)+px(17,15,30,7,v.hair)+px(20,18,7,8,v.highlight||v.hair);}
- if(v.jacketTrim){s+=px(19,39,5,16,v.jacketTrim)+px(40,39,5,16,v.jacketTrim);}
- if(v.bulk){s+=px(6,42,4,14,v.shade||'#222')+px(54,42,4,14,v.shade||'#222');}
- s+='</svg>';return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
+/* Retain the EXACT original character PNG artwork for advanced Houses 21–25.
+   Those portraits have simply moved from their previous chapter locations.
+   No procedural lookalikes, no modified faces and no duplicate cast members. */
+const BV_ADVANCED_IDS=['anya','bond','damian','yor','loid'];
+const BV_ADVANCED_SPRITES=BV_ADVANCED_IDS.map(
+ id=>typeof INLINE_SPRITES==='undefined'?id:INLINE_SPRITES[id]
+);
+/* Isometric advanced garden. Faithfully reuses the same roof geometry, tile palette,
+   shadowing and original PNG companions used by the first twenty houses.
+   It does not change the existing world renderer or its navigation. */
+function bvAdvancedRenderGarden(){
+ const canvas=document.getElementById('bv-advanced-world');
+ if(!canvas)return;
+ const c=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+ const sites=[[116,289],[283,238],[450,292],[617,237],[785,292]];
+ const adv=quest.advanced,now=bvAdvancedCurrent();
+ const colors=['#f5babb','#f2d0a1','#b9ccd8','#dfb0c7','#b9c8ab'];
+ c.imageSmoothingEnabled=false;
+ const sprites=BV_ADVANCED_SPRITES.map(url=>{const im=new Image();im.onload=()=>draw();im.src=url;return im;});
+ const iconStella=new Image(),iconBoltImg=new Image();
+ iconStella.onload=()=>draw();iconStella.src=asset('stella');
+ iconBoltImg.onload=()=>draw();iconBoltImg.src=asset('tonitrus');
+ function polygon(points,fill,stroke){
+   c.beginPath();c.moveTo(points[0][0],points[0][1]);
+   for(let j=1;j<points.length;j++)c.lineTo(points[j][0],points[j][1]);
+   c.closePath();c.fillStyle=fill;c.fill();
+   if(stroke){c.lineWidth=1;c.strokeStyle=stroke;c.stroke();}
+ }
+ function block(x,y,w,h,color,stroke){
+   c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));
+   if(stroke){c.strokeStyle=stroke;c.strokeRect(Math.round(x)+.5,Math.round(y)+.5,Math.round(w)-1,Math.round(h)-1);}
+ }
+ function label(text,x,y,font,color,align='center'){
+   c.textAlign=align;c.textBaseline='middle';c.font='800 '+font+'px ui-monospace, Menlo, monospace';
+   c.fillStyle=color;c.fillText(text,x,y);
+ }
+ function house(i){
+  const [x,y]=sites[i],height=49+(i%3)*5,active=i===now,won=adv.stars[i],roof=colors[i];
+  polygon([[x-47,y+7],[x,y+28],[x+47,y+7],[x,y-15]],'#709c79');
+  polygon([[x-34,y-height],[x,y-height+16],[x,y+9],[x-34,y-7]],'#f7eedb','#c4b99e');
+  polygon([[x,y-height+16],[x+35,y-height],[x+35,y-7],[x,y+9]],'#decbb5','#b9b19d');
+  for(let k=0;k<5;k++){block(x-31+k*5,y-height+20+k*3,7,2,'#e3d0ba');block(x+9+k*5,y-height+23-k*2,6,2,'#c5b49c');}
+  polygon([[x-41,y-height],[x,y-height-25],[x+41,y-height],[x,y-height+20]],roof,'#607164');
+  polygon([[x-41,y-height],[x,y-height+20],[x,y-height+10],[x-41,y-height-9]],'#ad8d88');
+  for(let k=-2;k<=2;k++)block(x+k*13-6,y-height-7+Math.abs(k)*2,8,3,'#ffffff65');
+  block(x-27,y-height+11,12,13,'#785a58');block(x-25,y-height+13,8,9,'#ffe0a4');
+  block(x+14,y-height+11,12,13,'#785a58');block(x+16,y-height+13,8,9,'#ffe0a4');
+  polygon([[x-9,y-9],[x,y-5],[x,y+9],[x-9,y+3]],'#638979');
+  polygon([[x,y-5],[x+9,y-10],[x+9,y+3],[x,y+9]],'#426c61');
+  block(x-37,y+2,7,8,'#67996f');block(x+31,y+2,7,8,'#6d9e6b');
+  block(x+12,y-height-26,8,11,'#a57f79');block(x+13,y-height-28,9,4,'#dfb0a6');
+  const title=BV_ADVANCED_CHAPTERS[i].name;
+  const short=title.length>17?title.slice(0,16)+'…':title;
+  block(x-65+3,y-height-81+3,130,24,'#5d866d');
+  block(x-65,y-height-81,130,24,active?'#fff8dc':'#fffaf1',active?'#e2af54':'#9eb09b');
+  block(x-61,y-height-78,23,18,active?'#e6b964':won?'#8cb8a5':'#b9c8ba');
+  label(String(i+21),x-49,y-height-69,11,'#42594e');
+  label(short,x+12,y-height-69,9,'#466556');
+  if(active){block(x-4,y-height-50,9,10,'#fce9ab','#ae9560');label('!',x+.5,y-height-43,9,'#926950');}
+  if(won){block(x-32,y+14,64,6,'#f9d985');}
+ }
+ function portrait(i){
+  const [hx,hy]=sites[i],x=hx+51,y=hy+8,im=sprites[i],locked=i>now,won=adv.stars[i];
+  c.fillStyle='#294d3b50';c.beginPath();c.ellipse(x,y+2,i===1?25:18,5,0,0,Math.PI*2);c.fill();
+  c.beginPath();c.arc(x,y-48,i===1?44:39,0,Math.PI*2);
+  c.fillStyle=locked?'#5d6e7499':won?'#e6d4a44d':'#fef3cf48';c.fill();
+  c.strokeStyle=locked?'#728c89':won?'#dfb64d':'#d6b26c';c.lineWidth=3;c.stroke();
+  if(im.complete&&im.naturalWidth){
+   const h=i===1?95:i===0||i===2?81:87,w=h*im.naturalWidth/im.naturalHeight;
+   c.globalAlpha=locked?0.58:1;c.drawImage(im,x-w/2,y-h,w,h);c.globalAlpha=1;
+  }else{block(x-18,y-57,36,45,'#d2a88e');}
+  const icon=won?iconStella:locked?iconBoltImg:null;
+  if(icon?.complete&&icon.naturalWidth)c.drawImage(icon,x+26,y-83,27,29);
+  if(!locked&&!won){c.fillStyle='#ffebb4';c.beginPath();c.arc(x+30,y-83,14,0,Math.PI*2);c.fill();label('✦',x+30,y-84,17,'#b48440');}
+  block(x-56,y+8,112,23,locked?'#dfe2dd':won?'#f7eac2':'#fff9ed','#99b59e');
+  label(BV_ADVANCED_CHAPTERS[i].guide.split(' ')[0].toUpperCase(),x,y+20,10,'#405a4c');
+ }
+ function grass(){
+  const fill=c.createLinearGradient(0,0,0,H);
+  fill.addColorStop(0,'#d7e5db');fill.addColorStop(.5,'#b6d5be');fill.addColorStop(1,'#9ac8a9');
+  c.fillStyle=fill;c.fillRect(0,0,W,H);
+  const tw=60,th=30;
+  for(let row=-1;row<20;row++)for(let col=-1;col<19;col++){
+   const x=col*tw+((row%2)*tw/2),y=row*(th/1.4)+125;
+   const shade=((row*17+col*31)%7+7)%7;
+   polygon([[x,y-th/2],[x+tw/2,y],[x,y+th/2],[x-tw/2,y]],
+    shade<2?'#acceb0':shade<5?'#aad0a9':'#b5d6b7','#97bf9b88');
+  }
+  for(let k=0;k<60;k++){
+   const x=(k*151+29)%W,y=(k*87+131)%H;
+   if(y<135||k%5===0)continue;
+   block(x,y-9,2,10,'#739b78');
+   block(x-5,y-9,10,5,k%3===0?'#f3b8c8':'#faefb4');
+   block(x-1,y-7,3,2,'#dfc58d');
+  }
+ }
+ function path(){
+  for(let i=0;i<sites.length-1;i++){
+   const a=sites[i],b=sites[i+1];
+   for(let k=1;k<=17;k++){
+    const f=k/18,x=a[0]+(b[0]-a[0])*f,y=a[1]+(b[1]-a[1])*f+8;
+    block(x-3,y,6,5,i<now?'#f9d985':'#d3bba0');
+    if(k===9){
+     c.fillStyle=i<now?'#fff0b6':'#eed9c8';c.beginPath();c.arc(x,y-11,12,0,2*Math.PI);c.fill();
+     label('›',x,y-11,20,'#8a755d');
+     if(i>=now&&iconBoltImg.complete&&iconBoltImg.naturalWidth)c.drawImage(iconBoltImg,x-14,y-45,28,28);
+    }
+   }
+  }
+ }
+ function draw(){
+  grass();path();
+  for(let i=0;i<5;i++)house(i);
+  for(let i=0;i<5;i++)portrait(i);
+  block(12,10,300,36,'#fff9e9d9','#aabda9');
+  label('ADVANCED RESEARCH · HOUSES 21–25',24,28,14,'#3c6654','left');
+  block(W-206,10,194,36,'#fff9e9d9','#aabda9');
+  label('TONITRUS '+adv.bolts+'/5',W-109,28,14,'#8a6556');
+ }
+ draw();
+ const hits=sites.map(([x,y])=>({left:x-70,right:x+100,top:y-152,bottom:y+40}));
+ canvas.onclick=event=>{
+  const rect=canvas.getBoundingClientRect(),
+  x=(event.clientX-rect.left)*canvas.width/rect.width,
+  y=(event.clientY-rect.top)*canvas.height/rect.height;
+  const i=hits.findIndex(hit=>x>=hit.left&&x<=hit.right&&y>=hit.top&&y<=hit.bottom);
+  if(i>=0&&i<=bvAdvancedCurrent())bvAdvancedShow(i);
+ };
 }
-const BV_ADVANCED_SPRITES=[
- bvAdvancedSprite({hair:'#222730',highlight:'#4d5562',coat:'#222a34',shade:'#11171e',school:true}),
- bvAdvancedSprite({hair:'#705139',highlight:'#a48362',coat:'#303640',shade:'#1c2127',school:true,glasses:true,bulk:true}),
- bvAdvancedSprite({hair:'#684632',highlight:'#b19072',coat:'#1f2939',shade:'#131a28',hat:true,jacketTrim:'#455a70'}),
- bvAdvancedSprite({hair:'#8c9696',highlight:'#c5c9c5',coat:'#48515e',shade:'#303744',glasses:true,tie:'#2a7b79'}),
- bvAdvancedSprite({hair:'#d4aa68',highlight:'#ffe0a2',coat:'#e9e9da',shade:'#b9b9af',glasses:true,longHair:true,jacketTrim:'#9d3f4d'})
-];
 /* RESEARCH GARDEN QUEST ENGINE · 20 chapters, nonrepeating conceptual question IDs, real scoring. */
 'use strict';
 const QUEST_STORAGE='latent-atlas-research-quest-v1';
@@ -1632,7 +1778,7 @@ function learningBridge(i){
 }
 
 function deepHTML(i){const d=DEEP_LESSONS[i];return `<div class="deep-primer"><h5>Concept mechanics · why it matters</h5><p>${qEsc(d[0])}</p><h5>Concrete reasoning case</h5><p>${qEsc(d[1])}</p><h5>Common misconception to defeat</h5><p>${qEsc(d[2])}</p></div>`;}
-function article(ch){const i=ch.index,passed=quest.passed[i];return `<article class="chapter-article"><div class="chapter-tag">CHAPTER ${String(i+1).padStart(2,'0')} / 20 · ${qEsc(ch.tag)}</div><div class="guide-header"><img src="${asset(ch.id)}" alt="Pixel art research companion for ${qEsc(ch.short)}"><div><h4>${qEsc(ch.title)}</h4><p>${qEsc(ch.short)}</p></div></div><p class="lede">${qEsc(ch.tag)}</p><h5>01 · First principles</h5><p>${qEsc(ch.known)}</p>${chapterEquation(i)}${deepHTML(i)}${learningBridge(i)}<h5>02 · Practice and reproducibility</h5><p>${qEsc(ch.experiment)}</p>${window.microLabHTML?microLabHTML(ch):''}${ch.role==='dynamics'?toyHTML():''}${ch.role==='energy'?energyHTML():''}<div class="frontier"><h5>03 · Open research limitation</h5><p>${qEsc(ch.frontier)}</p></div><a href="${qEsc(ch.source)}" class="paper-link" target="_blank" rel="noopener noreferrer">↗ VERIFIED READING<br><span style="font-weight:500">${qEsc(ch.paper)}</span></a>${challengeWidget(i)}${passed?`<p class="chapter-finished">✓ Chapter gate passed. ${quest.stars[i]?'Stella collected.':'A Stella can still be earned using unused questions.'}</p>`:''}</article>`;}
+function article(ch){const i=ch.index,passed=quest.passed[i];return `<article class="chapter-article"><div class="chapter-tag">CHAPTER ${String(i+1).padStart(2,'0')} / 20 · ${qEsc(ch.tag)}</div><div class="guide-header"><img src="${asset(ch.id)}" ${BV_CAST_NAMES.includes(ch.id)?`data-bv-cast-image="${ch.id}"`:``} alt="Pixel art research companion for ${qEsc(ch.short)}"><div><h4>${qEsc(ch.title)}</h4><p>${qEsc(ch.short)}</p></div></div><p class="lede">${qEsc(ch.tag)}</p><h5>01 · First principles</h5><p>${qEsc(ch.known)}</p>${chapterEquation(i)}${deepHTML(i)}${learningBridge(i)}<h5>02 · Practice and reproducibility</h5><p>${qEsc(ch.experiment)}</p>${window.microLabHTML?microLabHTML(ch):''}${ch.role==='dynamics'?toyHTML():''}${ch.role==='energy'?energyHTML():''}<div class="frontier"><h5>03 · Open research limitation</h5><p>${qEsc(ch.frontier)}</p></div><a href="${qEsc(ch.source)}" class="paper-link" target="_blank" rel="noopener noreferrer">↗ VERIFIED READING<br><span style="font-weight:500">${qEsc(ch.paper)}</span></a>${challengeWidget(i)}${passed?`<p class="chapter-finished">✓ Chapter gate passed. ${quest.stars[i]?'Stella collected.':'A Stella can still be earned using unused questions.'}</p>`:''}</article>`;}
 function progress(){const count=state.completed.size,num=quest.stars.filter(Boolean).length;
  document.getElementById('progress-numeric').innerHTML=`${String(count).padStart(2,'0')} <small>/ ${chapters.length}</small>`;
  document.getElementById('progress-fill').style.width=`${count/20*100}%`;
@@ -1975,14 +2121,15 @@ function bvAdvancedHasFullSet(level){
 function bvAdvancedMapHTML(){
  const adv=quest.advanced,current=bvAdvancedCurrent();
  return '<article class="chapter-article bv-advanced"><div class="chapter-tag">POST-LOID RESEARCH EXPEDITION · CHAPTERS 21–25</div>'+
- '<h4>The Five Hidden Research Houses</h4><p class="lede">Five distinct SPY×FAMILY companions guide harder studies. Enter after passing the first twenty chapters and the final examination; Imperial Scholar status is not required.</p>'+
- '<p class="bv-adv-rules">'+iconStar()+' '+adv.stars.filter(Boolean).length+'/5 advanced Stellas · '+iconBolt()+' '+adv.bolts+'/5 advanced Tonitrus Bolts. Each house presents 2 easy, 2 medium and 4 hard questions (8 total). At least 6/8 earns a Stella; a fifth incorrect answer restarts this advanced expedition at House 21, without erasing your original journey or question history.</p>'+
- '<div class="bv-adv-map" aria-label="Five advanced research houses">'+BV_ADVANCED_CHAPTERS.map((ch,i)=>{
-  const locked=i>current,star=adv.stars[i],here=i===current;
-  return '<button type="button" class="bv-adv-house '+(star?'won ':'')+(here?'active ':'')+'" data-bv-adv-stage="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' aria-label="Advanced chapter '+(21+i)+': '+qEsc(ch.name)+(locked?' locked':'')+'"><span class="bv-adv-houseno">HOUSE '+(21+i)+'</span><span class="bv-house-roof"></span><span class="bv-house-front"><span class="bv-house-door"></span></span><img class="bv-adv-guide" src="'+BV_ADVANCED_SPRITES[i]+'" alt="Pixel-art interpretation of '+qEsc(ch.guide)+'"><span class="bv-adv-housetitle">'+qEsc(ch.name)+'</span><span class="bv-adv-house-guide">'+qEsc(ch.guide)+'</span><span class="bv-adv-house-status">'+(star?iconStar()+' STELLA':locked?iconBolt()+' LOCKED':adv.active?.level===i?'Resume unfinished exam':'Face research questions')+'</span></button>';
+ '<h4>The Five Hidden Research Houses</h4><p class="lede">Anya, Bond, Damian, Yor and Loid guide these five research houses, after the original twenty chapters and a passing final examination. Imperial Scholar status is not required.</p>'+
+ '<p class="bv-adv-rules">'+iconStar()+' '+adv.stars.filter(Boolean).length+'/5 advanced Stellas · '+iconBolt()+' '+adv.bolts+'/5 advanced Tonitrus Bolts. Each house has 2 easy, 2 medium and 4 hard conceptual questions (8 in total). At least 6/8 earns a Stella; a fifth incorrect answer resets only the advanced expedition to House 21.</p>'+
+ '<p class="bv-adv-map-tip">Explore the five isometric research houses on the large map to the left. Select a house there or use the accessible chapter links below.</p>'+
+ '<div class="bv-adv-house-links" role="group" aria-label="Visit advanced houses">'+BV_ADVANCED_CHAPTERS.map((ch,i)=>{
+   const locked=i>current,star=adv.stars[i];
+   return '<button type="button" class="bv-adv-house-link '+(i===current?'active ':'')+'" data-bv-adv-stage="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' aria-label="House '+(21+i)+': '+qEsc(ch.guide)+', '+qEsc(ch.name)+(locked?', locked':'')+'"><b>'+(21+i)+'</b><span>'+qEsc(ch.guide)+'<small>'+qEsc(ch.name)+'</small></span><span class="bv-adv-link-state">'+(star?iconStar():locked?iconBolt():'✦')+'</span></button>';
  }).join('')+'</div>'+
- (adv.completedRecord?'<div class="quest-notice success">'+iconStar()+' Five advanced Stellas recorded: Elite Imperial League qualification unlocked.</div>':'')+
- '<div class="bv-adv-actions"><button type="button" class="action-button" data-chapter="20">Return to Loid\'s final record →</button>'+
+ (adv.completedRecord?'<div class="quest-notice success">'+iconStar()+' All five advanced Stellas recorded: Elite Imperial League qualification unlocked.</div>':'')+
+ '<div class="bv-adv-actions"><button type="button" class="action-button" data-chapter="20">Return to the Chapter 20 final record →</button>'+
  (quest.eliteUnlocked?'<button type="button" class="action-button" data-league-enter>Enter Elite Imperial League →</button>':'')+'</div></article>';
 }
 function bvAdvancedQuizHTML(){
@@ -2018,8 +2165,12 @@ function bvAdvancedStageHTML(i){
 function bvAdvancedShow(level=null){
  if(!bvAdvancedAllowed())return;
  const pane=document.getElementById('journal-content');if(!pane)return;
- pane.innerHTML=(Number.isInteger(level)&&level>=0&&level<5&&level<=bvAdvancedCurrent())?bvAdvancedStageHTML(level):bvAdvancedMapHTML();
+ const validLevel=Number.isInteger(level)&&level>=0&&level<5&&level<=bvAdvancedCurrent();
+ quest.advanced.view=validLevel?level:'map';
+ pane.innerHTML=validLevel?bvAdvancedStageHTML(level):bvAdvancedMapHTML();
  pane.scrollTop=0;
+ storeQuest();
+ bvAdvancedShowWorld();
 }
 function bvAdvancedStart(level){
  const adv=quest.advanced;
@@ -2071,11 +2222,47 @@ function bvAdvancedSubmit(){
  storeQuest();
  bvAdvancedShow(a.level);
 }
+/* The second garden occupies the existing large game viewport, not tiny journal cards.
+   The original canvas, its camera and twenty-house progression are never modified. */
+function bvAdvancedHideWorld(){
+ const overlay=document.getElementById('bv-advanced-overlay');
+ if(overlay&&!overlay.hidden){overlay.hidden=true;if(quest.advanced){quest.advanced.view=null;storeQuest();}}
+}
+function bvAdvancedShowWorld(){
+ const host=document.querySelector('.canvas-wrap');if(!host)return;
+ let layer=document.getElementById('bv-advanced-overlay');
+ if(!layer){
+  layer=document.createElement('section');
+  layer.id='bv-advanced-overlay';layer.className='bv-advanced-overlay';
+  layer.setAttribute('aria-label','Advanced five-house isometric research garden');
+  layer.innerHTML='<div class="bv-advanced-map-header"><strong>MAP 02 · ADVANCED RESEARCH GARDEN</strong><button type="button" class="bv-adv-exit" data-bv-advanced-exit aria-label="Return to the original garden">Return to Main Garden ✕</button></div>'+
+   '<canvas id="bv-advanced-world" width="940" height="470" tabindex="0" role="img" aria-label="Interactive 2.5D map with five isometric houses, characters Anya, Bond, Damian, Yor and Loid, and Stella and Tonitrus icons. Select the matching house from the chapter links at right if using a keyboard."></canvas>';
+  host.append(layer);
+ }
+ layer.hidden=false;
+ bvAdvancedRenderGarden();
+}
+const bvNormalChapterOpen=openChapter;
+openChapter=function(i){bvAdvancedHideWorld();return bvNormalChapterOpen(i);};
+const bvOriginalShowLeague=showLeague;
+showLeague=function(){bvAdvancedHideWorld();return bvOriginalShowLeague();};
+document.addEventListener('click',event=>{
+ if(event.target.closest('[data-bv-advanced-exit]'))openChapter(20);
+});
+document.addEventListener('keydown',event=>{
+ if(!document.getElementById('bv-advanced-overlay')?.hidden&&
+    document.getElementById('bv-advanced-overlay')&&
+    ['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(event.key.toLowerCase())&&
+    !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)){
+  event.stopImmediatePropagation();event.preventDefault();
+ }
+},true);
+
 const bvOriginalCompleteScreen=completeScreen;
 completeScreen=function(){
  const html=bvOriginalCompleteScreen();
  if(!bvAdvancedAllowed())return html;
- return html+'<div class="bv-adv-portal"><h4>Research Expedition · Houses 21–25</h4><p>After passing Loid’s final examination, explore five new advanced research houses. Imperial Scholar status is optional; five advanced Stellas or five separate Imperial wins qualify for the Elite Imperial League.</p><button type="button" class="action-button" data-bv-advanced-enter>Enter the five research houses →</button></div>';
+ return html+'<div class="bv-adv-portal"><h4>Research Expedition · Houses 21–25</h4><p>After passing the Chapter 20 final examination, explore five new advanced research houses. Imperial Scholar status is optional; five advanced Stellas or five separate Imperial wins qualify for the Elite Imperial League.</p><button type="button" class="action-button" data-bv-advanced-enter>Enter the five research houses →</button></div>';
 };
 document.addEventListener('click',event=>{
  const t=event.target,enter=t.closest('[data-bv-advanced-enter]');
@@ -2086,6 +2273,13 @@ document.addEventListener('click',event=>{
  if(t.closest('[data-bv-adv-submit]')){bvAdvancedSubmit();return;}
 });
 storeQuest();
+window.addEventListener('load',()=>{
+ const a=quest.advanced;
+ if(bvAdvancedAllowed()&&(a.active||a.view==='map'||Number.isInteger(a.view))){
+   const wanted=a.active?a.active.level:a.view;
+   bvAdvancedShow(Number.isInteger(wanted)?wanted:null);
+ }
+},{once:true});
 </script>
 
 
