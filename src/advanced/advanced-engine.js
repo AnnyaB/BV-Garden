@@ -75,7 +75,7 @@ function bvAdvancedEquation(i){
 function bvAdvancedStageHTML(i){
  const ch=BV_ADVANCED_CHAPTERS[i],adv=quest.advanced,last=adv.last?.level===i?adv.last:null,star=adv.stars[i];
  let html='<article class="chapter-article bv-advanced"><div class="chapter-tag">ADVANCED CHAPTER '+(21+i)+'/25 · '+qEsc(ch.role)+'</div>'+
- '<div class="guide-header"><img src="'+BV_ADVANCED_SPRITES[i]+'" alt="Pixel-art research companion"><div><h4>'+qEsc(ch.name)+'</h4><p>Research House '+(21+i)+'</p></div></div>'+
+ '<div class="guide-header"><img src="'+BV_ADVANCED_SPRITES[i]+'" alt="Pixel art illustration for House '+(21+i)+'"><div><h4>'+qEsc(ch.name)+'</h4><p>Research House '+(21+i)+'</p></div></div>'+
  '<h5>01 · Scientific foundations</h5><p>'+qEsc(ch.intro)+'</p>'+bvAdvancedEquation(i)+'<h5>02 · Reproducible experimental design</h5><p>'+qEsc(ch.experiment)+'</p>'+
  '<div class="frontier"><h5>03 · Open invention problem</h5><p>'+qEsc(ch.challenge)+'</p></div>'+
  '<h5>Verified research readings</h5>'+ch.papers.map(p=>'<p><a class="paper-link" target="_blank" rel="noopener noreferrer" href="'+qEsc(p[1])+'">'+qEsc(p[0])+' ↗</a></p>').join('')+

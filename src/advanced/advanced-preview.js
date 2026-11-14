@@ -47,7 +47,7 @@ function bvAdvancedPreviewSelect(i){
  if(!pane)return;
  pane.innerHTML='<article class="chapter-article bv-advanced"><div class="chapter-tag">'+iconBolt()+
  ' ADVANCED CHAPTER · LOCKED · '+(21+i)+'/25</div>'+
- '<div class="guide-header"><img src="'+img+'" alt="Pixel-art research companion for House '+(21+i)+'"><div><h4>House '+(21+i)+' · '+qEsc(ch.name)+'</h4><p>Research companion</p></div></div>'+
+ '<div class="guide-header"><img src="'+img+'" alt="Pixel art illustration for House '+(21+i)+'"><div><h4>House '+(21+i)+' · '+qEsc(ch.name)+'</h4></div></div>'+
  '<p class="lede">You can inspect this advanced house and its spiked-ball boundary now, but its research challenges remain locked.</p>'+
  '<p>Pass all first 20 chapter gates and the final examination with at least 7/10 correct to enter the five-house research expedition. Imperial Scholar status is NOT required. After entry, the advanced houses unlock in order.</p>'+
  '<p>'+iconBolt()+' Original garden: 10 incorrect answers restart Chapter 1; advanced garden: 5 incorrect answers restart House 21.</p>'+
