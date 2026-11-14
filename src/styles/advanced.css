@@ -21,3 +21,34 @@
 .bv-advanced .paper-link{display:block;line-height:1.5;margin:4px 0;font-size:12px}
 @media(max-width:650px){.bv-adv-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bv-adv-house{min-height:271px;padding-inline:5px}.bv-adv-housetitle{font-size:11px}.bv-adv-guide{height:100px}.bv-adv-portal{padding:12px}}
 @media(max-width:340px){.bv-adv-map{grid-template-columns:minmax(0,1fr)}}
+
+
+/* The second map replaces ONLY the map viewport while advanced mode is open. */
+.bv-advanced-overlay{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;
+ background:linear-gradient(160deg,#dfe9da,#b5d6bf);border-radius:4px;overflow:hidden;}
+.bv-advanced-overlay[hidden]{display:none!important}
+.bv-advanced-map-header{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;padding:10px 15px;background:#f9f5e5;border-bottom:2px solid #aabfae;color:#3b6954;
+ font:800 12px ui-monospace,monospace;letter-spacing:.03em;}
+.bv-advanced-map-header .bv-adv-exit{cursor:pointer;background:#fffdf5;border:1px solid #b9c5ad;
+ border-radius:6px;padding:7px 10px;color:#486052;font-weight:700}
+#bv-advanced-world{flex:1;display:block;width:100%;height:auto;min-height:0;object-fit:contain;
+ image-rendering:pixelated;cursor:pointer;touch-action:manipulation}
+.bv-adv-map-tip{font-size:12px;color:#456655;background:#e4f0e2;border:1px solid #c6d9c3;padding:10px;border-radius:10px}
+.bv-adv-house-links{display:grid;grid-template-columns:1fr;gap:7px;margin-top:12px}
+.bv-adv-house-link{display:flex;align-items:center;gap:10px;width:100%;min-height:45px;
+ border:1px solid #c3d4c3;border-radius:9px;background:#fff9ee;color:#466456;
+ padding:7px 9px;text-align:left;cursor:pointer}
+.bv-adv-house-link b{display:grid;place-items:center;min-width:29px;height:29px;
+ background:#c4ddc5;border-radius:6px;color:#345747}
+.bv-adv-house-link span{font-size:12px;font-weight:800;flex:1}
+.bv-adv-house-link small{display:block;font-size:10px;font-weight:500;margin-top:2px}
+.bv-adv-house-link.active{border:2px solid #c69f5a;background:#fff8dc}
+.bv-adv-house-link:disabled{opacity:.56;cursor:not-allowed}
+.bv-adv-house-link .bv-adv-link-state{flex:0 0 auto;min-width:26px;text-align:center}
+.bv-adv-house-link .reward-img{height:23px;width:23px;object-fit:contain;vertical-align:middle}
+@media(max-width:650px){
+ .bv-advanced-map-header{padding:5px 7px;font-size:9px}
+ .bv-advanced-map-header .bv-adv-exit{padding:5px 6px;font-size:10px}
+ #bv-advanced-world{min-height:100px}
+}
