@@ -163,4 +163,13 @@ test("Original journey restart retains the separate advanced research progress",
  restartJourney(false);
  assert.equal(ctx.quest.eliteUnlocked,true);
 });
+test("Advanced-Stella Elite qualification survives a subsequent Imperial Scholar win",()=>{
+ ctx.quest=initQuest();
+ ctx.quest.advanced={stars:[true,true,true,true,true],completedRecord:true,used:{},seen:{},passed:[true,true,true,true,true],bolts:0};
+ ctx.quest.eliteUnlocked=true;
+ fullStellas();
+ makeExam(1,2,4);gradeAttempt();
+ assert.equal(ctx.quest.imperialWins,1);
+ assert.equal(ctx.quest.eliteUnlocked,true);
+});
 console.log("Quest progression and award regression tests passed.");
