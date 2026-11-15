@@ -11,7 +11,7 @@ const BV_ADVANCED_CHAPTERS=[
     "papers": [
       [
         "ReAct: Synergizing Reasoning and Acting in Language Models — ICLR 2023",
-        "https://openreview.net/forum?id=WE_vluYUL-X"
+        "https://arxiv.org/abs/2210.03629"
       ],
       [
         "Toolformer: Language Models Can Teach Themselves to Use Tools — NeurIPS 2023",
@@ -40,8 +40,8 @@ const BV_ADVANCED_CHAPTERS=[
         "https://proceedings.mlr.press/v258/li25g.html"
       ],
       [
-        "Mastering Diverse Control Tasks through World Models — Nature 2025",
-        "https://www.nature.com/articles/s41586-025-08744-2"
+        "Identifying Partially Observed Causal Models from Heterogeneous/Nonstationary Data — ICML 2026",
+        "https://proceedings.mlr.press/v306/dong26a.html"
       ]
     ]
   },
@@ -59,7 +59,7 @@ const BV_ADVANCED_CHAPTERS=[
       ],
       [
         "ClevrSkills: Compositional Language and Visual Reasoning in Robotics — NeurIPS 2024",
-        "https://proceedings.neurips.cc/paper_files/paper/2024/file/439539557e9ba0d04055773ff1f3241c-Paper-Datasets_and_Benchmarks_Track.pdf"
+        "https://proceedings.neurips.cc/paper_files/paper/2024/hash/439539557e9ba0d04055773ff1f3241c-Abstract-Datasets_and_Benchmarks_Track.html"
       ],
       [
         "Compositional Interfaces for Compositional Generalization — CoLLAs 2025",
@@ -84,7 +84,7 @@ const BV_ADVANCED_CHAPTERS=[
         "https://proceedings.mlr.press/v270/hu25a.html"
       ],
       [
-        "Perceive With Confidence: Statistical Safety Assurances for Navigation — CoRL 2024",
+        "Perceive With Confidence: Statistical Safety Assurances for Navigation with Learning-Based Perception — CoRL 2024",
         "https://proceedings.mlr.press/v270/dixit25a.html"
       ]
     ]
@@ -103,7 +103,7 @@ const BV_ADVANCED_CHAPTERS=[
       ],
       [
         "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents — ICLR 2026",
-        "https://openreview.net/pdf?id=pUpzQZTvGY"
+        "https://arxiv.org/abs/2505.22954"
       ],
       [
         "Towards End-to-End Automation of AI Research — Nature 2026",

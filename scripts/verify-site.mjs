@@ -70,6 +70,15 @@ test("Advanced terrain traversal stays locked until ordinary final exam passes",
  html.includes("bvAdvancedAllowed())")&&
  html.includes("bvAdvancedPreviewOccupied(x,y)"));
 
+
+// Verify the research reading of every original chapter against its exact topic.
+const chapterReadingSource=readFileSync(resolve(root,"src/scripts/01-curriculum.js"),"utf8");
+const chapterReadingRows=JSON.parse(new Script(chapterReadingSource+'\\nJSON.stringify(CONTENT.map(row=>({name:row[0],title:row[7],url:row[8]})))').runInNewContext({}, {timeout:5000}));
+const expectedChapterReadings=[["AI Origins","https://ai.dartmouth.edu/our-story"],["Logic & Data","https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/"],["Python & Algorithms","https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/"],["Mathematics","https://mml-book.github.io/"],["Optimization","https://web.stanford.edu/~boyd/cvxbook/"],["Machine Learning","https://see.stanford.edu/Course/CS229"],["Deep Learning","https://arxiv.org/abs/1706.03762"],["Self-Supervision","https://proceedings.mlr.press/v119/chen20j.html"],["Representations","https://doi.org/10.1109/TPAMI.2013.50"],["Energy Models","https://cs.nyu.edu/~yann/2010f-G22-2565-001/diglib/lecun-06.pdf"],["Predictive Embeddings","https://openaccess.thecvf.com/content/CVPR2023/html/Assran_Self-Supervised_Learning_From_Images_With_a_Joint-Embedding_Predictive_Architecture_CVPR_2023_paper.html"],["Dynamics & State","https://web.stanford.edu/class/cs234/modules.html"],["World Models","https://www.nature.com/articles/s41586-025-08744-2"],["Model Predictive Control","https://proceedings.iclr.cc/paper_files/paper/2024/hash/cf73d57b6dcda32b293df7c2d5341f49-Abstract-Conference.html"],["Search & MCTD","https://proceedings.mlr.press/v267/yoon25a.html"],["Object & Skill Models","https://proceedings.iclr.cc/paper_files/paper/2025/hash/ae82a60c5ce50b5c4d18cfe3214eb684-Abstract-Conference.html"],["Embodied Learning","https://proceedings.mlr.press/v270/kim25c.html"],["Safety & Shift","https://proceedings.neurips.cc/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html"],["Physical Reasoning","https://proceedings.mlr.press/v306/feng26aa.html"],["Continual & Lifelong Learning","https://www.nature.com/articles/s42256-025-00983-2"]];
+test("All 20 original chapters have verified, topic-matched, distinct reading destinations",
+  chapterReadingRows.length===20 && chapterReadingRows.every((r,i)=>r.name===expectedChapterReadings[i][0]&&r.url===expectedChapterReadings[i][1]&&r.title.length>10) &&
+  new Set(chapterReadingRows.map(r=>r.url)).size===20);
+
 const sounds = [...html.matchAll(/\b(stella|fail):'data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)'/g)];
 test("Two embedded MP3 clips", sounds.length === 2 && new Set(sounds.map(s => s[1])).size === 2);
 for (const [, name, data] of sounds) {
@@ -100,6 +109,13 @@ test("Question-bank source is discoverable", bankStart > 0 && bankEnd > bankStar
 const bankCode = html.slice(bankStart, bankEnd);
 const bankData = JSON.parse(new Script(bankCode +
   "\nJSON.stringify({chapters:CHALLENGE_BANK,exam:IMPERIAL_BANK,adv:BV_ADVANCED_BANK,advChapters:BV_ADVANCED_CHAPTERS})").runInNewContext({}, {timeout:5000}));
+
+const expectedAdvancedReadings=["https://arxiv.org/abs/2210.03629","https://proceedings.neurips.cc/paper_files/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html","https://proceedings.neurips.cc/paper_files/paper/2023/hash/a85b405ed65c6477a4fe8302b5e06ce7-Abstract-Conference.html","https://proceedings.iclr.cc/paper_files/paper/2025/hash/85381f4549b5ddf1d48e2e287d7d3d15-Abstract-Conference.html","https://proceedings.mlr.press/v258/li25g.html","https://proceedings.mlr.press/v306/dong26a.html","https://proceedings.mlr.press/v235/zhou24f.html","https://proceedings.neurips.cc/paper_files/paper/2024/hash/439539557e9ba0d04055773ff1f3241c-Abstract-Datasets_and_Benchmarks_Track.html","https://proceedings.mlr.press/v274/luketina25a.html","https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html","https://proceedings.mlr.press/v270/hu25a.html","https://proceedings.mlr.press/v270/dixit25a.html","https://proceedings.iclr.cc/paper_files/paper/2025/hash/36b7acf6f6010652b3f2a433774a66fe-Abstract-Conference.html","https://arxiv.org/abs/2505.22954","https://www.nature.com/articles/s41586-026-10265-5"];
+const actualAdvancedReadings=bankData.advChapters.flatMap(ch=>ch.papers.map(p=>p[1]));
+test("All 15 advanced-house research-paper destinations match verified primary records",
+  actualAdvancedReadings.length===15&&actualAdvancedReadings.every((u,i)=>u===expectedAdvancedReadings[i])&&
+  new Set(actualAdvancedReadings).size===15&&bankData.advChapters.every(ch=>ch.papers.length===3));
+
 test("20 distinct research levels", bankData.chapters.length === 20);
 const normalizeStem = t=>String(t).normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
 const stems = new Map();

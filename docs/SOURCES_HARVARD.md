@@ -1,5 +1,5 @@
 # Research Garden — Harvard-style source catalogue
-**Reference cut-off:** 12 November 2026. **Scope:** selective foundational and frontier reading for the 20-station game, not an exhaustive index of every AI paper ever written.
+**Reference cut-off:** 15 November 2026. **Scope:** selective foundational and frontier reading for all 25 chapters, not an exhaustive index of every AI paper ever written.
 
 ## How to interpret this document
 - References use the Harvard author–date convention: author(s), year, title, publication or publication status, and publisher/DOI or primary-source link. Web resources have an access date of 12 November 2026.
@@ -93,6 +93,22 @@
 64. Bandai Spirits (n.d.) *Anya and Mr. Chimera merchandise listing*. Tamashii Nations. [Official licensed merchandise evidence for the toy's character design] Available at: https://tamashiiweb.com/item/14973/?wovn=en (Accessed: 12 November 2026).
 
 **Character-art provenance:** The 20 game sprites and the player sprite are newly made **unofficial fan-art interpretations**, not official animation frames, directly licensed images, or characters created by the game developers. The original characters, world, Eden Academy, Stella Stars, Tonitrus Bolts and Imperial Scholar concepts belong to their rights holders. A public release may need rights review; citing sources does not grant copyright permission.
+
+## Additional verified chapter-aligned research readings (15 November 2026)
+These supplement the numbered bibliography above. University courses and scholarly textbooks are **not** labelled peer-reviewed conference papers.
+
+- Meyer, A.R. and Chlipala, A. (2015) *6.042J Mathematics for Computer Science*. MIT OpenCourseWare. [Official university course; Chapter 2] https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/
+- Demaine, E., Leiserson, C. and Devadas, S. (2011) *6.006 Introduction to Algorithms*. MIT OpenCourseWare. [Official university course; Chapter 3] https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/
+- Deisenroth, M.P., Faisal, A.A. and Ong, C.S. (2020) *Mathematics for Machine Learning*. Cambridge University Press. [Textbook; Chapter 4] https://mml-book.github.io/
+- Boyd, S. and Vandenberghe, L. (2004) *Convex Optimization*. Cambridge University Press. [Textbook; Chapter 5; also Reference 7] https://web.stanford.edu/~boyd/cvxbook/
+- Stanford University (n.d.) *CS229: Machine Learning*. Stanford Engineering Everywhere. [Official university course; Chapter 6] https://see.stanford.edu/Course/CS229
+- Stanford University (2026) *CS234: Reinforcement Learning, course modules*. [Official university course; Chapter 12] https://web.stanford.edu/class/cs234/modules.html
+- Kim, M.J. *et al.* (2025) 'OpenVLA: An Open-Source Vision-Language-Action Model', *Proceedings of the 8th Conference on Robot Learning*, PMLR 270, pp. 2679–2713. [Peer-reviewed; Chapter 17; also Reference 51] https://proceedings.mlr.press/v270/kim25c.html
+- Ovadia, Y. *et al.* (2019) 'Can You Trust Your Model’s Uncertainty? Evaluating Predictive Uncertainty under Dataset Shift', *NeurIPS*, 32. [Peer-reviewed; Chapter 18; also Reference 54] https://proceedings.neurips.cc/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html
+- Feng, F. *et al.* (2026) 'Learning Task-Sufficient World Models by Synergizing Agentic Exploration and Structured Modeling', *ICML*, PMLR 306, pp. 30616–30641. [Peer-reviewed; Chapter 19] https://proceedings.mlr.press/v306/feng26aa.html
+- Dong, X., Dai, H., Ng, I., Spirtes, P. and Zhang, K. (2026) 'Identifying Partially Observed Causal Models from Heterogeneous/Nonstationary Data', *ICML*, PMLR 306, pp. 25763–25787. [Peer-reviewed; Chapter 22] https://proceedings.mlr.press/v306/dong26a.html
+- Yao, S. *et al.* (2023) 'ReAct: Synergizing Reasoning and Acting in Language Models', *ICLR*. [Peer-reviewed; Chapter 21; accessible manuscript of accepted work] https://arxiv.org/abs/2210.03629
+- Zhang, J., Hu, S., Lu, C., Lange, R. and Clune, J. (2026) 'Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents', *ICLR*. [Peer-reviewed; Chapter 25; accessible manuscript of accepted work] https://arxiv.org/abs/2505.22954
 
 ## Research questions for future work (not citations or invented completed papers)
 A. **Continual world-model revision:** Can an embodied agent detect a causal dynamics failure, revise only what failed, and preserve unrelated skills under long-horizon change?
